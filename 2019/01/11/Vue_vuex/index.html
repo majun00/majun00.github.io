@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Vue," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Vuex 就是前端为了方便数据的操作而建立的一个” 前端数据库“。模块间是不共享作用域的，那么B 模块想要拿到 A 模块的数据，我们会怎么做？我们会定义一个全局变量，叫aaa 吧，就是window.aaa。然后把A 模块要共享的数据作为属性挂到 B 模块上。这样我们在 B 模块中通过window.aaa 就可以拿到这个数据了。但是问题来了，B 模块拿到了共享的数据，就叫他xxx 吧？得了，名字太">
+<meta name="keywords" content="Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue--Vuex状态管理">
+<meta property="og:url" content="http://www.needqq.com/2019/01/11/Vue_vuex/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="Vuex 就是前端为了方便数据的操作而建立的一个” 前端数据库“。模块间是不共享作用域的，那么B 模块想要拿到 A 模块的数据，我们会怎么做？我们会定义一个全局变量，叫aaa 吧，就是window.aaa。然后把A 模块要共享的数据作为属性挂到 B 模块上。这样我们在 B 模块中通过window.aaa 就可以拿到这个数据了。但是问题来了，B 模块拿到了共享的数据，就叫他xxx 吧？得了，名字太">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-11T06:06:51.349Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue--Vuex状态管理">
+<meta name="twitter:description" content="Vuex 就是前端为了方便数据的操作而建立的一个” 前端数据库“。模块间是不共享作用域的，那么B 模块想要拿到 A 模块的数据，我们会怎么做？我们会定义一个全局变量，叫aaa 吧，就是window.aaa。然后把A 模块要共享的数据作为属性挂到 B 模块上。这样我们在 B 模块中通过window.aaa 就可以拿到这个数据了。但是问题来了，B 模块拿到了共享的数据，就叫他xxx 吧？得了，名字太">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2019/01/11/Vue_vuex/"/>
+
+
+
+
+
+  <title>Vue--Vuex状态管理 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Vue--Vuex状态管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-11T14:06:51+08:00">
+                2019-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Vuex 就是前端为了方便数据的操作而建立的一个” 前端数据库“。模块间是不共享作用域的，那么B 模块想要拿到 A 模块的数据，我们会怎么做？我们会定义一个全局变量，叫aaa 吧，就是window.aaa。然后把A 模块要共享的数据作为属性挂到 B 模块上。这样我们在 B 模块中通过window.aaa 就可以拿到这个数据了。但是问题来了，B 模块拿到了共享的数据，就叫他xxx 吧？得了，名字太混乱了，咱先给它们都改下名字。那个全局变量既然是存东西的，就叫store 吧，共享的数据就叫state 吧，B 模块拿到了 A 模块的数据state，但是这个数据不是一成不变的呀，A 要操作这个数据的。那么我们是不是要在这个数据——state 改变的时候通知一下 B？那写个自定义事件吧。首先，你得能取吧？那么得有一套取数据的 API，我们给他们集中起个名字吧？既然是获取，那就叫getter 吧。我们还得存数据呀，是吧。存数据就是对数据库的修改，这些 API，我们也得给它起个名字，就叫mutation。vuex 生成的仓库也就这么出来了，所以我说 vuex 就是” 前端的数据库“。State 就是数据库。Mutations 就是我们把数据存入数据库的 API，用来修改state 的。getters 是我们从数据库里取数据的 API，既然是取，那么你肯定不能把数据库给改了吧？所以getters 得是一个”纯函数“，就是不会对原数据造成影响的函数。拿到了数据，总要做个处理吧，处理完了再存到数据库中。其实这就是action的过程。当然你也可以不做处理，直接丢到数据库。来看看 vuex 的数据流，通过action处理数据，然后通过mutation 把处理后的数据放入数据库（state）中，谁要用就通过getter从数据库（state）中取。</p>
+</blockquote>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save vuex</span><br></pre></td></tr></table></figure>
+<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import Vuex from &apos;vuex&apos;</span><br><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">Vue.use(Vuex)</span><br></pre></td></tr></table></figure>
+<h2 id="实例化生成store的过程是"><a href="#实例化生成store的过程是" class="headerlink" title="实例化生成store的过程是"></a>实例化生成store的过程是</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//store为实例化生成的</span><br><span class="line">import store from &apos;./store&apos;</span><br><span class="line"></span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#app&apos;,</span><br><span class="line">  store,</span><br><span class="line">  render: h =&gt; h(App)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const mutations = &#123;...&#125;;</span><br><span class="line">const actions = &#123;...&#125;;</span><br><span class="line">const state = &#123;...&#125;;</span><br><span class="line"></span><br><span class="line">Vuex.Store(&#123;</span><br><span class="line">  state,</span><br><span class="line">  actions,</span><br><span class="line">  mutation</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="State"><a href="#State" class="headerlink" title="State"></a>State</h2><p>存储整个应用的状态数据.<br>想要获取对应的状态你就可以直接使用<code>this.$store.state</code>获取，也可以利用<code>vuex</code>提供的<code>mapState</code>辅助函数将<code>state</code>映射到计算属性中去</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//我是组件</span><br><span class="line">import &#123;mapState&#125; from &apos;vuex&apos;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  computed: mapState(&#123;</span><br><span class="line">    count: state =&gt; state.count</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Mutations"><a href="#Mutations" class="headerlink" title="Mutations"></a>Mutations</h2><p>更改状态，本质就是用来处理数据的函数, 其接收唯一参数值<code>state</code>。<br><code>store.commit(mutationName)</code>是用来触发一个<code>mutation</code>的方法。需要记住的是，定义的<code>mutation</code>必须是同步函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const mutations = &#123;</span><br><span class="line">  mutationName(state) &#123;</span><br><span class="line">    //在这里改变state中的数据</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在组件中触发：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//我是一个组件</span><br><span class="line">export default &#123;</span><br><span class="line">  methods: &#123;</span><br><span class="line">    handleClick() &#123;</span><br><span class="line">      this.$store.commit(&apos;mutationName&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者使用辅助函数<code>mapMutations</code>直接将触发函数映射到<code>methods</code>上，这样就能在元素事件绑定上直接使用了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import &#123;mapMutations&#125; from &apos;vuex&apos;</span><br><span class="line"></span><br><span class="line">//我是一个组件</span><br><span class="line">export default &#123;</span><br><span class="line">  methods: mapMutations([</span><br><span class="line">    &apos;mutationName&apos;</span><br><span class="line">  ])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Actions"><a href="#Actions" class="headerlink" title="Actions"></a>Actions</h2><p><code>Actions</code>也可以用于改变状态，不过是通过触发<code>mutation</code>实现的，重要的是可以包含异步操作。其辅助函数是<code>mapActions</code>与<code>mapMutations</code>类似，也是绑定在组件的<code>methods</code>上的。如果选择直接触发的话，使用<code>this.$store.dispatch(actionName)</code>方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//定义Actions</span><br><span class="line">const actions = &#123;</span><br><span class="line">  actionName(&#123; commit &#125;) &#123;</span><br><span class="line">    //dosomething</span><br><span class="line">    commit(&apos;mutationName&apos;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在组件中使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import &#123;mapActions&#125; from &apos;vuex&apos;</span><br><span class="line"></span><br><span class="line">//我是一个组件</span><br><span class="line">export default &#123;</span><br><span class="line">  methods: mapActions([</span><br><span class="line">    &apos;actionName&apos;,</span><br><span class="line">  ])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Getters"><a href="#Getters" class="headerlink" title="Getters"></a>Getters</h2><p>有些状态需要做二次处理，就可以使用<code>getters</code>。通过<code>this.$store.getters.valueName</code>对派生出来的状态进行访问。或者直接使用辅助函数<code>mapGetters</code>将其映射到本地计算属性中去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const getters = &#123;</span><br><span class="line">  strLength: state =&gt; state.aString.length</span><br><span class="line">&#125;</span><br><span class="line">//上面的代码根据aString状态派生出了一个strLength状态</span><br></pre></td></tr></table></figure>
+<p>在组件中使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import &#123;mapGetters&#125; from &apos;vuex&apos;</span><br><span class="line"></span><br><span class="line">//我是一个组件</span><br><span class="line">export default &#123;</span><br><span class="line">  computed: mapGetters([</span><br><span class="line">    &apos;strLength&apos;</span><br><span class="line">  ])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><p>插件就是一个钩子函数，在初始化<code>store</code>的时候引入即可。比较常用的是内置的logger插件，用于作为调试使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import createLogger from &apos;vuex/dist/logger&apos;</span><br><span class="line">const store = Vuex.Store(&#123;</span><br><span class="line">  ...</span><br><span class="line">  plugins: [createLogger()]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save vuex</span><br></pre></td></tr></table></figure>
+<p>该步骤完成之后，我们需要在 src 目录下创建名为 store 的目录来存放状态管理相关代码，首先创建 index.js:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">import Vuex from &apos;vuex&apos;</span><br><span class="line">import axios from &apos;axios&apos;</span><br><span class="line">Vue.use(Vuex)</span><br><span class="line">const store = new Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  getters: &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">export default store</span><br></pre></td></tr></table></figure>
+<p>然后在 main.js 文件中我们需要将该 Store 实例添加到构造的 Vue 实例中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">import store from &apos;./store&apos;</span><br><span class="line">/* eslint-disable no-new */</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  template: `</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;navbar /&gt;</span><br><span class="line">    &lt;section class=&quot;section&quot;&gt;</span><br><span class="line">      &lt;div class=&quot;container is-fluid&quot;&gt;</span><br><span class="line">        &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/section&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  `,</span><br><span class="line">  router,</span><br><span class="line">  store,</span><br><span class="line">  components: &#123;</span><br><span class="line">    navbar</span><br><span class="line">  &#125;</span><br><span class="line">&#125;).$mount(&apos;#app&apos;)</span><br></pre></td></tr></table></figure>
+<p>然后，我们需要去完善 Store 定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;</span><br><span class="line">import Vuex from &apos;vuex&apos;</span><br><span class="line">import axios from &apos;axios&apos;</span><br><span class="line">Vue.use(Vuex)</span><br><span class="line">const store = new Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    projects: []</span><br><span class="line">  &#125;,</span><br><span class="line">  actions: &#123;</span><br><span class="line">    LOAD_PROJECT_LIST: function (&#123; commit &#125;) &#123;</span><br><span class="line">      axios.get(&apos;/secured/projects&apos;).then((response) =&gt; &#123;</span><br><span class="line">        commit(&apos;SET_PROJECT_LIST&apos;, &#123; list: response.data &#125;)</span><br><span class="line">      &#125;, (err) =&gt; &#123;</span><br><span class="line">        console.log(err)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    SET_PROJECT_LIST: (state, &#123; list &#125;) =&gt; &#123;</span><br><span class="line">      state.projects = list</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  getters: &#123;</span><br><span class="line">    openProjects: state =&gt; &#123;</span><br><span class="line">      return state.projects.filter(project =&gt; !project.completed)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">export default store</span><br></pre></td></tr></table></figure>
+<p>在本项目中，我们将原本存放在组件内的项目数组移动到 Store 中，并且将所有关于状态的改变都通过 Action 进行而不是直接修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// /src/components/projectList.vue</span><br><span class="line">&lt;template lang=&quot;html&quot;&gt;</span><br><span class="line">  &lt;div class=&quot;&quot;&gt;</span><br><span class="line">    &lt;table class=&quot;table&quot;&gt;</span><br><span class="line">      &lt;thead&gt;</span><br><span class="line">        &lt;tr&gt;</span><br><span class="line">          &lt;th&gt;Project Name&lt;/th&gt;</span><br><span class="line">          &lt;th&gt;Assigned To&lt;/th&gt;</span><br><span class="line">          &lt;th&gt;Priority&lt;/th&gt;</span><br><span class="line">          &lt;th&gt;Completed&lt;/th&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">      &lt;/thead&gt;</span><br><span class="line">      &lt;tbody&gt;</span><br><span class="line">        &lt;tr v-for=&quot;item in projects&quot;&gt;</span><br><span class="line">          &lt;td&gt;&#123;&#123;item.name&#125;&#125;&lt;/td&gt;</span><br><span class="line">          &lt;td&gt;&#123;&#123;item.assignedTo&#125;&#125;&lt;/td&gt;</span><br><span class="line">          &lt;td&gt;&#123;&#123;item.priority&#125;&#125;&lt;/td&gt;</span><br><span class="line">          &lt;td&gt;&lt;i v-if=&quot;item.completed&quot; class=&quot;fa fa-check&quot;&gt;&lt;/i&gt;&lt;/td&gt;</span><br><span class="line">        &lt;/tr&gt;</span><br><span class="line">      &lt;/tbody&gt;</span><br><span class="line">    &lt;/table&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; mapState &#125; from &apos;vuex&apos;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &apos;projectList&apos;,</span><br><span class="line">  computed: mapState([</span><br><span class="line">    &apos;projects&apos;</span><br><span class="line">  ])</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;style lang=&quot;css&quot;&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+<p>这个模板还是十分直观，我们通过computed对象来访问 Store 中的状态信息。值得一提的是这里的mapState函数，这里用的是简写，完整的话可以直接访问 Store 对象：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  projects () &#123;</span><br><span class="line">    return this.$store.state.projects</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>mapState 是 Vuex 提供的简化数据访问的辅助函数。我们视线回到 project.vue 容器组件，在该组件中调用this.$store.dispatch(‘LOAD_PROJECT_LIST)来触发从服务端中加载项目列表：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;template lang=&quot;html&quot;&gt;</span><br><span class="line">  &lt;div id=&quot;projects&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;columns&quot;&gt;</span><br><span class="line">      &lt;div class=&quot;column is-half&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;notification&quot;&gt;</span><br><span class="line">          Project List</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;project-list /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">import projectList from &apos;../components/projectList&apos;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &apos;projects&apos;,</span><br><span class="line">  components: &#123;</span><br><span class="line">    projectList</span><br><span class="line">  &#125;,</span><br><span class="line">  mounted: function () &#123;</span><br><span class="line">    this.$store.dispatch(&apos;LOAD_PROJECT_LIST&apos;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>当我们启动应用时，Vuex 状态管理容器会自动在数据获取之后渲染整个项目列表。现在我们需要添加新的 Action 与 Mutation 来创建新的项目：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// under actions:</span><br><span class="line">ADD_NEW_PROJECT: function (&#123; commit &#125;) &#123;</span><br><span class="line">  axios.post(&apos;/secured/projects&apos;).then((response) =&gt; &#123;</span><br><span class="line">    commit(&apos;ADD_PROJECT&apos;, &#123; project: response.data &#125;)</span><br><span class="line">  &#125;, (err) =&gt; &#123;</span><br><span class="line">    console.log(err)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">// under mutations:</span><br><span class="line">ADD_PROJECT: (state, &#123; project &#125;) =&gt; &#123;</span><br><span class="line">  state.projects.push(project)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们创建一个简单的用于添加新的项目的组件 addProject.vue:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;template lang=&quot;html&quot;&gt;</span><br><span class="line">  &lt;button type=&quot;button&quot; class=&quot;button&quot; @click=&quot;addProject()&quot;&gt;Add New Project&lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &apos;addProject&apos;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    addProject () &#123;</span><br><span class="line">      this.$store.dispatch(&apos;ADD_NEW_PROJECT&apos;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>该组件会派发某个 Action 来添加组件，我们需要将该组件引入到 projects.vue 中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;template lang=&quot;html&quot;&gt;</span><br><span class="line">  &lt;div id=&quot;projects&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;columns&quot;&gt;</span><br><span class="line">      &lt;div class=&quot;column is-half&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;notification&quot;&gt;</span><br><span class="line">          Project List</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;project-list /&gt;</span><br><span class="line">        &lt;add-project /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">import projectList from &apos;../components/projectList&apos;</span><br><span class="line">import addProject from &apos;../components/addProject&apos;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &apos;projects&apos;,</span><br><span class="line">  components: &#123;</span><br><span class="line">    projectList,</span><br><span class="line">    addProject</span><br><span class="line">  &#125;,</span><br><span class="line">  mounted: function () &#123;</span><br><span class="line">    this.$store.dispatch(&apos;LOAD_PROJECT_LIST&apos;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>重新运行下该应用会看到服务端返回的创建成功的提示，现在我们添加另一个功能，就是允许用户将某个项目设置为已完成。我们现在添加新的组件 completeToggle.vue:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;template lang=&quot;html&quot;&gt;</span><br><span class="line">  &lt;button type=&quot;button&quot; class=&quot;button&quot;  @click=&quot;toggle(item)&quot;&gt;</span><br><span class="line">    &lt;i class=&quot;fa fa-undo&quot; v-if=&quot;item.completed&quot;&gt;&lt;/i&gt;</span><br><span class="line">    &lt;i class=&quot;fa fa-check-circle&quot; v-else&gt;&lt;/i&gt;</span><br><span class="line">  &lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &apos;completeToggle&apos;,</span><br><span class="line">  props: [&apos;item&apos;],</span><br><span class="line">  methods: &#123;</span><br><span class="line">    toggle (item) &#123;</span><br><span class="line">      this.$store.dispatch(&apos;TOGGLE_COMPLETED&apos;, &#123; item: item &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>该组件会展示一个用于切换项目是否完成的按钮，我们通过 Props 传入具体的项目信息然后通过触发 TOGGLE_COMPLETED Action 来使服务端进行相对应的更新与相应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// actions</span><br><span class="line">TOGGLE_COMPLETED: function (&#123; commit, state &#125;, &#123; item &#125;) &#123;</span><br><span class="line">  axios.put(&apos;/secured/projects/&apos; + item.id, item).then((response) =&gt; &#123;</span><br><span class="line">    commit(&apos;UPDATE_PROJECT&apos;, &#123; item: response.data &#125;)</span><br><span class="line">  &#125;, (err) =&gt; &#123;</span><br><span class="line">    console.log(err)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">// mutations</span><br><span class="line">UPDATE_PROJECT: (state, &#123; item &#125;) =&gt; &#123;</span><br><span class="line">  let idx = state.projects.map(p =&gt; p.id).indexOf(item.id)</span><br><span class="line">  state.projects.splice(idx, 1, item)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>UPDATE_PROJECT 会触发项目列表移除对应的项目并且将服务端返回的数据重新添加到数组中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">app.put(&apos;/secured/projects/:id&apos;, function (req, res) &#123;</span><br><span class="line">  let project = data.filter(function (p) &#123; return p.id == req.params.id &#125;)</span><br><span class="line">  if (project.length &gt; 0) &#123;</span><br><span class="line">    project[0].completed = !project[0].completed</span><br><span class="line">    res.status(201).json(project[0])</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    res.sendStatus(404)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>最后一步就是将 completeToggle 组件引入到 projectList 组件中，然后将其添加到列表中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// new column in table</span><br><span class="line">&lt;td&gt;&lt;complete-toggle :item=&quot;item&quot; /&gt;&lt;/td&gt;</span><br><span class="line">// be sure import and add to the components object</span><br></pre></td></tr></table></figure>
+<h2 id="整理"><a href="#整理" class="headerlink" title="整理"></a>整理</h2><h3 id="基本用途："><a href="#基本用途：" class="headerlink" title="基本用途："></a>基本用途：</h3><ul>
+<li>将某些data变成组件间公用的状态，组件随时都可以进行访问和响应，解决了<code>props</code>传值的链式响应的代码冗余</li>
+<li>给状态配以公用方法，将状态的变更及时响应并处理</li>
+</ul>
+<h3 id="基本用法："><a href="#基本用法：" class="headerlink" title="基本用法："></a>基本用法：</h3><p>/store/store.js<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;;</span><br><span class="line">import Vuex from &apos;vuex&apos;;</span><br><span class="line"></span><br><span class="line">Vue.use(Vuex);</span><br><span class="line"></span><br><span class="line">export const store = new Vuex.Store(&#123;</span><br><span class="line">    state: &#123;</span><br><span class="line">        sideBarOpened: false</span><br><span class="line">        //放置公用状态</span><br><span class="line">    &#125;,</span><br><span class="line">    getters: &#123;</span><br><span class="line">        changeState: state =&gt; &#123;</span><br><span class="line">            //相当于vue实例中的methods,用于处理公用data</span><br><span class="line">            //自vuex 面向组件的数据处理</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    mutations: &#123;</span><br><span class="line">        //写法与getters相类似</span><br><span class="line">        //组件想要对于vuex 中的数据进行的处理</span><br><span class="line">        //组件中采用this.$store.commit(&apos;方法名&apos;) 的方式调用，实现充分解耦</span><br><span class="line">        //内部操作必须在此刻完成(同步)</span><br><span class="line">    &#125;,</span><br><span class="line">    actions: &#123;</span><br><span class="line">        //使得mutations能够实现异步调用，实现例如延迟调用</span><br><span class="line">        increment (&#123; commit &#125;, payload) &#123;</span><br><span class="line">            commit(&apos;突变方法名&apos;)</span><br><span class="line">            //payload应该是一个对象，可通过模板方法调用传入对象的方式将数据从组件传入vuex</span><br><span class="line">        &#125;,</span><br><span class="line">        asyncIncrement(&#123;commit&#125;) =&gt; &#123;</span><br><span class="line">            setTimeout(() =&gt; &#123;</span><br><span class="line">                commit(&apos;increment&apos;)</span><br><span class="line">            &#125;, 1000)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    modules: &#123;</span><br><span class="line">        //引入某一个state的以上集合的模块，会自动分别填充到上面，使得结构更加清晰</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>main.js<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import &#123; store &#125; from &apos;./store/store&apos;</span><br><span class="line">*</span><br><span class="line">*</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  el: &apos;#app&apos;,</span><br><span class="line">  store,    //注入根组件</span><br><span class="line">  ...</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h4 id="访问vuex中的数据和方法"><a href="#访问vuex中的数据和方法" class="headerlink" title="访问vuex中的数据和方法"></a>访问vuex中的数据和方法</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">this.$store.state.数据名</span><br><span class="line">this.$store.getters.方法名</span><br></pre></td></tr></table></figure>
+<p>受影响组件局部定义计算属性响应变化数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">     open () &#123;</span><br><span class="line">          return this.$store.state.sideBarOpened</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>将 store 中的 getters/mutations 映射到局部(计算属性/方法)使用<code>mapGetters/mapMutations</code>辅助函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import &#123; mapGetters &#125; from &apos;vuex&apos;</span><br><span class="line"></span><br><span class="line">computed: &#123;</span><br><span class="line">  // 使用对象展开运算符将 getters 混入 computed 对象中</span><br><span class="line">    ...mapGetters([</span><br><span class="line">        //映射 this.doneTodosCount 为 store.getters.doneTodosCount</span><br><span class="line">      &apos;doneTodosCount&apos;,</span><br><span class="line">      //&apos;getter名称&apos;,</span><br><span class="line"></span><br><span class="line">      // 映射 this.doneCount 为 store.getters.doneTodosCount</span><br><span class="line">        doneCount: &apos;doneTodosCount&apos;</span><br><span class="line">      // 三个点表示将内部拿出生成键值对，这样使得组件本身的计算属性不受影响</span><br><span class="line">      // 此语法依赖babel-preset-stage-2</span><br><span class="line">    ])</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h3><p>mutation 必须是同步函数 — devtool要保存快照，方便追踪状态变化<br>使用 v-model 绑定 vuex 计算属性的时候要设置get 和 set 才能双向绑定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">    value: &#123;</span><br><span class="line">        get () &#123;</span><br><span class="line">            return this.$store.getters.value;</span><br><span class="line">        &#125;,</span><br><span class="line">        set (event) &#123;</span><br><span class="line">            this.$store.dispatch(&apos;updateValue&apos;, event.target.value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意:</p>
+<ol>
+<li>当 Vue 组件从 store 中读取状态的时候，若 store中的状态发生变化，那么相应的组件也会相应地得到高效更新。</li>
+<li>不能直接改变 store 中的状态。改变 store 中的状态的唯一途径就是显式地提交mutations<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 如果在模块化构建系统中，请确保在开头调用了 Vue.use(Vuex)</span><br><span class="line">const store = new Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    count: 0</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    increment (state) &#123;</span><br><span class="line">      state.count++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>现在，你可以通过 store.state 来获取状态对象，以及通过 store.commit 方法触发状态变更：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">store.commit(&apos;increment&apos;)</span><br><span class="line">console.log(store.state.count) // -&gt; 1</span><br></pre></td></tr></table></figure>
+<p><strong>每次对数据对象进行操作的时候，都需要进行commit</strong></p>
+<h3 id="state"><a href="#state" class="headerlink" title="state"></a>state</h3><p>Vuex 通过 store 选项，提供了一种机制将状态从根组件『注入』到每一个子组件中（需调用 Vue.use(Vuex)）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const app = new Vue(&#123;</span><br><span class="line">  el: &apos;#app&apos;,</span><br><span class="line">  // 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件</span><br><span class="line">  store,</span><br><span class="line">  components: &#123; Counter &#125;,</span><br><span class="line">  template: `</span><br><span class="line">    &lt;div class=&quot;app&quot;&gt;</span><br><span class="line">      &lt;counter&gt;&lt;/counter&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  `</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store访问到。让我们更新下 Counter 的实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const Counter = &#123;</span><br><span class="line">  template: `&lt;div&gt;&#123;&#123; count &#125;&#125;&lt;/div&gt;`,</span><br><span class="line">  computed: &#123;</span><br><span class="line">    count () &#123;</span><br><span class="line">      return this.$store.state.count</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>mapState 辅助函数<br>辅助函数帮助我们生成计算属性<br>mapState函数返回的是一个对象。我们如何将它与局部计算属性混合使用呢？通常，我们需要使用一个工具函数将多个对象合并为一个，以使我们可以将最终对象传给 computed 属性。但是自从有了对象展开运算符（现处于 ECMASCript 提案 stage-3 阶段），我们可以极大地简化写法。</p>
+<h3 id="Getters-1"><a href="#Getters-1" class="headerlink" title="Getters"></a>Getters</h3><p>可以认为是 store 的计算属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const store = new Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    todos: [</span><br><span class="line">      &#123; id: 1, text: &apos;...&apos;, done: true &#125;,</span><br><span class="line">      &#123; id: 2, text: &apos;...&apos;, done: false &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  getters: &#123;</span><br><span class="line">    doneTodos: state =&gt; &#123;</span><br><span class="line">      return state.todos.filter(todo =&gt; todo.done)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>会暴露为 store.getters 对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">store.getters.doneTodos // -&gt; [&#123; id: 1, text: &apos;...&apos;, done: true &#125;]</span><br></pre></td></tr></table></figure></p>
+<p>也可以接受其他 getters 作为第二个参数<br>mapGetters 辅助函数<br>将 store 中的 getters 映射到局部计算属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import &#123; mapGetters &#125; from &apos;vuex&apos;</span><br><span class="line">export default &#123;</span><br><span class="line">  // ...</span><br><span class="line">  computed: &#123;</span><br><span class="line">  // 使用对象展开运算符将 getters 混入 computed 对象中</span><br><span class="line">    ...mapGetters([</span><br><span class="line">      &apos;doneTodosCount&apos;,</span><br><span class="line">      &apos;anotherGetter&apos;,</span><br><span class="line">      // ...</span><br><span class="line">    ])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你想将一个 getter 属性另取一个名字，使用对象形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mapGetters(&#123;</span><br><span class="line">  // 映射 this.doneCount 为 store.getters.doneTodosCount</span><br><span class="line">  doneCount: &apos;doneTodosCount&apos;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/Vue/" rel="tag"># Vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../gulp/" rel="next" title="Gulp">
+                <i class="fa fa-chevron-left"></i> Gulp
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../React/" rel="prev" title="React">
+                React <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引入"><span class="nav-number">2.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例化生成store的过程是"><span class="nav-number">3.</span> <span class="nav-text">实例化生成store的过程是</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#State"><span class="nav-number">4.</span> <span class="nav-text">State</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mutations"><span class="nav-number">5.</span> <span class="nav-text">Mutations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Actions"><span class="nav-number">6.</span> <span class="nav-text">Actions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getters"><span class="nav-number">7.</span> <span class="nav-text">Getters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plugins"><span class="nav-number">8.</span> <span class="nav-text">Plugins</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Example"><span class="nav-number"></span> <span class="nav-text">Example</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整理"><span class="nav-number">1.</span> <span class="nav-text">整理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本用途："><span class="nav-number">1.1.</span> <span class="nav-text">基本用途：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本用法："><span class="nav-number">1.2.</span> <span class="nav-text">基本用法：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#访问vuex中的数据和方法"><span class="nav-number">1.2.1.</span> <span class="nav-text">访问vuex中的数据和方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项："><span class="nav-number">1.3.</span> <span class="nav-text">注意事项：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#state"><span class="nav-number">1.4.</span> <span class="nav-text">state</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Getters-1"><span class="nav-number">1.5.</span> <span class="nav-text">Getters</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

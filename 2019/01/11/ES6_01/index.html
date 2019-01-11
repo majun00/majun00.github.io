@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ES6," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数组扩展 Array.from() 将类数组对象和可遍历对象转换成数组  1Array.from(&amp;apos;hello&amp;apos;) // [&amp;apos;h&amp;apos;, &amp;apos;e&amp;apos;, &amp;apos;l&amp;apos;, &amp;apos;l&amp;apos;, &amp;apos;o&amp;apos;]  Array.of() 将一组值转换为数组  1234567Array.of(3, 2, 1) // [3">
+<meta name="keywords" content="ES6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6数组对象扩展整理">
+<meta property="og:url" content="http://www.needqq.com/2019/01/11/ES6_01/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="数组扩展 Array.from() 将类数组对象和可遍历对象转换成数组  1Array.from(&amp;apos;hello&amp;apos;) // [&amp;apos;h&amp;apos;, &amp;apos;e&amp;apos;, &amp;apos;l&amp;apos;, &amp;apos;l&amp;apos;, &amp;apos;o&amp;apos;]  Array.of() 将一组值转换为数组  1234567Array.of(3, 2, 1) // [3">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-11T06:06:51.345Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6数组对象扩展整理">
+<meta name="twitter:description" content="数组扩展 Array.from() 将类数组对象和可遍历对象转换成数组  1Array.from(&amp;apos;hello&amp;apos;) // [&amp;apos;h&amp;apos;, &amp;apos;e&amp;apos;, &amp;apos;l&amp;apos;, &amp;apos;l&amp;apos;, &amp;apos;o&amp;apos;]  Array.of() 将一组值转换为数组  1234567Array.of(3, 2, 1) // [3">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2019/01/11/ES6_01/"/>
+
+
+
+
+
+  <title>ES6数组对象扩展整理 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ES6数组对象扩展整理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-11T14:06:51+08:00">
+                2019-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/ES6/" itemprop="url" rel="index">
+                    <span itemprop="name">ES6</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="数组扩展"><a href="#数组扩展" class="headerlink" title="数组扩展"></a>数组扩展</h2><ol>
+<li>Array.from() 将类数组对象和可遍历对象转换成数组</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array.from(&apos;hello&apos;) // [&apos;h&apos;, &apos;e&apos;, &apos;l&apos;, &apos;l&apos;, &apos;o&apos;]</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Array.of() 将一组值转换为数组</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Array.of(3, 2, 1) // [3,2,1]</span><br><span class="line"></span><br><span class="line">Array.from([1, 2, 3], x =&gt; x * x) // [1, 4, 9]</span><br><span class="line"></span><br><span class="line">Array.from([1, , 2, , 3], n =&gt; n || 0) // [1, 0, 2, 0, 3]</span><br><span class="line"></span><br><span class="line">Array.from(&#123; length: 2 &#125;, () =&gt; &apos;jack&apos;) // [&apos;jack&apos;, &apos;jack&apos;]</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>copyWithin(target, start = 0, end = this.length) 复制成员</p>
+</li>
+<li><p>find(),findIndex() 查找值，查找索引</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[1, 4, -5, 10].find((n) =&gt; n &lt; 0) // -5</span><br><span class="line"></span><br><span class="line">[1, 5, 10, 15].find(function(value, index, arr) &#123;</span><br><span class="line">  return value &gt; 9;</span><br><span class="line">&#125;) // 10</span><br><span class="line"></span><br><span class="line">[1, 5, 10, 15].findIndex(function(value, index, arr) &#123;</span><br><span class="line">  return value &gt; 9;</span><br><span class="line">&#125;) // 2</span><br><span class="line"></span><br><span class="line">[NaN].findIndex(y =&gt; Object.is(NaN, y))// 0 和indexOf不同，可以找到NaN</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>fill() 填充 (注意是浅拷贝)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">new Array(3).fill(7) // [7, 7, 7]</span><br><span class="line"></span><br><span class="line">[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;].fill(7, 1, 2) // [&apos;a&apos;, 7, &apos;c&apos;]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>entries()，keys()和values() </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">for (let index of [&apos;a&apos;, &apos;b&apos;].keys()) &#123;</span><br><span class="line">  console.log(index);</span><br><span class="line">&#125;</span><br><span class="line">// 0</span><br><span class="line">// 1</span><br><span class="line"></span><br><span class="line">for (let elem of [&apos;a&apos;, &apos;b&apos;].values()) &#123;</span><br><span class="line">  console.log(elem);</span><br><span class="line">&#125;</span><br><span class="line">// &apos;a&apos;</span><br><span class="line">// &apos;b&apos;</span><br><span class="line"></span><br><span class="line">for (let [index, elem] of [&apos;a&apos;, &apos;b&apos;].entries()) &#123;</span><br><span class="line">  console.log(index, elem);</span><br><span class="line">&#125;</span><br><span class="line">// 0 &quot;a&quot;</span><br><span class="line">// 1 &quot;b&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>includes() 表示某个数组是否包含给定的值，可以找到NaN，可代替indexOf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, NaN].includes(NaN) // true</span><br><span class="line"></span><br><span class="line">[1, 2, 3].includes(3, 3);  // false</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>flat(),flatMap() 拉平</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, [3, 4]].flat() // [1, 2, 3, 4]</span><br><span class="line"></span><br><span class="line">[1, [2, [3]]].flat(Infinity) // [1, 2, 3] 默认只能拉平一层，可加入参数指定层数</span><br><span class="line"></span><br><span class="line">[1, 2, , 4, 5].flat() // [1, 2, 4, 5] 会跳过空位</span><br><span class="line"></span><br><span class="line">[2, 3, 4].flatMap((x) =&gt; [x, x * 2]) // [2, 4, 3, 6, 4, 8]</span><br><span class="line"></span><br><span class="line">[1, 2, 3, 4].flatMap(x =&gt; [[x * 2]]) // [[2], [4], [6], [8]]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>扩展运算符</p>
+</li>
+</ol>
+<h2 id="对象扩展"><a href="#对象扩展" class="headerlink" title="对象扩展"></a>对象扩展</h2><ol>
+<li><p>Object.is() </p>
+</li>
+<li><p>Object.assign(target, source1, source2); 很常用，用的比较熟了就不介绍了(注意是一层深拷贝)</p>
+</li>
+<li><p>Object.keys()，Object.values()，Object.entries()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">let &#123;keys, values, entries&#125; = Object;</span><br><span class="line">let obj = &#123; a: 1, b: 2, c: 3 &#125;;</span><br><span class="line"></span><br><span class="line">for (let key of keys(obj)) &#123;</span><br><span class="line">  console.log(key); // &apos;a&apos;, &apos;b&apos;, &apos;c&apos;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (let value of values(obj)) &#123;</span><br><span class="line">  console.log(value); // 1, 2, 3</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (let [key, value] of entries(obj)) &#123;</span><br><span class="line">  console.log([key, value]); // [&apos;a&apos;, 1], [&apos;b&apos;, 2], [&apos;c&apos;, 3]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">const obj = &#123; 100: &apos;a&apos;, 2: &apos;b&apos;, 7: &apos;c&apos; &#125;;</span><br><span class="line">Object.values(obj)</span><br><span class="line">// [&quot;b&quot;, &quot;c&quot;, &quot;a&quot;]</span><br><span class="line"></span><br><span class="line">const obj = &#123; foo: &apos;bar&apos;, baz: 42 &#125;;</span><br><span class="line">Object.entries(obj)</span><br><span class="line">// [ [&quot;foo&quot;, &quot;bar&quot;], [&quot;baz&quot;, 42] ]</span><br><span class="line"></span><br><span class="line">Object.fromEntries([</span><br><span class="line">  [&apos;foo&apos;, &apos;bar&apos;],</span><br><span class="line">  [&apos;baz&apos;, 42]</span><br><span class="line">])</span><br><span class="line">// &#123; foo: &quot;bar&quot;, baz: 42 &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>扩展运算符</p>
+</li>
+<li><p>其他<br>Object.getOwnPropertyDescriptors()方法，返回指定对象所有自身属性（非继承属性）的描述对象<br>Object.getOwnPropertyDescriptor()方法会返回某个对象属性的描述对象<br>Object.setPrototypeOf() 原型对象写操作<br>Object.getPrototypeOf() 原型对象读操作<br>Object.create() 原型对象生成操作</p>
+</li>
+</ol>
+<h2 id="字符串扩展"><a href="#字符串扩展" class="headerlink" title="字符串扩展"></a>字符串扩展</h2><p>includes() 返回布尔值，表示是否找到了参数字符串。<br>startsWith() 返回布尔值，表示参数字符串是否在原字符串的头部。<br>endsWith() 返回布尔值，表示参数字符串是否在原字符串的尾部。<br>repeat(n) 重复<br>padStart(n,str) 头部补全<br>padEnd(n,str) 尾部补全</p>
+<h2 id="数值扩展"><a href="#数值扩展" class="headerlink" title="数值扩展"></a>数值扩展</h2><p>Number.isFinite(), Number.isNaN()<br>Number.parseInt(), Number.parseFloat()<br>Number.isInteger() 是否是整数<br>Math.trunc() 去除一个数的小数部分，返回整数部分。<br>Math.sign() 为正数，返回+1；为负数，返回-1；为 0，返回0；为-0，返回-0;其他值，返回NaN。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/ES6/" rel="tag"># ES6</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../ES6_Generator/" rel="next" title="ES6学习--异步编程--Generator">
+                <i class="fa fa-chevron-left"></i> ES6学习--异步编程--Generator
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../ES6_00/" rel="prev" title="ES6基础语法整理">
+                ES6基础语法整理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组扩展"><span class="nav-number">1.</span> <span class="nav-text">数组扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象扩展"><span class="nav-number">2.</span> <span class="nav-text">对象扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串扩展"><span class="nav-number">3.</span> <span class="nav-text">字符串扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数值扩展"><span class="nav-number">4.</span> <span class="nav-text">数值扩展</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

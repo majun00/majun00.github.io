@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面向对象," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="词法作用域什么叫作用域 变量可以使用 到 不能使用的范围  js的词法作用域  js 的词法作用域, 就是根据预解析规则定义变量的使用范围, 而js只有函数可以限定范围. 其他均不能限定访问范围. 所以实际上词法作用域也可以称作函数作用域.  词法作用域特点  在代码中只有函数可以限定作用范围. 允许函数访问外部的变量. 反之不允许.  在函数内优先访问内部声明的变量, 如果没有才会访问外部的.">
+<meta name="keywords" content="面向对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OOP-(4)--作用域">
+<meta property="og:url" content="http://www.needqq.com/2019/01/11/OOP04/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="词法作用域什么叫作用域 变量可以使用 到 不能使用的范围  js的词法作用域  js 的词法作用域, 就是根据预解析规则定义变量的使用范围, 而js只有函数可以限定范围. 其他均不能限定访问范围. 所以实际上词法作用域也可以称作函数作用域.  词法作用域特点  在代码中只有函数可以限定作用范围. 允许函数访问外部的变量. 反之不允许.  在函数内优先访问内部声明的变量, 如果没有才会访问外部的.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-11T06:06:51.349Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OOP-(4)--作用域">
+<meta name="twitter:description" content="词法作用域什么叫作用域 变量可以使用 到 不能使用的范围  js的词法作用域  js 的词法作用域, 就是根据预解析规则定义变量的使用范围, 而js只有函数可以限定范围. 其他均不能限定访问范围. 所以实际上词法作用域也可以称作函数作用域.  词法作用域特点  在代码中只有函数可以限定作用范围. 允许函数访问外部的变量. 反之不允许.  在函数内优先访问内部声明的变量, 如果没有才会访问外部的.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2019/01/11/OOP04/"/>
+
+
+
+
+
+  <title>OOP-(4)--作用域 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OOP-(4)--作用域</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-11T14:06:51+08:00">
+                2019-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/JS/" itemprop="url" rel="index">
+                    <span itemprop="name">JS</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/JS/JS-OOP/" itemprop="url" rel="index">
+                    <span itemprop="name">JS_OOP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h2><h3 id="什么叫作用域"><a href="#什么叫作用域" class="headerlink" title="什么叫作用域"></a>什么叫作用域</h3><blockquote>
+<p>变量可以使用 到 不能使用的范围</p>
+</blockquote>
+<h3 id="js的词法作用域"><a href="#js的词法作用域" class="headerlink" title="js的词法作用域"></a>js的词法作用域</h3><blockquote>
+<p> js 的词法作用域, 就是根据预解析规则定义变量的使用范围, 而js只有函数可以限定范围. 其他均不能限定访问范围. 所以实际上词法作用域也可以称作函数作用域.</p>
+</blockquote>
+<h3 id="词法作用域特点"><a href="#词法作用域特点" class="headerlink" title="词法作用域特点"></a>词法作用域特点</h3><blockquote>
+<ol>
+<li><p>在代码中只有函数可以限定作用范围. 允许函数访问外部的变量. 反之不允许.</p>
+</li>
+<li><p>在函数内优先访问内部声明的变量, 如果没有才会访问外部的.</p>
+</li>
+<li><p>所有变量的访问规则, 按照预解析规则来访问</p>
+</li>
+<li><p>js中变量的作用域链与定义时的环境有关，与执行时无关。</p>
+</li>
+</ol>
+</blockquote>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><h4 id="案例01"><a href="#案例01" class="headerlink" title="案例01"></a>案例01</h4><pre><code>var num = 123;
+function f1 () {
+    console.log( num );
+}
+function f2 () {
+    console.log( num );
+    var num = 456;
+    f1();
+    console.log( num );
+}
+f2();
+
+1&gt; 读取代码预解析. 得到 num, f1, f2
+2&gt; 逐步的执行代码
+    1) 赋值 num = 123;   注意 f1 和 f2 由于是函数, 所以也有数据.
+    2) 调用 f2.
+        进入到函数体内. 相当于做一次预解析. 得到 num. 注意, 此时有内外两个 num
+        执行每一句代码
+        -&gt; 打印 num. 因为函数内部有声明 num. 所以此时访问的是函数内部的 num. 未赋值, 得到 undefined
+        -&gt; 赋值 num = 456
+        -&gt; 调用 f1(). 调用函数的规则也是一样. 首先看当前环境中是否有函数的声明. 如果有直接使用. 如果没有, 则在函数外面找, 看是否有函数. 此时在函数 f2 中没有 f1 的声明. 故访问的就是外面的 f1 函数
+        -&gt; 跳入 f1 函数中. 又要解析一次. 没有得到任何声明.
+        -&gt; 执行打印 num. 当前环境没有声明 num. 故在外面找. 外面的是 123. 所以打印 123. 
+            函数调用结束, 回到 f2 中.
+        -&gt; 继续执行 f2, 打印 num. 在 f2 的环境中找 num. 打印 456.
+</code></pre><h4 id="案例02"><a href="#案例02" class="headerlink" title="案例02"></a>案例02</h4><pre><code>(function ( a ) {
+    console.log( a );
+    var a = 10;
+    console.log( a );
+})( 100 );
+
+拆解
+( 函数 ) ( 100 )
+第一个圆括号就是将函数变成表达式
+后面一个圆括号就是调用该函数
+
+注意: 函数定义参数, 实际上就是在函数最开始的时候, 有一个变量的声明
+function ( a ) { ... }
+其含义就是, 在已进入函数体, 在所有操作开始之前( 预解析之前 )就有了该变量的声明.
+
+由于已经有了 a 参数的声明. 所以在代码中 var a = 10 是重复声明. 其声明无效.
+所以上面的代码, 等价于
+var func = function ( a ) {
+    console.log( a );            // =&gt; 100
+    a = 10;
+    console.log( a );            // =&gt; 10
+}
+func( 100 );
+</code></pre><h4 id="案例03"><a href="#案例03" class="headerlink" title="案例03"></a>案例03</h4><pre><code>(function ( a ) {
+    console.log( a );
+    var a = 10;
+    console.log( a );
+    function a () {
+        console.log( a );
+    }
+    a();
+})( 100 );
+
+
+1&gt; 直接调用
+2&gt; 进入到函数中, 已有声明 a 并且其值为 100
+3&gt; 在函数内部预解析. 得到 一个结论. 函数声明是两个步骤. 
+    1) 让当前环境中, 有变量名 a 可以使用. 但是不需要. 因为已经有 a 的声明了
+    2) 让 a 指向函数. 相当于
+        var a;
+        function a () {}
+        ...
+4&gt; 开始逐步执行每一句代码
+    1) 打印 a. 所以打印函数体
+    2) 赋值 a = 10
+    3) 打印 a, 打印出 10
+    4) 调用 a, a已经被赋值为10,不在是函数体, 所以报错 error: a is not function
+</code></pre><h2 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h2><blockquote>
+<p>链其实指的一种访问规则,作用域链就是指作用域的访问规则</p>
+</blockquote>
+<h3 id="绘制作用域链的规则"><a href="#绘制作用域链的规则" class="headerlink" title="绘制作用域链的规则"></a>绘制作用域链的规则</h3><pre><code>1. 将所有的 script 标签作为一条链结构. 标记为 0 级别的链.
+2. 将全局范围内, 所有的声明变量名和声明函数名按照代码的顺序标注在 0 级链中.
+3. 由于每一个函数都可以构成一个新的作用域链. 所以每一个 0 级链上的函数都延展出 1 级链.
+4. 分别在每一个函数中进行上述操作. 将函数中的每一个名字标注在 1 级链中.
+5. 每一条 1 级链中如果有函数, 可以再次的延展出 2 级链. 以此类推...
+</code></pre><h3 id="分析代码执行"><a href="#分析代码执行" class="headerlink" title="分析代码执行"></a>分析代码执行</h3><pre><code>1. 根据代码的执行顺序( 从上往下, 从左至右 )在图中标记每一步的变量数据的变化
+2. 如果需要访问某个变量. 直接在当前 n 级链上查找变量. 查找无序.
+3. 如果找到变量, 直接使用. 如果没有找到变量 在上一级, n - 1 级中查找.
+4. 一直找下去, 直至到 0 级链. 如果 0 级链还没有就报错. xxx is not defined.
+</code></pre><h3 id="经典面试题"><a href="#经典面试题" class="headerlink" title="经典面试题"></a>经典面试题</h3><pre><code>var  arr = [ { name: &apos;张三1&apos; }, 
+             { name: &apos;张三2&apos; }, 
+             { name: &apos;张三3&apos; }, 
+             { name: &apos;张三4&apos; } ];
+
+// 利用循环, 添加方法, 在方法中打印 name
+for ( var i = 0; i &lt; arr.length; i++) {
+    // arr[ i ] 绑定方法
+    arr[ i ].sayHello = function () {
+        // 打印名字
+        console.log( &apos;name = &apos; + arr[ i ].name );
+    };
+}
+
+for ( var i = 0; i &lt; arr.length; i++ ) {
+    arr[ i ].sayHello();
+}
+
+// 打印结果?
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/面向对象/" rel="tag"># 面向对象</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../Vue02/" rel="next" title="Vue-(2)--组件">
+                <i class="fa fa-chevron-left"></i> Vue-(2)--组件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../OOP07/" rel="prev" title="OOP-(7)--补充知识">
+                OOP-(7)--补充知识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#词法作用域"><span class="nav-number">1.</span> <span class="nav-text">词法作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么叫作用域"><span class="nav-number">1.1.</span> <span class="nav-text">什么叫作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#js的词法作用域"><span class="nav-number">1.2.</span> <span class="nav-text">js的词法作用域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#词法作用域特点"><span class="nav-number">1.3.</span> <span class="nav-text">词法作用域特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例"><span class="nav-number">1.4.</span> <span class="nav-text">案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#案例01"><span class="nav-number">1.4.1.</span> <span class="nav-text">案例01</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例02"><span class="nav-number">1.4.2.</span> <span class="nav-text">案例02</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例03"><span class="nav-number">1.4.3.</span> <span class="nav-text">案例03</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#作用域链"><span class="nav-number">2.</span> <span class="nav-text">作用域链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制作用域链的规则"><span class="nav-number">2.1.</span> <span class="nav-text">绘制作用域链的规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析代码执行"><span class="nav-number">2.2.</span> <span class="nav-text">分析代码执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#经典面试题"><span class="nav-number">2.3.</span> <span class="nav-text">经典面试题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

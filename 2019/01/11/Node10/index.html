@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NodeJS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="OS 模块Node.js os 模块提供了一些基本的系统操作函数。可以通过以下方式引入该模块：1var os = require(&amp;quot;os&amp;quot;) 方法 os.tmpdir()返回操作系统的默认临时文件夹。 os.endianness()返回 CPU 的字节序，可能的是 “BE” 或 “LE”。 os.hostname()返回操作系统的主机名。 os.type()返回操作系统名 os">
+<meta name="keywords" content="NodeJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node学习(10)--工具模块">
+<meta property="og:url" content="http://www.needqq.com/2019/01/11/Node10/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="OS 模块Node.js os 模块提供了一些基本的系统操作函数。可以通过以下方式引入该模块：1var os = require(&amp;quot;os&amp;quot;) 方法 os.tmpdir()返回操作系统的默认临时文件夹。 os.endianness()返回 CPU 的字节序，可能的是 “BE” 或 “LE”。 os.hostname()返回操作系统的主机名。 os.type()返回操作系统名 os">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-11T06:06:51.349Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node学习(10)--工具模块">
+<meta name="twitter:description" content="OS 模块Node.js os 模块提供了一些基本的系统操作函数。可以通过以下方式引入该模块：1var os = require(&amp;quot;os&amp;quot;) 方法 os.tmpdir()返回操作系统的默认临时文件夹。 os.endianness()返回 CPU 的字节序，可能的是 “BE” 或 “LE”。 os.hostname()返回操作系统的主机名。 os.type()返回操作系统名 os">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2019/01/11/Node10/"/>
+
+
+
+
+
+  <title>Node学习(10)--工具模块 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Node学习(10)--工具模块</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-11T14:06:51+08:00">
+                2019-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/NodeJS/" itemprop="url" rel="index">
+                    <span itemprop="name">NodeJS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="OS-模块"><a href="#OS-模块" class="headerlink" title="OS 模块"></a>OS 模块</h1><p>Node.js os 模块提供了一些基本的系统操作函数。可以通过以下方式引入该模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var os = require(&quot;os&quot;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><ol>
+<li><code>os.tmpdir()</code><br>返回操作系统的默认临时文件夹。</li>
+<li><code>os.endianness()</code><br>返回 CPU 的字节序，可能的是 “BE” 或 “LE”。</li>
+<li><code>os.hostname()</code><br>返回操作系统的主机名。</li>
+<li><code>os.type()</code><br>返回操作系统名</li>
+<li><code>os.platform()</code><br>返回操作系统名</li>
+<li><code>os.arch()</code><br>返回操作系统 CPU 架构，可能的值有 “x64”、”arm” 和 “ia32”。</li>
+<li><code>os.release()</code><br>返回操作系统的发行版本。</li>
+<li><code>os.uptime()</code><br>返回操作系统运行的时间，以秒为单位。</li>
+<li><code>os.loadavg()</code><br>返回一个包含 1、5、15 分钟平均负载的数组。</li>
+<li><code>os.totalmem()</code><br>返回系统内存总量，单位为字节。</li>
+<li><code>os.freemem()</code><br>返回操作系统空闲内存量，单位是字节。</li>
+<li><code>os.cpus()</code><br>返回一个对象数组，包含所安装的每个 CPU/内核的信息：型号、速度（单位 MHz）、时间（一个包含 user、nice、sys、idle 和 irq 所使用 CPU/内核毫秒数的对象）。</li>
+<li><code>os.networkInterfaces()</code><br>获得网络接口列表。</li>
+</ol>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p><code>os.EOL</code> 定义了操作系统的行尾符的常量。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>创建 main.js 文件，代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var os = require(&quot;os&quot;);</span><br><span class="line"></span><br><span class="line">// CPU 的字节序</span><br><span class="line">console.log(&apos;endianness : &apos; + os.endianness());</span><br><span class="line"></span><br><span class="line">// 操作系统名</span><br><span class="line">console.log(&apos;type : &apos; + os.type());</span><br><span class="line"></span><br><span class="line">// 操作系统名</span><br><span class="line">console.log(&apos;platform : &apos; + os.platform());</span><br><span class="line"></span><br><span class="line">// 系统内存总量</span><br><span class="line">console.log(&apos;total memory : &apos; + os.totalmem() + &quot; bytes.&quot;);</span><br><span class="line"></span><br><span class="line">// 操作系统空闲内存量</span><br><span class="line">console.log(&apos;free memory : &apos; + os.freemem() + &quot; bytes.&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>代码执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ node main.js </span><br><span class="line">endianness : LE</span><br><span class="line">type : Linux</span><br><span class="line">platform : linux</span><br><span class="line">total memory : 25103400960 bytes.</span><br><span class="line">free memory : 20676710400 bytes.</span><br></pre></td></tr></table></figure></p>
+<h1 id="Path-模块"><a href="#Path-模块" class="headerlink" title="Path 模块"></a>Path 模块</h1><p>Node.js path 模块提供了一些用于处理文件路径的小工具，可以通过以下方式引入该模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var path = require(&quot;path&quot;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h3><ol>
+<li><code>path.normalize(p)</code><br>规范化路径，注意’..’ 和 ‘.’。</li>
+<li><code>path.join([path1][, path2][, ...])</code><br>用于连接路径。该方法的主要用途在于，会正确使用当前系统的路径分隔符，Unix系统是”/“，Windows系统是”\”。</li>
+<li><code>path.resolve([from ...], to)</code><br>将 to 参数解析为绝对路径。</li>
+<li><code>path.isAbsolute(path)</code><br>判断参数 path 是否是绝对路径。</li>
+<li><code>path.relative(from, to)</code><br>用于将相对路径转为绝对路径。</li>
+<li><code>path.dirname(p)</code><br>返回路径中代表文件夹的部分，同 Unix 的dirname 命令类似。</li>
+<li><code>path.basename(p[, ext])</code><br>返回路径中的最后一部分。同 Unix 命令 bashname 类似。</li>
+<li><code>path.extname(p)</code><br>返回路径中文件的后缀名，即路径中最后一个’.’之后的部分。如果一个路径中并不包含’.’或该路径只包含一个’.’ 且这个’.’为路径的第一个字符，则此命令返回空字符串。</li>
+<li><code>path.parse(pathString)</code><br>返回路径字符串的对象。</li>
+<li><code>path.format(pathObject)</code><br>从对象中返回路径字符串，和 path.parse 相反。</li>
+</ol>
+<h3 id="属性-1"><a href="#属性-1" class="headerlink" title="属性"></a>属性</h3><ol>
+<li><code>path.sep</code><br>平台的文件路径分隔符，’\‘ 或 ‘/‘。</li>
+<li><code>path.delimiter</code><br>平台的分隔符, ; or ‘:’.</li>
+<li><code>path.posix</code><br>提供上述 path 的方法，不过总是以 posix 兼容的方式交互。</li>
+<li><code>path.win32</code><br>提供上述 path 的方法，不过总是以 win32 兼容的方式交互。</li>
+</ol>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><p>创建 main.js 文件，代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var path = require(&quot;path&quot;);</span><br><span class="line"></span><br><span class="line">// 格式化路径</span><br><span class="line">console.log(&apos;normalization : &apos; + path.normalize(&apos;/test/test1//2slashes/1slash/tab/..&apos;));</span><br><span class="line"></span><br><span class="line">// 连接路径</span><br><span class="line">console.log(&apos;joint path : &apos; + path.join(&apos;/test&apos;, &apos;test1&apos;, &apos;2slashes/1slash&apos;, &apos;tab&apos;, &apos;..&apos;));</span><br><span class="line"></span><br><span class="line">// 转换为绝对路径</span><br><span class="line">console.log(&apos;resolve : &apos; + path.resolve(&apos;main.js&apos;));</span><br><span class="line"></span><br><span class="line">// 路径中文件的后缀名</span><br><span class="line">console.log(&apos;ext name : &apos; + path.extname(&apos;main.js&apos;));</span><br></pre></td></tr></table></figure></p>
+<p>代码执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ node main.js </span><br><span class="line">normalization : /test/test1/2slashes/1slash</span><br><span class="line">joint path : /test/test1/2slashes/1slash</span><br><span class="line">resolve : /web/com/1427176256_27423/main.js</span><br><span class="line">ext name : .js</span><br></pre></td></tr></table></figure></p>
+<h1 id="Net-模块"><a href="#Net-模块" class="headerlink" title="Net 模块"></a>Net 模块</h1><p>Node.js Net 模块提供了一些用于底层的网络通信的小工具，包含了创建服务器/客户端的方法，可以通过以下方式引入该模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var net = require(&quot;net&quot;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="方法-2"><a href="#方法-2" class="headerlink" title="方法"></a>方法</h3><ol>
+<li><code>net.createServer([options][, connectionListener])</code><br>创建一个 TCP 服务器。参数 connectionListener 自动给 ‘connection’ 事件创建监听器。</li>
+<li><code>net.connect(options[, connectionListener])</code><br>返回一个新的 ‘net.Socket’，并连接到指定的地址和端口。<br>当 socket 建立的时候，将会触发 ‘connect’ 事件。</li>
+<li><code>net.createConnection(options[, connectionListener])</code><br>创建一个到端口 port 和 主机 host的 TCP 连接。 host 默认为 ‘localhost’。</li>
+<li><code>net.connect(port[, host][, connectListener])</code><br>创建一个端口为 port 和主机为 host的 TCP 连接 。host 默认为 ‘localhost’。参数 connectListener 将会作为监听器添加到 ‘connect’ 事件。返回 ‘net.Socket’。</li>
+<li><code>net.createConnection(port[, host][, connectListener])</code><br>创建一个端口为 port 和主机为 host的 TCP 连接 。host 默认为 ‘localhost’。参数 connectListener 将会作为监听器添加到 ‘connect’ 事件。返回 ‘net.Socket’。</li>
+<li><code>net.connect(path[, connectListener])</code><br>创建连接到 path 的 unix socket 。参数 connectListener 将会作为监听器添加到 ‘connect’ 事件上。返回 ‘net.Socket’。</li>
+<li><code>net.createConnection(path[, connectListener])</code><br>创建连接到 path 的 unix socket 。参数 connectListener 将会作为监听器添加到 ‘connect’ 事件。返回 ‘net.Socket’。</li>
+<li><code>net.isIP(input)</code><br>检测输入的是否为 IP 地址。 IPV4 返回 4， IPV6 返回 6，其他情况返回 0。</li>
+<li><code>net.isIPv4(input)</code><br>如果输入的地址为 IPV4， 返回 true，否则返回 false。</li>
+<li><code>net.isIPv6(input)</code><br>如果输入的地址为 IPV6， 返回 true，否则返回 false。</li>
+</ol>
+<h2 id="net-Server"><a href="#net-Server" class="headerlink" title="net.Server"></a>net.Server</h2><p>net.Server通常用于创建一个 TCP 或本地服务器。</p>
+<ol>
+<li><code>server.listen(port[, host][, backlog][, callback])</code><br>监听指定端口 port 和 主机 host ac连接。 默认情况下 host 接受任何 IPv4 地址(INADDR_ANY)的直接连接。端口 port 为 0 时，则会分配一个随机端口。</li>
+<li><code>server.listen(path[, callback])</code><br>通过指定 path 的连接，启动一个本地 socket 服务器。</li>
+<li><code>server.listen(handle[, callback])</code><br>通过指定句柄连接。</li>
+<li><code>server.listen(options[, callback])</code><br>options 的属性：端口 port, 主机 host, 和 backlog, 以及可选参数 callback 函数, 他们在一起调用server.listen(port, [host], [backlog], [callback])。还有，参数 path 可以用来指定 UNIX socket。</li>
+<li><code>server.close([callback])</code><br>服务器停止接收新的连接，保持现有连接。这是异步函数，当所有连接结束的时候服务器会关闭，并会触发 ‘close’ 事件。</li>
+<li><code>server.address()</code><br>操作系统返回绑定的地址，协议族名和服务器端口。</li>
+<li><code>server.unref()</code><br>如果这是事件系统中唯一一个活动的服务器，调用 unref 将允许程序退出。</li>
+<li><code>server.ref()</code><br>与 unref 相反，如果这是唯一的服务器，在之前被 unref 了的服务器上调用 ref 将不会让程序退出（默认行为）。如果服务器已经被 ref，则再次调用 ref 并不会产生影响。</li>
+<li><code>server.getConnections(callback)</code><br>异步获取服务器当前活跃连接的数量。当 socket 发送给子进程后才有效；回调函数有 2 个参数 err 和 count。</li>
+</ol>
+<h3 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h3><ol>
+<li><code>listening</code><br>当服务器调用 server.listen 绑定后会触发。</li>
+<li><code>connection</code><br>当新连接创建后会被触发。socket 是 net.Socket实例。</li>
+<li><code>close</code><br>服务器关闭时会触发。注意，如果存在连接，这个事件不会被触发直到所有的连接关闭。</li>
+<li><code>error</code><br>发生错误时触发。’close’ 事件将被下列事件直接调用。</li>
+</ol>
+<h2 id="net-Socket"><a href="#net-Socket" class="headerlink" title="net.Socket"></a>net.Socket</h2><p>net.Socket 对象是 TCP 或 UNIX Socket 的抽象。net.Socket 实例实现了一个双工流接口。 他们可以在用户创建客户端(使用 connect())时使用, 或者由 Node 创建它们，并通过 connection 服务器事件传递给用户。</p>
+<h3 id="事件-1"><a href="#事件-1" class="headerlink" title="事件"></a>事件</h3><p>net.Socket 事件有：</p>
+<ol>
+<li><code>lookup</code><br>在解析域名后，但在连接前，触发这个事件。对 UNIX sokcet 不适用。</li>
+<li><code>connect</code><br>成功建立 socket 连接时触发。</li>
+<li><code>data</code><br>当接收到数据时触发。</li>
+<li><code>end</code><br>当 socket 另一端发送 FIN 包时，触发该事件。</li>
+<li><code>timeout</code><br>当 socket 空闲超时时触发，仅是表明 socket 已经空闲。用户必须手动关闭连接。</li>
+<li><code>drain</code><br>当写缓存为空得时候触发。可用来控制上传。</li>
+<li><code>error</code><br>错误发生时触发。</li>
+<li><code>close</code><br>当 socket 完全关闭时触发。参数 had_error 是布尔值，它表示是否因为传输错误导致 socket 关闭。</li>
+</ol>
+<h3 id="属性-2"><a href="#属性-2" class="headerlink" title="属性"></a>属性</h3><p>net.Socket 提供了很多有用的属性，便于控制 socket 交互：</p>
+<ol>
+<li><code>socket.bufferSize</code><br>该属性显示了要写入缓冲区的字节数。</li>
+<li><code>socket.remoteAddress</code><br>远程的 IP 地址字符串，例如：’74.125.127.100’ or ‘2001:4860:a005::68’。</li>
+<li><code>socket.remoteFamily</code><br>远程IP协议族字符串，比如 ‘IPv4’ or ‘IPv6’。</li>
+<li><code>socket.remotePort</code><br>远程端口，数字表示，例如：80 or 21。</li>
+<li><code>socket.localAddress</code><br>网络连接绑定的本地接口 远程客户端正在连接的本地 IP 地址，字符串表示。例如，如果你在监听’0.0.0.0’而客户端连接在’192.168.1.1’，这个值就会是 ‘192.168.1.1’。</li>
+<li><code>socket.localPort</code><br>本地端口地址，数字表示。例如：80 or 21。</li>
+<li><code>socket.bytesRead</code><br>接收到得字节数。</li>
+<li><code>socket.bytesWritten</code><br>发送的字节数。</li>
+</ol>
+<h3 id="方法-3"><a href="#方法-3" class="headerlink" title="方法"></a>方法</h3><ol>
+<li><code>new net.Socket([options])</code><br>构造一个新的 socket 对象。</li>
+<li><code>socket.connect(port[, host][, connectListener])</code><br>指定端口 port 和 主机 host，创建 socket 连接 。参数 host 默认为 localhost。通常情况不需要使用 net.createConnection 打开 socket。只有你实现了自己的 socket 时才会用到。</li>
+<li><code>socket.connect(path[, connectListener])</code><br>打开指定路径的 unix socket。通常情况不需要使用 net.createConnection 打开 socket。只有你实现了自己的 socket 时才会用到。</li>
+<li><code>socket.setEncoding([encoding])</code><br>设置编码</li>
+<li><code>socket.write(data[, encoding][, callback])</code><br>在 socket 上发送数据。第二个参数指定了字符串的编码，默认是 UTF8 编码。</li>
+<li><code>socket.end([data][, encoding])</code><br>半关闭 socket。例如，它发送一个 FIN 包。可能服务器仍在发送数据。</li>
+<li><code>socket.destroy()</code><br>确保没有 I/O 活动在这个套接字上。只有在错误发生情况下才需要。（处理错误等等）。</li>
+<li><code>socket.pause()</code><br>暂停读取数据。就是说，不会再触发 data 事件。对于控制上传非常有用。</li>
+<li><code>socket.resume()</code><br>调用 pause() 后想恢复读取数据。</li>
+<li><code>socket.setTimeout(timeout[, callback])</code><br>socket 闲置时间超过 timeout 毫秒后 ，将 socket 设置为超时。</li>
+<li><code>socket.setNoDelay([noDelay])</code><br>禁用纳格（Nagle）算法。默认情况下 TCP 连接使用纳格算法，在发送前他们会缓冲数据。将 noDelay 设置为 true 将会在调用 socket.write() 时立即发送数据。noDelay 默认值为 true。</li>
+<li><code>socket.setKeepAlive([enable][, initialDelay])</code><br>禁用/启用长连接功能，并在发送第一个在闲置 socket 上的长连接 probe 之前，可选地设定初始延时。默认为 false。 设定 initialDelay （毫秒），来设定收到的最后一个数据包和第一个长连接probe之间的延时。将 initialDelay 设为0，将会保留默认（或者之前）的值。默认值为0.</li>
+<li><code>socket.address()</code><br>操作系统返回绑定的地址，协议族名和服务器端口。返回的对象有 3 个属性，比如{ port: 12346, family: ‘IPv4’, address: ‘127.0.0.1’ }。</li>
+<li><code>socket.unref()</code><br>如果这是事件系统中唯一一个活动的服务器，调用 unref 将允许程序退出。如果服务器已被 unref，则再次调用 unref 并不会产生影响。</li>
+<li><code>socket.ref()</code><br>与 unref 相反，如果这是唯一的服务器，在之前被 unref 了的服务器上调用 ref 将不会让程序退出（默认行为）。如果服务器已经被 ref，则再次调用 ref 并不会产生影响。</li>
+</ol>
+<h3 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h3><p>创建 server.js 文件，代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var net = require(&apos;net&apos;);</span><br><span class="line">var server = net.createServer(function(connection) &#123; </span><br><span class="line">   console.log(&apos;client connected&apos;);</span><br><span class="line">   connection.on(&apos;end&apos;, function() &#123;</span><br><span class="line">      console.log(&apos;客户端关闭连接&apos;);</span><br><span class="line">   &#125;);</span><br><span class="line">   connection.write(&apos;Hello World!\r\n&apos;);</span><br><span class="line">   connection.pipe(connection);</span><br><span class="line">&#125;);</span><br><span class="line">server.listen(8080, function() &#123; </span><br><span class="line">  console.log(&apos;server is listening&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>执行以上服务端代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node server.js</span><br><span class="line">server is listening   # 服务已创建并监听 8080 端口</span><br></pre></td></tr></table></figure></p>
+<p>新开一个窗口，创建 client.js 文件，代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var net = require(&apos;net&apos;);</span><br><span class="line">var client = net.connect(&#123;port: 8080&#125;, function() &#123;</span><br><span class="line">   console.log(&apos;连接到服务器！&apos;);  </span><br><span class="line">&#125;);</span><br><span class="line">client.on(&apos;data&apos;, function(data) &#123;</span><br><span class="line">   console.log(data.toString());</span><br><span class="line">   client.end();</span><br><span class="line">&#125;);</span><br><span class="line">client.on(&apos;end&apos;, function() &#123; </span><br><span class="line">   console.log(&apos;断开与服务器的连接&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>执行以上客户端的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">连接到服务器！</span><br><span class="line">Hello World!</span><br><span class="line"></span><br><span class="line">断开与服务器的连接</span><br></pre></td></tr></table></figure></p>
+<h1 id="DNS-模块"><a href="#DNS-模块" class="headerlink" title="DNS 模块"></a>DNS 模块</h1><p>DNS模块用于解析域名。引入 DNS 模块语法格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var dns = require(&quot;dns&quot;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="方法-4"><a href="#方法-4" class="headerlink" title="方法"></a>方法</h2><ol>
+<li><code>dns.lookup(hostname[, options], callback)</code><br>将域名（比如 ‘runoob.com’）解析为第一条找到的记录 A （IPV4）或 AAAA(IPV6)。参数 options可以是一个对象或整数。如果没有提供 options，IP v4 和 v6 地址都可以。如果 options 是整数，则必须是 4 或 6。</li>
+<li><code>dns.lookupService(address, port, callback)</code><br>使用 getnameinfo 解析传入的地址和端口为域名和服务。</li>
+<li><code>dns.resolve(hostname[, rrtype], callback)</code><br>将一个域名（如 ‘runoob.com’）解析为一个 rrtype 指定记录类型的数组。</li>
+<li><code>dns.resolve4(hostname, callback)</code><br>和 dns.resolve() 类似, 仅能查询 IPv4 (A 记录）。 addresses IPv4 地址数组 (比如，[‘74.125.79.104’, ‘74.125.79.105’, ‘74.125.79.106’]）。</li>
+<li><code>dns.resolve6(hostname, callback)</code><br>和 dns.resolve4() 类似， 仅能查询 IPv6( AAAA 查询）</li>
+<li><code>dns.resolveMx(hostname, callback)</code><br>和 dns.resolve() 类似, 仅能查询邮件交换(MX 记录)。</li>
+<li><code>dns.resolveTxt(hostname, callback)</code><br>和 dns.resolve() 类似, 仅能进行文本查询 (TXT 记录）。 addresses 是 2-d 文本记录数组。(比如，[ [‘v=spf1 ip4:0.0.0.0 ‘, ‘~all’ ] ]）。 每个子数组包含一条记录的 TXT 块。根据使用情况可以连接在一起，也可单独使用。</li>
+<li><code>dns.resolveSrv(hostname, callback)</code><br>和 dns.resolve() 类似, 仅能进行服务记录查询 (SRV 记录）。 addresses 是 hostname可用的 SRV 记录数组。 SRV 记录属性有优先级（priority），权重（weight）, 端口（port）, 和名字（name） (比如，[{‘priority’: 10, ‘weight’: 5, ‘port’: 21223, ‘name’: ‘service.example.com’}, …]）。</li>
+<li><code>dns.resolveSoa(hostname, callback)</code><br>和 dns.resolve() 类似, 仅能查询权威记录(SOA 记录）。</li>
+<li><code>dns.resolveNs(hostname, callback)</code><br>和 dns.resolve() 类似, 仅能进行域名服务器记录查询(NS 记录）。 addresses 是域名服务器记录数组（hostname 可以使用） (比如, [‘ns1.example.com’, ‘ns2.example.com’]）。</li>
+<li><code>dns.resolveCname(hostname, callback)</code><br>和 dns.resolve() 类似, 仅能进行别名记录查询 (CNAME记录)。addresses 是对 hostname 可用的别名记录数组 (比如，, [‘bar.example.com’]）。</li>
+<li><code>dns.reverse(ip, callback)</code><br>反向解析 IP 地址，指向该 IP 地址的域名数组。</li>
+<li><code>dns.getServers()</code><br>返回一个用于当前解析的 IP 地址数组的字符串。</li>
+<li><code>dns.setServers(servers)</code><br>指定一组 IP 地址作为解析服务器。</li>
+</ol>
+<h3 id="rrtypes"><a href="#rrtypes" class="headerlink" title="rrtypes"></a>rrtypes</h3><p>以下列出了 dns.resolve() 方法中有效的 rrtypes值:</p>
+<ul>
+<li><code>&#39;A&#39;</code> IPV4 地址, 默认</li>
+<li><code>&#39;AAAA&#39;</code> IPV6 地址</li>
+<li><code>&#39;MX&#39;</code> 邮件交换记录</li>
+<li><code>&#39;TXT&#39;</code> text 记录</li>
+<li><code>&#39;SRV&#39;</code> SRV 记录</li>
+<li><code>&#39;PTR&#39;</code> 用来反向 IP 查找</li>
+<li><code>&#39;NS&#39;</code> 域名服务器记录</li>
+<li><code>&#39;CNAME&#39;</code> 别名记录</li>
+<li><code>&#39;SOA&#39;</code> 授权记录的初始值</li>
+</ul>
+<h2 id="错误码"><a href="#错误码" class="headerlink" title="错误码"></a>错误码</h2><p>每次 DNS 查询都可能返回以下错误码：</p>
+<ul>
+<li><code>dns.NODATA</code>: 无数据响应。</li>
+<li><code>dns.FORMERR</code>: 查询格式错误。</li>
+<li><code>dns.SERVFAIL</code>: 常规失败。</li>
+<li><code>dns.NOTFOUND</code>: 没有找到域名。</li>
+<li><code>dns.NOTIMP</code>: 未实现请求的操作。</li>
+<li><code>dns.REFUSED</code>: 拒绝查询。</li>
+<li><code>dns.BADQUERY</code>: 查询格式错误。</li>
+<li><code>dns.BADNAME</code>: 域名格式错误。</li>
+<li><code>dns.BADFAMILY</code>: 地址协议不支持。</li>
+<li><code>dns.BADRESP</code>: 回复格式错误。</li>
+<li><code>dns.CONNREFUSED</code>: 无法连接到 DNS 服务器。</li>
+<li><code>dns.TIMEOUT</code>: 连接 DNS 服务器超时。</li>
+<li><code>dns.EOF</code>: 文件末端。</li>
+<li><code>dns.FILE</code>: 读文件错误。</li>
+<li><code>dns.NOMEM</code>: 内存溢出。</li>
+<li><code>dns.DESTRUCTION</code>: 通道被摧毁。</li>
+<li><code>dns.BADSTR</code>: 字符串格式错误。</li>
+<li><code>dns.BADFLAGS</code>: 非法标识符。</li>
+<li><code>dns.NONAME</code>: 所给主机不是数字。</li>
+<li><code>dns.BADHINTS</code>: 非法HINTS标识符。</li>
+<li><code>dns.NOTINITIALIZED</code>: c c-ares 库尚未初始化。</li>
+<li><code>dns.LOADIPHLPAPI</code>: 加载 iphlpapi.dll 出错。</li>
+<li><code>dns.ADDRGETNETWORKPARAMS</code>: 无法找到 GetNetworkParams 函数。</li>
+<li><code>dns.CANCELLED</code>: 取消 DNS 查询。</li>
+</ul>
+<h3 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h3><p>创建 main.js 文件，代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var dns = require(&apos;dns&apos;);</span><br><span class="line"></span><br><span class="line">dns.lookup(&apos;www.github.com&apos;, function onLookup(err, address, family) &#123;</span><br><span class="line">    console.log(&apos;ip 地址:&apos;, address);</span><br><span class="line">    dns.reverse(address, function (err, hostnames) &#123;</span><br><span class="line">        if (err) &#123;</span><br><span class="line">            console.log(err.stack);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        console.log(&apos;反向解析 &apos; + address + &apos;: &apos; + JSON.stringify(hostnames));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>执行以上代码，结果如下所示:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">address: 192.30.252.130</span><br><span class="line">reverse for 192.30.252.130: [&quot;github.com&quot;]</span><br></pre></td></tr></table></figure></p>
+<h1 id="Domain-模块"><a href="#Domain-模块" class="headerlink" title="Domain 模块"></a>Domain 模块</h1><p>Domain(域)简化异步代码的异常处理，可以捕捉处理try catch无法捕捉的异常。引入Domain 模块语法格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var domain = require(&quot;domain&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>domain模块，把处理多个不同的IO的操作作为一个组。注册事件和回调到domain，当发生一个错误事件或抛出一个错误时，domain对象会被通知，不会丢失上下文环境，也不导致程序错误立即推出，与process.on(‘uncaughtException’)不同。</p>
+<p>Domain 模块可分为隐式绑定和显式绑定：</p>
+<ul>
+<li>隐式绑定: 把在domain上下文中定义的变量，自动绑定到domain对象</li>
+<li>显式绑定: 把不是在domain上下文中定义的变量，以代码的方式绑定到domain对象</li>
+</ul>
+<h2 id="方法-5"><a href="#方法-5" class="headerlink" title="方法"></a>方法</h2><ol>
+<li><code>domain.run(function)</code><br>在域的上下文运行提供的函数，隐式的绑定了所有的事件分发器，计时器和底层请求。</li>
+<li><code>domain.add(emitter)</code><br>显式的增加事件</li>
+<li><code>domain.remove(emitter)</code><br>删除事件。</li>
+<li><code>domain.bind(callback)</code><br>返回的函数是一个对于所提供的回调函数的包装函数。当调用这个返回的函数被时，所有被抛出的错误都会被导向到这个域的 error 事件。</li>
+<li><code>domain.intercept(callback)</code><br>和 domain.bind(callback) 类似。除了捕捉被抛出的错误外，它还会拦截 Error 对象作为参数传递到这个函数。</li>
+<li><code>domain.enter()</code><br>进入一个异步调用的上下文，绑定到domain。</li>
+<li><code>domain.exit()</code><br>退出当前的domain，切换到不同的链的异步调用的上下文中。对应domain.enter()。</li>
+<li><code>domain.dispose()</code><br>释放一个domain对象，让node进程回收这部分资源。</li>
+<li><code>domain.create()</code><br>返回一个domain对象。</li>
+</ol>
+<h2 id="属性-3"><a href="#属性-3" class="headerlink" title="属性"></a>属性</h2><p><code>domain.members</code> 已加入domain对象的域定时器和事件发射器的数组。</p>
+<h3 id="实例-4"><a href="#实例-4" class="headerlink" title="实例"></a>实例</h3><p>创建 main.js 文件，代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">var EventEmitter = require(&quot;events&quot;).EventEmitter;</span><br><span class="line">var domain = require(&quot;domain&quot;);</span><br><span class="line"></span><br><span class="line">var emitter1 = new EventEmitter();</span><br><span class="line"></span><br><span class="line">// 创建域</span><br><span class="line">var domain1 = domain.create();</span><br><span class="line"></span><br><span class="line">domain1.on(&apos;error&apos;, function(err)&#123;</span><br><span class="line">   console.log(&quot;domain1 处理这个错误 (&quot;+err.message+&quot;)&quot;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 显式绑定</span><br><span class="line">domain1.add(emitter1);</span><br><span class="line"></span><br><span class="line">emitter1.on(&apos;error&apos;,function(err)&#123;</span><br><span class="line">   console.log(&quot;监听器处理此错误 (&quot;+err.message+&quot;)&quot;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">emitter1.emit(&apos;error&apos;,new Error(&apos;通过监听器来处理&apos;));</span><br><span class="line"></span><br><span class="line">emitter1.removeAllListeners(&apos;error&apos;);</span><br><span class="line"></span><br><span class="line">emitter1.emit(&apos;error&apos;,new Error(&apos;通过 domain1 处理&apos;));</span><br><span class="line"></span><br><span class="line">var domain2 = domain.create();</span><br><span class="line"></span><br><span class="line">domain2.on(&apos;error&apos;, function(err)&#123;</span><br><span class="line">   console.log(&quot;domain2 处理这个错误 (&quot;+err.message+&quot;)&quot;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 隐式绑定</span><br><span class="line">domain2.run(function()&#123;</span><br><span class="line">   var emitter2 = new EventEmitter();</span><br><span class="line">   emitter2.emit(&apos;error&apos;,new Error(&apos;通过 domain2 处理&apos;));   </span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">domain1.remove(emitter1);</span><br><span class="line">emitter1.emit(&apos;error&apos;, new Error(&apos;转换为异常，系统将崩溃!&apos;));</span><br></pre></td></tr></table></figure></p>
+<p>执行以上代码，结果如下所示:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">监听器处理此错误 (通过监听器来处理)</span><br><span class="line">domain1 处理这个错误 (通过 domain1 处理)</span><br><span class="line">domain2 处理这个错误 (通过 domain2 处理)</span><br><span class="line"></span><br><span class="line">events.js:72</span><br><span class="line">        throw er; // Unhandled &apos;error&apos; event</span><br><span class="line">              ^</span><br><span class="line">Error: 转换为异常，系统将崩溃!</span><br><span class="line">    at Object.&lt;anonymous&gt; (/www/node/main.js:40:24)</span><br><span class="line">    at Module._compile (module.js:456:26)</span><br><span class="line">    at Object.Module._extensions..js (module.js:474:10)</span><br><span class="line">    at Module.load (module.js:356:32)</span><br><span class="line">    at Function.Module._load (module.js:312:12)</span><br><span class="line">    at Function.Module.runMain (module.js:497:10)</span><br><span class="line">    at startup (node.js:119:16)</span><br><span class="line">    at node.js:929:3</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>参考自<a href="http://www.runoob.com/" target="_blank" rel="external">http://www.runoob.com/</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/NodeJS/" rel="tag"># NodeJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../Node_Jade01/" rel="next" title="Node模板引擎学习(2)--Jade语法归纳">
+                <i class="fa fa-chevron-left"></i> Node模板引擎学习(2)--Jade语法归纳
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../Node07/" rel="prev" title="Node学习(7)--函数,全局对象,常用工具">
+                Node学习(7)--函数,全局对象,常用工具 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OS-模块"><span class="nav-number">1.</span> <span class="nav-text">OS 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">1.0.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性"><span class="nav-number">1.0.2.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">1.0.3.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Path-模块"><span class="nav-number">2.</span> <span class="nav-text">Path 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法-1"><span class="nav-number">2.0.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性-1"><span class="nav-number">2.0.2.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例-1"><span class="nav-number">2.0.3.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Net-模块"><span class="nav-number">3.</span> <span class="nav-text">Net 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法-2"><span class="nav-number">3.0.1.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#net-Server"><span class="nav-number">3.1.</span> <span class="nav-text">net.Server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件"><span class="nav-number">3.1.1.</span> <span class="nav-text">事件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#net-Socket"><span class="nav-number">3.2.</span> <span class="nav-text">net.Socket</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性-2"><span class="nav-number">3.2.2.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法-3"><span class="nav-number">3.2.3.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例-2"><span class="nav-number">3.2.4.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DNS-模块"><span class="nav-number">4.</span> <span class="nav-text">DNS 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法-4"><span class="nav-number">4.1.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rrtypes"><span class="nav-number">4.1.1.</span> <span class="nav-text">rrtypes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误码"><span class="nav-number">4.2.</span> <span class="nav-text">错误码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例-3"><span class="nav-number">4.2.1.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Domain-模块"><span class="nav-number">5.</span> <span class="nav-text">Domain 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法-5"><span class="nav-number">5.1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性-3"><span class="nav-number">5.2.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例-4"><span class="nav-number">5.2.1.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Git," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Git 分支管理创建分支命令：1git branch (branchname) 切换分支命令:1git checkout (branchname) 当你切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容， 所以多个分支不需要多个目录。合并分支命令:1git merge 你可以多次合并到统一分支， 也可以选择在合并之后直接删除被并入的分支。 列出分支列出分支基本命令：1git">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git学习(4)--分支管理">
+<meta property="og:url" content="http://www.needqq.com/2019/01/11/Git04/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="Git 分支管理创建分支命令：1git branch (branchname) 切换分支命令:1git checkout (branchname) 当你切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容， 所以多个分支不需要多个目录。合并分支命令:1git merge 你可以多次合并到统一分支， 也可以选择在合并之后直接删除被并入的分支。 列出分支列出分支基本命令：1git">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-11T06:06:51.345Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git学习(4)--分支管理">
+<meta name="twitter:description" content="Git 分支管理创建分支命令：1git branch (branchname) 切换分支命令:1git checkout (branchname) 当你切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容， 所以多个分支不需要多个目录。合并分支命令:1git merge 你可以多次合并到统一分支， 也可以选择在合并之后直接删除被并入的分支。 列出分支列出分支基本命令：1git">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2019/01/11/Git04/"/>
+
+
+
+
+
+  <title>Git学习(4)--分支管理 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Git学习(4)--分支管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-11T14:06:51+08:00">
+                2019-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Git-分支管理"><a href="#Git-分支管理" class="headerlink" title="Git 分支管理"></a>Git 分支管理</h2><p>创建分支命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch (branchname)</span><br></pre></td></tr></table></figure></p>
+<p>切换分支命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout (branchname)</span><br></pre></td></tr></table></figure></p>
+<p>当你切换分支的时候，Git 会用该分支的最后提交的快照替换你的工作目录的内容， 所以多个分支不需要多个目录。合并分支命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge</span><br></pre></td></tr></table></figure></p>
+<p>你可以多次合并到统一分支， 也可以选择在合并之后直接删除被并入的分支。</p>
+<h4 id="列出分支"><a href="#列出分支" class="headerlink" title="列出分支"></a>列出分支</h4><p>列出分支基本命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure></p>
+<p>没有参数时，git branch 会列出你在本地的分支。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* master</span><br></pre></td></tr></table></figure></p>
+<p>此例的意思就是，我们有一个叫做”master”的分支，并且该分支是当前分支。当你执行 git init 的时候，缺省情况下 Git 就会为你创建”master”分支。如果我们要手动创建一个分支。执行 git branch (branchname) 即可。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git branch testing</span><br><span class="line">$ git branch</span><br><span class="line">* master</span><br><span class="line">  testing</span><br></pre></td></tr></table></figure></p>
+<p>现在我们可以看到，有了一个新分支 testing。当你以此方式在上次提交更新之后创建了新分支，如果后来又有更新提交， 然后又切换到了”testing”分支，Git 将还原你的工作目录到你创建分支时候的样子接下来我们将演示如何切换分支，我们用 git checkout (branch) 切换到我们要修改的分支。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ ls</span><br><span class="line">README</span><br><span class="line">$ echo &apos;hello.com&apos; &gt; test.txt</span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -m &apos;add test.txt&apos;</span><br><span class="line">[master 048598f] add test.txt</span><br><span class="line"> 2 files changed, 1 insertion(+), 3 deletions(-)</span><br><span class="line"> delete mode 100644 hello.php</span><br><span class="line"> create mode 100644 test.txt</span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br><span class="line">$ git checkout testing</span><br><span class="line">Switched to branch &apos;testing&apos;</span><br><span class="line">$ ls</span><br><span class="line">README        hello.php</span><br></pre></td></tr></table></figure></p>
+<p>当我们切换到”testing”分支的时候，我们添加的新文件test.txt被移除了, 原来被删除的文件hello.php文件又出现了。切换回”master”分支的时候，它们有重新出现了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">Switched to branch &apos;master&apos;</span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br></pre></td></tr></table></figure></p>
+<p>我们也可以使用 git checkout -b (branchname) 命令来创建新分支并立即切换到该分支下，从而在该分支中操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b newtest</span><br><span class="line">Switched to a new branch &apos;newtest&apos;</span><br><span class="line">$ git rm test2.txt </span><br><span class="line">rm &apos;test2.txt&apos;</span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br><span class="line">$ git commit -am &apos;removed test2.txt&apos;</span><br><span class="line">[newtest 556f0a0] removed test2.txt</span><br><span class="line"> 1 file changed, 1 deletion(-)</span><br><span class="line"> delete mode 100644 test2.txt</span><br><span class="line">$ git checkout master</span><br><span class="line">Switched to branch &apos;master&apos;</span><br><span class="line">$ ls</span><br><span class="line">README        test.txt    test2.txt</span><br></pre></td></tr></table></figure></p>
+<p>如你所见，我们创建了一个分支，在该分支的上下文中移除了一些文件，然后切换回我们的主分支，那些文件又回来了。使用分支将工作切分开来，从而让我们能够在不同上下文中做事，并来回切换。</p>
+<h4 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h4><p>删除分支命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d (branchname)</span><br></pre></td></tr></table></figure></p>
+<p>例如我们要删除”testing”分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* master</span><br><span class="line">  testing</span><br><span class="line">$ git branch -d testing</span><br><span class="line">Deleted branch testing (was 85fc7e7).</span><br><span class="line">$ git branch</span><br><span class="line">* master</span><br></pre></td></tr></table></figure></p>
+<h4 id="分支合并"><a href="#分支合并" class="headerlink" title="分支合并"></a>分支合并</h4><p>一旦某分支有了独立内容，你终究会希望将它合并回到你的主分支。 你可以使用以下命令将任何分支合并到当前分支中去：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* master</span><br><span class="line">  newtest</span><br><span class="line">$ ls</span><br><span class="line">README        test.txt    test2.txt</span><br><span class="line">$ git merge newtest</span><br><span class="line">Updating 2e082b7..556f0a0</span><br><span class="line">Fast-forward</span><br><span class="line"> test2.txt | 1 -</span><br><span class="line"> 1 file changed, 1 deletion(-)</span><br><span class="line"> delete mode 100644 test2.txt</span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br></pre></td></tr></table></figure>
+<p>以上实例中我们将 newtest 分支合并到主分支去，test2.txt 文件被删除。<br>合并冲突<br>合并并不仅仅是简单的文件添加、移除的操作，Git 也会合并修改。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* master</span><br><span class="line">$ cat test.txt</span><br><span class="line">hello.com</span><br></pre></td></tr></table></figure></p>
+<p>首先，我们创建一个叫做”change_site”的分支，切换过去，我们将内容改为 www.hello.com 。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b change_site</span><br><span class="line">Switched to a new branch &apos;change_site&apos;</span><br><span class="line">$ vim test.txt </span><br><span class="line">$ head -1 test.txt </span><br><span class="line">www.hello.com</span><br><span class="line">$ git commit -am &apos;changed the site&apos;</span><br><span class="line">[change_site d7e7346] changed the site</span><br><span class="line"> 1 file changed, 1 insertion(+), 1 deletion(-)</span><br></pre></td></tr></table></figure></p>
+<p>将修改的内容提交到 “change_site” 分支中。 现在，假如切换回 “master” 分支我们可以看内容恢复到我们修改前的，我们再次修改test.txt文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">Switched to branch &apos;master&apos;</span><br><span class="line">$ head -1 test.txt </span><br><span class="line">www.hello.com</span><br><span class="line">$ vim test.txt </span><br><span class="line">$ cat test.txt</span><br><span class="line">hello.com</span><br><span class="line">新增加一行</span><br><span class="line">$ git diff</span><br><span class="line">diff --git a/test.txt b/test.txt</span><br><span class="line">index 704cce7..f84c2a4 100644</span><br><span class="line">--- a/test.txt</span><br><span class="line">+++ b/test.txt</span><br><span class="line">@@ -1 +1,2 @@</span><br><span class="line"> hello.com</span><br><span class="line">+新增加一行</span><br><span class="line">$ git commit -am &apos;新增加一行&apos;</span><br><span class="line">[master 14b4dca] 新增加一行</span><br><span class="line"> 1 file changed, 1 insertion(+)</span><br></pre></td></tr></table></figure></p>
+<p>现在这些改变已经记录到我的 “master” 分支了。接下来我们将 “change_site” 分支合并过来。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> $ git merge change_site</span><br><span class="line">Auto-merging test.txt</span><br><span class="line">CONFLICT (content): Merge conflict in test.txt</span><br><span class="line">Automatic merge failed; fix conflicts and then commit the result.</span><br><span class="line">$ cat test.txt </span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span><br><span class="line">hello.com</span><br><span class="line">新增加一行</span><br><span class="line">=======</span><br><span class="line">www.hello.com</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; change_site</span><br></pre></td></tr></table></figure></p>
+<p>我们将前一个分支合并到 “master” 分支，一个合并冲突就出现了，接下来我们需要手动去修改它。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ vim test.txt </span><br><span class="line">$ cat test.txt </span><br><span class="line">www.hello.com</span><br><span class="line">新增加一行</span><br><span class="line">$ git diff</span><br><span class="line">diff --cc test.txt</span><br><span class="line">index f84c2a4,bccb7c2..0000000</span><br><span class="line">--- a/test.txt</span><br><span class="line">+++ b/test.txt</span><br><span class="line">@@@ -1,2 -1,1 +1,2 @@@</span><br><span class="line">- hello.com</span><br><span class="line">+ www.hello.com</span><br><span class="line"> +新增加一行</span><br><span class="line">在 Git 中，我们可以用 git add 要告诉 Git 文件冲突已经解决</span><br><span class="line">$ git status -s</span><br><span class="line">UU test.txt</span><br><span class="line">$ git add test.txt </span><br><span class="line">$ git status -s</span><br><span class="line">M  test.txt</span><br><span class="line">$ git commit</span><br><span class="line">[master 88afe0e] Merge branch &apos;change_site&apos;</span><br></pre></td></tr></table></figure></p>
+<p>现在我们成功解决了合并中的冲突，并提交了结果。</p>
+<h2 id="Git-查看提交历史"><a href="#Git-查看提交历史" class="headerlink" title="Git 查看提交历史"></a>Git 查看提交历史</h2><p>在使用 Git 提交了若干更新之后，又或者克隆了某个项目，想回顾下提交历史，我们可以使用 git log 命令查看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">$ git log</span><br><span class="line">commit 88afe0e02adcdfea6844bb627de97da21eb10af1</span><br><span class="line">Merge: 14b4dca d7e7346</span><br><span class="line">Author: w3cschool &lt;w3c@w3cschool.cc&gt;</span><br><span class="line">Date:   Sun Mar 1 15:03:42 2015 +0800</span><br><span class="line"></span><br><span class="line">    Merge branch &apos;change_site&apos;</span><br><span class="line">    </span><br><span class="line">    Conflicts:</span><br><span class="line">        test.txt</span><br><span class="line"></span><br><span class="line">commit 14b4dcadbdc847207651d5a9fae0d315057f346e</span><br><span class="line">Author: w3cschool &lt;w3c@w3cschool.cc&gt;</span><br><span class="line">Date:   Sun Mar 1 14:53:15 2015 +0800</span><br><span class="line"></span><br><span class="line">    新增加一行</span><br><span class="line"></span><br><span class="line">commit d7e734640da06055e107eaf29cf350b3f1de1c2c</span><br><span class="line">Author: w3cschool &lt;w3c@w3cschool.cc&gt;</span><br><span class="line">Date:   Sun Mar 1 14:48:57 2015 +0800</span><br><span class="line"></span><br><span class="line">    changed the site</span><br><span class="line"></span><br><span class="line">commit 556f0a0637978097b82287ac665a717623b21f3f</span><br><span class="line">Author: w3cschool &lt;w3c@w3cschool.cc&gt;</span><br><span class="line">Date:   Sun Mar 1 14:40:34 2015 +0800</span><br><span class="line"></span><br><span class="line">    removed test2.txt</span><br></pre></td></tr></table></figure></p>
+<p>我们可以用 –oneline 选项来查看历史记录的简洁的版本。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git log --oneline</span><br><span class="line">88afe0e Merge branch &apos;change_site&apos;</span><br><span class="line">14b4dca 新增加一行</span><br><span class="line">d7e7346 changed the site</span><br><span class="line">556f0a0 removed test2.txt</span><br><span class="line">2e082b7 add test2.txt</span><br><span class="line">048598f add test.txt</span><br><span class="line">85fc7e7 test comment from w3cschool.cc</span><br></pre></td></tr></table></figure></p>
+<p>我们还可以用 –graph 选项，查看历史中什么时候出现了分支、合并。以下为相同的命令，开启了拓扑图选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ git log --oneline --graph</span><br><span class="line">*   88afe0e Merge branch &apos;change_site&apos;</span><br><span class="line">|\  </span><br><span class="line">| * d7e7346 changed the site</span><br><span class="line">* | 14b4dca 新增加一行</span><br><span class="line">|/  </span><br><span class="line">* 556f0a0 removed test2.txt</span><br><span class="line">* 2e082b7 add test2.txt</span><br><span class="line">* 048598f add test.txt</span><br><span class="line">* 85fc7e7 test comment from w3cschool.cc</span><br><span class="line">你也可以用 &apos;--reverse&apos;参数来逆向显示所有日志。</span><br><span class="line">$ git log --reverse --oneline</span><br><span class="line">85fc7e7 test comment from w3cschool.cc</span><br><span class="line">048598f add test.txt</span><br><span class="line">2e082b7 add test2.txt</span><br><span class="line">556f0a0 removed test2.txt</span><br><span class="line">d7e7346 changed the site</span><br><span class="line">14b4dca 新增加一行</span><br><span class="line">88afe0e Merge branch &apos;change_site&apos;</span><br></pre></td></tr></table></figure></p>
+<p>如果只想查找指定用户的提交日志可以使用命令：git log –author , 例如，比方说我们要找 Git 源码中 Linus 提交的部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git log --author=Linus --oneline -5</span><br><span class="line">81b50f3 Move &apos;builtin-*&apos; into a &apos;builtin/&apos; subdirectory</span><br><span class="line">3bb7256 make &quot;index-pack&quot; a built-in</span><br><span class="line">377d027 make &quot;git pack-redundant&quot; a built-in</span><br><span class="line">b532581 make &quot;git unpack-file&quot; a built-in</span><br><span class="line">112dd51 make &quot;mktag&quot; a built-in</span><br></pre></td></tr></table></figure></p>
+<p>如果你要指定日期，可以执行几个选项：–since 和 –before，但是你也可以用 –until 和 –after。例如，如果我要看 Git 项目中三周前且在四月十八日之后的所有提交，我可以执行这个（我还用了 –no-merges 选项以隐藏合并提交）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ git log --oneline --before=&#123;3.weeks.ago&#125; --after=&#123;2010-04-18&#125; --no-merges</span><br><span class="line">5469e2d Git 1.7.1-rc2</span><br><span class="line">d43427d Documentation/remote-helpers: Fix typos and improve language</span><br><span class="line">272a36b Fixup: Second argument may be any arbitrary string</span><br><span class="line">b6c8d2d Documentation/remote-helpers: Add invocation section</span><br><span class="line">5ce4f4e Documentation/urls: Rewrite to accomodate transport::address</span><br><span class="line">00b84e9 Documentation/remote-helpers: Rewrite description</span><br><span class="line">03aa87e Documentation: Describe other situations where -z affects git diff</span><br><span class="line">77bc694 rebase-interactive: silence warning when no commits rewritten</span><br><span class="line">636db2c t3301: add tests to use --format=&quot;%N&quot;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>参考自<a href="http://www.runoob.com/git/git-tutorial.html" target="_blank" rel="external">http://www.runoob.com/git/git-tutorial.html</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/Git/" rel="tag"># Git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../HTML5/" rel="next" title="回顾HTML5">
+                <i class="fa fa-chevron-left"></i> 回顾HTML5
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../Git03/" rel="prev" title="Git学习(3)--基础知识">
+                Git学习(3)--基础知识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-分支管理"><span class="nav-number">1.</span> <span class="nav-text">Git 分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#列出分支"><span class="nav-number">1.0.1.</span> <span class="nav-text">列出分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除分支"><span class="nav-number">1.0.2.</span> <span class="nav-text">删除分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支合并"><span class="nav-number">1.0.3.</span> <span class="nav-text">分支合并</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-查看提交历史"><span class="nav-number">2.</span> <span class="nav-text">Git 查看提交历史</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

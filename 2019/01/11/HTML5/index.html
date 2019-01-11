@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HTML5," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="新增的标签 多媒体标签  audio src,url 要播放的URL autoplay 自动播放 preload 在页面加载时进行加载,并预备播放 如果使用 “autoplay”,则忽略该属性   loop 循环播放 controls 向用户显示控件,比如播放按钮   video  src,url autoplay preload loop controls width height 设置视频播放">
+<meta name="keywords" content="HTML5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回顾HTML5">
+<meta property="og:url" content="http://www.needqq.com/2019/01/11/HTML5/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="新增的标签 多媒体标签  audio src,url 要播放的URL autoplay 自动播放 preload 在页面加载时进行加载,并预备播放 如果使用 “autoplay”,则忽略该属性   loop 循环播放 controls 向用户显示控件,比如播放按钮   video  src,url autoplay preload loop controls width height 设置视频播放">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-11T06:06:51.345Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="回顾HTML5">
+<meta name="twitter:description" content="新增的标签 多媒体标签  audio src,url 要播放的URL autoplay 自动播放 preload 在页面加载时进行加载,并预备播放 如果使用 “autoplay”,则忽略该属性   loop 循环播放 controls 向用户显示控件,比如播放按钮   video  src,url autoplay preload loop controls width height 设置视频播放">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2019/01/11/HTML5/"/>
+
+
+
+
+
+  <title>回顾HTML5 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">回顾HTML5</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-11T14:06:51+08:00">
+                2019-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/HTML5/" itemprop="url" rel="index">
+                    <span itemprop="name">HTML5</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="新增的标签"><a href="#新增的标签" class="headerlink" title="新增的标签"></a>新增的标签</h3><ul>
+<li><p>多媒体标签</p>
+<ul>
+<li>audio<ul>
+<li>src,url 要播放的URL</li>
+<li>autoplay 自动播放</li>
+<li>preload 在页面加载时进行加载,并预备播放<blockquote>
+<p>如果使用 “autoplay”,则忽略该属性</p>
+</blockquote>
+</li>
+<li>loop 循环播放</li>
+<li>controls 向用户显示控件,比如播放按钮</li>
+</ul>
+</li>
+<li><p>video</p>
+<ul>
+<li>src,url</li>
+<li>autoplay</li>
+<li>preload</li>
+<li>loop</li>
+<li>controls</li>
+<li>width height 设置视频播放器的宽度高度<blockquote>
+<p>一般只设置宽度或者高度</p>
+</blockquote>
+</li>
+<li><p>poster 指定视频还没有完全下载完毕,或者用户没有点击播放前显示的封面,默认显示当前视频文件的第一副图像</p>
+<blockquote>
+<p>因为不同的浏览器所支持的视频格式不一样,为了保证用户能够看到视频,我们可以提供多个视频文件让浏览器自动选择</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">"mp3/flv.flv"</span> <span class="attr">type</span>=<span class="string">"video/flv"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">"mp3/mp4.mp4"</span> <span class="attr">type</span>=<span class="string">"video/mp4"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>fieldset 带标题的框</p>
+<blockquote>
+<p>用法:form fieldset legend(为fieldset元素定义标题)</p>
+</blockquote>
+</li>
+<li>progress 进度条, meter 度量器 用于标示级别<ul>
+<li>high:number 定义度量的值位于哪个点,被界定为高的值</li>
+<li>low:number 定义度量的值位于哪个点,被界定为低的值</li>
+<li>max:number 定义最大值,默认值是 1</li>
+<li>min:number 定义最小值,默认值是 0</li>
+<li>optimum:number 定义什么样的度量值是最佳的值</li>
+<li>value:number 定义度量的值</li>
+</ul>
+</li>
+<li>datalist 下拉列表(不常用)</li>
+<li>keygen (不常用)</li>
+<li>output 用于展示内容,只能展示,不能进行编辑(不常用)</li>
+</ul>
+<h3 id="新增的表单属性"><a href="#新增的表单属性" class="headerlink" title="新增的表单属性:"></a>新增的表单属性:</h3><ul>
+<li>placeholder 占位符</li>
+<li>required 验证条件,必填项</li>
+<li>pattern 正则表达式,验证表单</li>
+<li>autofocus 获取焦点</li>
+<li>autocomplete 自动完成<blockquote>
+<p>on:打开,off:关闭,<br>必须成功提交过,且添加autocomplete的元素必须有name属性</p>
+</blockquote>
+</li>
+<li>multiple 文件上传多选或多个邮箱地址</li>
+<li>novalidate 关闭验证,可用于form标签</li>
+<li>form 指定表单项属于哪个form<blockquote>
+<p>处理复杂表单时会需要,当某个表单元素并没有包含在form中时,可在属性中用form属性指定表单id</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="新增的表单输入类型"><a href="#新增的表单输入类型" class="headerlink" title="新增的表单输入类型"></a>新增的表单输入类型</h3><ul>
+<li>search： 搜索框</li>
+<li>email : 提供了默认的电子邮箱的完整验证</li>
+<li>tel： 能够在移动端打开数字键盘</li>
+<li>number： 只能输入数字(value=””max=””min=””)</li>
+<li>url： 只能输入url格式(必须包含http://)</li>
+<li>file</li>
+<li>time：时间</li>
+<li>date：日期</li>
+<li>range： 范围,可以进行拖动(value=””max=””min=””)</li>
+<li>color：拾色器,可通过value进行取值</li>
+<li>datetime： 时间日期(不常用)</li>
+<li>month： 月份</li>
+<li>week： 星期</li>
+</ul>
+<h3 id="新增的表单事件："><a href="#新增的表单事件：" class="headerlink" title="新增的表单事件："></a>新增的表单事件：</h3><ul>
+<li>oninput 用户输入内容时触发,可用于移动端输入字数统计</li>
+<li>oninvalid 验证不通过时触发</li>
+</ul>
+<h3 id="DOM扩展"><a href="#DOM扩展" class="headerlink" title="DOM扩展"></a>DOM扩展</h3><ol>
+<li>获取元素：<ul>
+<li>document.querySelector(‘selector’)<blockquote>
+<p>获取单个元素,如果获取的元素不止一个,那么只会返回满足条件的第一个元素。如果是类选择器,必须添加.,如果是id选择器,必须添加# ,否则当成标签处理</p>
+</blockquote>
+</li>
+<li>document.querySelectorAll(‘selector’)<blockquote>
+<p>获取满足条件的所有元素,以类数组形式存在</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>类名操作：<ul>
+<li>classList.add(‘class’)</li>
+<li>classList.remove(‘class’)</li>
+<li>classList.toggle(‘class’)</li>
+<li>classList.contains(‘class’) 检测是否存在指定class</li>
+<li>classList.item(n) 获取样式</li>
+</ul>
+</li>
+<li>自定义属性<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">data-school-name</span>=<span class="string">"itcast"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value=p.dataset[<span class="string">"schoolName"</span>];</span><br></pre></td></tr></table></figure>
+<h3 id="网络接口"><a href="#网络接口" class="headerlink" title="网络接口"></a>网络接口</h3><ul>
+<li>ononline:网络连通的时候触发这个事件</li>
+<li>onoffline:网络断开时触发<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"online"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"网络连通了"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">"offline"</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">"网络断开了"</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="全屏接口"><a href="#全屏接口" class="headerlink" title="全屏接口"></a>全屏接口</h3><ul>
+<li>requestFullScreen():开启全屏显示</li>
+<li>cancelFullScreen():退出全屏显示</li>
+<li>fullScreenElement:是否是全屏状态<blockquote>
+</blockquote>
+</li>
+</ul>
+<ol>
+<li>不同浏览器需要添加不同的前缀chrome:webkit   firefox:moz   ie:ms   opera:o</li>
+<li>document.fullscreenElement||document.webkitFullscreenElement||document.mozFullScreenElement||document.msFullscreenElement 注意此时的拼写</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.onload=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> div=<span class="built_in">document</span>.querySelector(<span class="string">"div"</span>);</span><br><span class="line">    <span class="comment">/*全屏操作*/</span></span><br><span class="line">    <span class="built_in">document</span>.querySelector(<span class="string">"#full"</span>).onclick=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(div.requestFullScreen)&#123;</span><br><span class="line">            div.requestFullScreen();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(div.webkitRequestFullScreen)&#123;</span><br><span class="line">            div.webkitRequestFullScreen();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(div.mozRequestFullScreen)&#123;</span><br><span class="line">            div.mozRequestFullScreen();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(div.msRequestFullScreen)&#123;</span><br><span class="line">            div.msRequestFullScreen();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*退出全屏*/</span></span><br><span class="line">    <span class="built_in">document</span>.querySelector(<span class="string">"#cancelFull"</span>).onclick=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">document</span>.cancelFullScreen)&#123;</span><br><span class="line">            <span class="built_in">document</span>.cancelFullScreen();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.webkitCancelFullScreen)&#123;</span><br><span class="line">            <span class="built_in">document</span>.webkitCancelFullScreen();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.mozCancelFullScreen)&#123;</span><br><span class="line">            <span class="built_in">document</span>.mozCancelFullScreen();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">document</span>.msCancelFullScreen)&#123;</span><br><span class="line">            <span class="built_in">document</span>.msCancelFullScreen();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*判断是否是全屏状态*/</span></span><br><span class="line">    <span class="built_in">document</span>.querySelector(<span class="string">"#isFull"</span>).onclick=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">document</span>.fullscreenElement || <span class="built_in">document</span>.webkitFullscreenElement || <span class="built_in">document</span>.mozFullScreenElement || <span class="built_in">document</span>.msFullscreenElement)&#123;</span><br><span class="line">            alert(<span class="literal">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            alert(<span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="FileReader-读取文件内容"><a href="#FileReader-读取文件内容" class="headerlink" title="FileReader 读取文件内容"></a>FileReader 读取文件内容</h3><blockquote>
+<pre><code>- .readAsText():读取文本文件,返回文本字符串,默认编码是UTF-8
+- .readAsBinaryString():读取任意类型的文件,返回二进制字符串
+这个方法不是用来读取文件展示给用户看,而是存储文件
+例如：读取文件的内容,获取二进制数据,传递给后台,后台接收了数据之后,再将数据存储
+- .readAsDataURL():
+读取文件,获取一段以data开头的字符串,
+这段字符串的本质就是DataURL,
+DataURL是一种将文件嵌入到文档的方案,
+(一般就是指图像或者能够嵌入到文档的文件格式)DataURL是将资源转换为base64编码的字符串形式,
+并且将这些内容直接存储在url中,优化网站的加载速度和执行效率
+</code></pre></blockquote>
+<p>FileReader提供一个完整的事件模型,用来捕获读取文件时的状态</p>
+<blockquote>
+<pre><code>- onabort:读取文件中断片时触发
+- onerror:读取错误时触发
+- onload:文件读取成功完成时触发
+- onloadend:读取完成时触发,无论成功还是失败
+- onloadstart:开始读取时触发
+- onprogress:读取文件过程中持续触发
+- abort():中断读取
+</code></pre></blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">    文件： <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"myFile"</span> <span class="attr">id</span>=<span class="string">"myFile"</span> <span class="attr">onchange</span>=<span class="string">"getFileContent();"</span>&gt;</span> <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">""</span> <span class="attr">alt</span>=<span class="string">""</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> div = <span class="built_in">document</span>.querySelector(<span class="string">"div"</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getFileContent</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> file = <span class="built_in">document</span>.querySelector(<span class="string">"#myFile"</span>).files[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">//文件存储在file表单元素的files属性中,它是一个数组</span></span><br><span class="line">    <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">    <span class="comment">//创建文件读取对象</span></span><br><span class="line">    reader.readAsDataURL(file);</span><br><span class="line">    <span class="comment">//读取文件,获取DataURL</span></span><br><span class="line">    <span class="comment">//需要传递一个参数 binary large object:文件(图片或者其它可以嵌入到文档的类型)</span></span><br><span class="line">    <span class="comment">//读取完文件之后,它会将读取的结果存储在文件读取对象的result中,void说明没有任何的返回值</span></span><br><span class="line">    reader.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">document</span>.querySelector(<span class="string">"img"</span>).src = reader.result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="拖拽接口"><a href="#拖拽接口" class="headerlink" title="拖拽接口"></a>拖拽接口</h3><ul>
+<li>应用于拖拽元素:<ul>
+<li>ondragstart 拖拽开始时调用</li>
+<li>ondragleave 鼠标离开拖拽元素时调用</li>
+<li>ondrag 整个拖拽过程都会调用–持续</li>
+<li>ondragend 拖拽结束时调用</li>
+</ul>
+</li>
+<li>应用于目标元素:<ul>
+<li>ondragenter 当拖拽元素进入时调用</li>
+<li>ondragleave 当鼠标离开目标元素时调用</li>
+<li>ondragover 当停留在目标元素上时调用</li>
+<li>ondrop 当在目标元素上松开鼠标时调用</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>注: 在h5中,如果想拖拽元素,就必须为元素添加标签属性draggable=”true”,图片和超链接默认就可以拖拽</p>
+</blockquote>
+<h3 id="dataTransfer"><a href="#dataTransfer" class="headerlink" title="dataTransfer"></a>dataTransfer</h3><ol>
+<li>通过dataTransfer来实现数据的存储<br>e.dataTransfer.setData(format,data);<br>format:数据的类型：text/html text/uri-list<br>Data:数据:一般来说是字符串值<br><code>e.dataTransfer.setData(&quot;text/html&quot;, e.target.id);</code></li>
+<li>通过e.dataTransfer.setData存储的数据,只能在drop事件中获取<br>e.dataTransfer.getData(format,data);<br><code>var id = e.dataTransfer.getData(&quot;text/html&quot;);</code><br><code>e.target.appendChild(document.getElementById(id));</code></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.ondragstart = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    e.target.style.opacity = <span class="number">0.5</span>;</span><br><span class="line">    e.dataTransfer.setData(<span class="string">"text/html"</span>, e.target.id);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.ondragend = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    e.target.style.opacity = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.ondragover = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    e.preventDefault();</span><br><span class="line">    <span class="comment">//浏览器默认会阻止ondrop事件,我们必须在ondragover中阻止浏览器的默认行为</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">document</span>.ondrop = <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> id = e.dataTransfer.getData(<span class="string">"text/html"</span>);</span><br><span class="line">    e.target.appendChild(<span class="built_in">document</span>.getElementById(id));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="地理位置接口-不常用"><a href="#地理位置接口-不常用" class="headerlink" title="地理位置接口 (不常用)"></a>地理位置接口 (不常用)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getLocation</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (navigator.geolocation) &#123;</span><br><span class="line">        navigator.geolocation.getCurrentPosition(success, error, option)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        x.innerHTML = <span class="string">"Geolocation is not supported by this browser."</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">success</span>(<span class="params">position</span>) </span>&#123; <span class="comment">//注意position</span></span><br><span class="line">    x.innerHTML = position.coords.latitude + position.coords.longitude;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">error</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (error.code) &#123;</span><br><span class="line">        <span class="keyword">case</span> error.PERMISSION_DENIED:</span><br><span class="line">            x.innerHTML = <span class="string">"User denied the request for Geolocation."</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> error.POSITION_UNAVAILABLE:</span><br><span class="line">            x.innerHTML = <span class="string">"Location information is unavailable."</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> error.TIMEOUT:</span><br><span class="line">            x.innerHTML = <span class="string">"The request to get user location timed out."</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> error.UNKNOWN_ERROR:</span><br><span class="line">            x.innerHTML = <span class="string">"An unknown error occurred."</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">getLocation();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:</p>
+<pre><code>1. navigator.geolocation.getCurrentPosition(showPosition,showError,{});
+或navigator.geolocation.getCurrentPosition(success,error,option);
+navigator.watchPosition(successCallback, errorCallback, options)
+2.option:可以设置获取数据的方式
+    - enableHighAccuracy:true/false:是否使用高精度
+    - timeout:设置超时时间,单位ms
+    - maximumAge:可以设置浏览器重新获取地理信息的时间间隔,单位是ms
+3.
+    - position.coords.latitude 纬度
+    - position.coords.longitude 经度
+    - position.coords.accuracy 精度
+    - position.coords.altitude 海拔高度
+</code></pre></blockquote>
+<h2 id="sessionStorage-localStorage"><a href="#sessionStorage-localStorage" class="headerlink" title="sessionStorage,localStorage"></a>sessionStorage,localStorage</h2><ul>
+<li>window.sessionStorage<blockquote>
+</blockquote>
+</li>
+</ul>
+<ol>
+<li>存储容量5mb左右</li>
+<li>本质是存储在当前页面的内存中,其它页面和浏览器无法获取数据</li>
+<li>生命周期为关闭当前页面,关闭页面,数据会自动清除</li>
+</ol>
+<ul>
+<li>window.localStorage<blockquote>
+</blockquote>
+</li>
+</ul>
+<ol>
+<li>存储容量20mb左右</li>
+<li>不同浏览器不能共享数据,但是在同一个浏览器的不同窗口中可以共享数据</li>
+<li>永久生效,它的数据是存储在硬盘上,并不会随着页面或者浏览器的关闭而清除.如果想清除,必须手动清除</li>
+</ol>
+<ul>
+<li>.setItem(key,value):设置数据,以键值对的方式存储</li>
+<li>.getItem(key):通过指定的键获取对应的值内容</li>
+<li>.removeItem(key):删除指定的键及对应的值内容</li>
+<li>.clear():清空所有存储内容</li>
+</ul>
+<h2 id="应用缓存"><a href="#应用缓存" class="headerlink" title="应用缓存"></a>应用缓存</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">manifest</span>=<span class="string">"demo.appcache"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">CACHE MANIFEST</span><br><span class="line">#上面一句代码必须是当前文档的第一句</span><br><span class="line">#后面写注释</span><br><span class="line"></span><br><span class="line">#需要缓存的文件清单列表</span><br><span class="line">CACHE:</span><br><span class="line">#下面就是需要缓存的清单列表</span><br><span class="line">../images/l1.jpg</span><br><span class="line">../images/l2.jpg</span><br><span class="line"># *:代表所有文件</span><br><span class="line"></span><br><span class="line">#配置每一次都需要重新从服务器获取的文件清单列表</span><br><span class="line">NETWORK:</span><br><span class="line">../images/l3.jpg</span><br><span class="line"></span><br><span class="line">#配置如果文件无法获取则使用指定的文件进行替代</span><br><span class="line">FALLBACK:</span><br><span class="line">../images/l4.jpg ../images/banner_1.jpg</span><br><span class="line"># /:代表所有文件</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/HTML5/" rel="tag"># HTML5</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../HTTP00/" rel="next" title="学习HTTP">
+                <i class="fa fa-chevron-left"></i> 学习HTTP
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../Git04/" rel="prev" title="Git学习(4)--分支管理">
+                Git学习(4)--分支管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#新增的标签"><span class="nav-number">1.</span> <span class="nav-text">新增的标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增的表单属性"><span class="nav-number">2.</span> <span class="nav-text">新增的表单属性:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增的表单输入类型"><span class="nav-number">3.</span> <span class="nav-text">新增的表单输入类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增的表单事件："><span class="nav-number">4.</span> <span class="nav-text">新增的表单事件：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM扩展"><span class="nav-number">5.</span> <span class="nav-text">DOM扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络接口"><span class="nav-number">6.</span> <span class="nav-text">网络接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全屏接口"><span class="nav-number">7.</span> <span class="nav-text">全屏接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FileReader-读取文件内容"><span class="nav-number">8.</span> <span class="nav-text">FileReader 读取文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拖拽接口"><span class="nav-number">9.</span> <span class="nav-text">拖拽接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dataTransfer"><span class="nav-number">10.</span> <span class="nav-text">dataTransfer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地理位置接口-不常用"><span class="nav-number"></span> <span class="nav-text">地理位置接口 (不常用)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sessionStorage-localStorage"><span class="nav-number"></span> <span class="nav-text">sessionStorage,localStorage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用缓存"><span class="nav-number"></span> <span class="nav-text">应用缓存</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

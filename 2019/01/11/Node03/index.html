@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NodeJS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Node.js 回调函数Node.js 异步编程的直接体现就是回调。 异步编程依托于回调来实现，但不能说使用了回调后程序就异步化了。回调函数在完成任务后就会被调用，Node 使用了大量的回调函数，Node 所有 API 都支持回调函数。 例如，我们可以一边读取文件，一边执行其他命令，在文件读取完成后，我们将文件内容作为回调函数的参数返回。这样在执行代码时就没有阻塞或等待文件 I/O 操作。这就大大">
+<meta name="keywords" content="NodeJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node学习(3)--异步编程">
+<meta property="og:url" content="http://www.needqq.com/2019/01/11/Node03/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="Node.js 回调函数Node.js 异步编程的直接体现就是回调。 异步编程依托于回调来实现，但不能说使用了回调后程序就异步化了。回调函数在完成任务后就会被调用，Node 使用了大量的回调函数，Node 所有 API 都支持回调函数。 例如，我们可以一边读取文件，一边执行其他命令，在文件读取完成后，我们将文件内容作为回调函数的参数返回。这样在执行代码时就没有阻塞或等待文件 I/O 操作。这就大大">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-11T06:06:51.349Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node学习(3)--异步编程">
+<meta name="twitter:description" content="Node.js 回调函数Node.js 异步编程的直接体现就是回调。 异步编程依托于回调来实现，但不能说使用了回调后程序就异步化了。回调函数在完成任务后就会被调用，Node 使用了大量的回调函数，Node 所有 API 都支持回调函数。 例如，我们可以一边读取文件，一边执行其他命令，在文件读取完成后，我们将文件内容作为回调函数的参数返回。这样在执行代码时就没有阻塞或等待文件 I/O 操作。这就大大">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2019/01/11/Node03/"/>
+
+
+
+
+
+  <title>Node学习(3)--异步编程 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Node学习(3)--异步编程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-11T14:06:51+08:00">
+                2019-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/NodeJS/" itemprop="url" rel="index">
+                    <span itemprop="name">NodeJS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Node-js-回调函数"><a href="#Node-js-回调函数" class="headerlink" title="Node.js 回调函数"></a>Node.js 回调函数</h1><p>Node.js 异步编程的直接体现就是回调。</p>
+<p>异步编程依托于回调来实现，但不能说使用了回调后程序就异步化了。回调函数在完成任务后就会被调用，Node 使用了大量的回调函数，Node 所有 API 都支持回调函数。</p>
+<p>例如，我们可以一边读取文件，一边执行其他命令，在文件读取完成后，我们将文件内容作为回调函数的参数返回。这样在执行代码时就没有阻塞或等待文件 I/O 操作。这就大大提高了 Node.js 的性能，可以处理大量的并发请求。</p>
+<h2 id="阻塞代码实例"><a href="#阻塞代码实例" class="headerlink" title="阻塞代码实例"></a>阻塞代码实例</h2><p>创建一个文件 input.txt ，内容如下：<code>hello</code><br>创建 main.js 文件, 代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&quot;fs&quot;);</span><br><span class="line">var data = fs.readFileSync(&apos;input.txt&apos;);</span><br><span class="line">console.log(data.toString());</span><br><span class="line">console.log(&quot;程序执行结束!&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>以上代码执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ node main.js</span><br><span class="line">hello</span><br><span class="line">程序执行结束!</span><br></pre></td></tr></table></figure></p>
+<h2 id="非阻塞代码实例"><a href="#非阻塞代码实例" class="headerlink" title="非阻塞代码实例"></a>非阻塞代码实例</h2><p>创建一个文件 input.txt ，内容如下：<code>hello</code><br>创建 main.js 文件, 代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&quot;fs&quot;);</span><br><span class="line">fs.readFile(&apos;input.txt&apos;, function (err, data) &#123;</span><br><span class="line">    if (err) return console.error(err);</span><br><span class="line">    console.log(data.toString());</span><br><span class="line">&#125;);</span><br><span class="line">console.log(&quot;程序执行结束!&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>以上代码执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ node main.js</span><br><span class="line">程序执行结束!</span><br><span class="line">hello</span><br></pre></td></tr></table></figure></p>
+<p>以上两个实例我们了解了阻塞与非阻塞调用的不同。第一个实例在文件读取完后才执行完程序。 第二个实例我们不需要等待文件读取完，这样就可以在读取文件时同时执行接下来的代码，大大提高了程序的性能。因此，阻塞是按顺序执行的，而非阻塞是不需要按顺序的，所以如果需要处理回调函数的参数，我们就需要写在回调函数内。</p>
+<h1 id="Node-js-事件循环"><a href="#Node-js-事件循环" class="headerlink" title="Node.js 事件循环"></a>Node.js 事件循环</h1><p>Node.js 是单进程单线程应用程序，但是通过事件和回调支持并发，所以性能非常高。</p>
+<p>Node.js 的每一个 API 都是异步的，并作为一个独立线程运行，使用异步函数调用，并处理并发。</p>
+<p>Node.js 基本上所有的事件机制都是用设计模式中观察者模式实现。Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者，如果有事件发生就调用该回调函数.</p>
+<h2 id="事件驱动程序"><a href="#事件驱动程序" class="headerlink" title="事件驱动程序"></a>事件驱动程序</h2><p>Node.js 使用事件驱动模型，当web server接收到请求，就把它关闭然后进行处理，然后去服务下一个web请求。当这个请求完成，它被放回处理队列，当到达队列开头，这个结果被返回给用户。这个模型非常高效可扩展性非常强，因为webserver一直接受请求而不等待任何读写操作。（这也被称之为非阻塞式IO或者事件驱动IO） 在事件驱动模型中，会生成一个主循环来监听事件，当检测到事件时触发回调函数。整个事件驱动的流程就是这么实现的，非常简洁。有点类似于观察者模式，事件相当于一个主题(Subject)，而所有注册到这个事件上的处理函数相当于观察者(Observer)。Node.js 有多个内置的事件，我们可以通过引入 events 模块，并通过实例化 EventEmitter 类来绑定和监听事件，如下实例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 引入 events 模块</span><br><span class="line">var events = require(&apos;events&apos;);</span><br><span class="line">// 创建 eventEmitter 对象</span><br><span class="line">var eventEmitter = new events.EventEmitter();</span><br></pre></td></tr></table></figure></p>
+<p>以下程序绑定事件处理程序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 绑定事件及事件的处理程序</span><br><span class="line">eventEmitter.on(&apos;eventName&apos;, eventHandler);</span><br></pre></td></tr></table></figure></p>
+<p>我们可以通过程序触发事件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 触发事件</span><br><span class="line">eventEmitter.emit(&apos;eventName&apos;);</span><br></pre></td></tr></table></figure></p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>创建 main.js 文件，代码如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 引入 events 模块</span><br><span class="line">var events = require(&apos;events&apos;);</span><br><span class="line">// 创建 eventEmitter 对象</span><br><span class="line">var eventEmitter = new events.EventEmitter();</span><br><span class="line">// 创建事件处理程序</span><br><span class="line">var connectHandler = function connected() &#123;</span><br><span class="line">   console.log(&apos;连接成功。&apos;);</span><br><span class="line">   // 触发 data_received 事件 </span><br><span class="line">   eventEmitter.emit(&apos;data_received&apos;);</span><br><span class="line">&#125;</span><br><span class="line">// 绑定 connection 事件处理程序</span><br><span class="line">eventEmitter.on(&apos;connection&apos;, connectHandler);</span><br><span class="line">// 使用匿名函数绑定 data_received 事件</span><br><span class="line">eventEmitter.on(&apos;data_received&apos;, function()&#123;</span><br><span class="line">   console.log(&apos;数据接收成功。&apos;);</span><br><span class="line">&#125;);</span><br><span class="line">// 触发 connection 事件 </span><br><span class="line">eventEmitter.emit(&apos;connection&apos;);</span><br><span class="line">console.log(&quot;程序执行完毕。&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>接下来让我们执行以上代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ node main.js</span><br><span class="line">连接成功。</span><br><span class="line">数据接收成功。</span><br><span class="line">程序执行完毕。</span><br></pre></td></tr></table></figure></p>
+<p>在 Node 应用程序中，执行异步操作的函数将回调函数作为最后一个参数， 回调函数接收错误对象作为第一个参数。</p>
+<p>接下来让我们来重新看下前面的实例，创建一个 input.txt ,文件内容如下：<code>hello</code><br>创建 main.js 文件，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var fs = require(&quot;fs&quot;);</span><br><span class="line"></span><br><span class="line">fs.readFile(&apos;input.txt&apos;, function (err, data) &#123;</span><br><span class="line">   if (err)&#123;</span><br><span class="line">      console.log(err.stack);</span><br><span class="line">      return;</span><br><span class="line">   &#125;</span><br><span class="line">   console.log(data.toString());</span><br><span class="line">&#125;);</span><br><span class="line">console.log(&quot;程序执行完毕&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>以上程序中 fs.readFile() 是异步函数用于读取文件。如果在读取文件过程中发生错误，错误 err 对象就会输出错误信息。如果没发生错误，readFile 跳过 err 对象的输出，文件内容就通过回调函数输出。</p>
+<p>执行以上代码，执行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">程序执行完毕</span><br><span class="line">hello</span><br></pre></td></tr></table></figure></p>
+<p>接下来我们删除 input.txt 文件，执行结果如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">程序执行完毕</span><br><span class="line">Error: ENOENT, open &apos;input.txt&apos;</span><br></pre></td></tr></table></figure></p>
+<p>因为文件 input.txt 不存在，所以输出了错误信息。 </p>
+<h1 id="Node-js-EventEmitter"><a href="#Node-js-EventEmitter" class="headerlink" title="Node.js EventEmitter"></a>Node.js EventEmitter</h1><p>Node.js 所有的异步 I/O 操作在完成时都会发送一个事件到事件队列。Node.js里面的许多对象都会分发事件：一个net.Server对象会在每次有新连接时分发一个事件， 一个fs.readStream对象会在文件被打开的时候发出一个事件。 所有这些产生事件的对象都是 events.EventEmitter 的实例。</p>
+<h2 id="EventEmitter-类"><a href="#EventEmitter-类" class="headerlink" title="EventEmitter 类"></a>EventEmitter 类</h2><p>events 模块只提供了一个对象： events.EventEmitter。EventEmitter 的核心就是事件触发与事件监听器功能的封装。可以通过require(“events”);来访问该模块。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 引入 events 模块</span><br><span class="line">var events = require(&apos;events&apos;);</span><br><span class="line">// 创建 eventEmitter 对象</span><br><span class="line">var eventEmitter = new events.EventEmitter();</span><br></pre></td></tr></table></figure></p>
+<p>EventEmitter 对象如果在实例化时发生错误，会触发 error 事件。当添加新的监听器时，newListener 事件会触发，当监听器被移除时，removeListener 事件被触发。</p>
+<p>下面我们用一个简单的例子说明 EventEmitter 的用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//event.js 文件</span><br><span class="line">var EventEmitter = require(&apos;events&apos;).EventEmitter; </span><br><span class="line">var event = new EventEmitter(); </span><br><span class="line">event.on(&apos;some_event&apos;, function() &#123; </span><br><span class="line">    console.log(&apos;some_event 事件触发&apos;); </span><br><span class="line">&#125;); </span><br><span class="line">setTimeout(function() &#123; </span><br><span class="line">    event.emit(&apos;some_event&apos;); </span><br><span class="line">&#125;, 1000);</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下：<br>运行这段代码，1 秒后控制台输出了’some_event 事件触发’。其原理是 event 对象注册了事件 some_event 的一个监听器，然后我们通过 setTimeout 在 1000 毫秒以后向 event 对象发送事件 some_event，此时会调用some_event 的监听器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ node event.js </span><br><span class="line">some_event 事件触发</span><br></pre></td></tr></table></figure></p>
+<p>EventEmitter 的每个事件由一个事件名和若干个参数组成，事件名是一个字符串，通常表达一定的语义。对于每个事件，EventEmitter 支持 若干个事件监听器。当事件触发时，注册到这个事件的事件监听器被依次调用，事件参数作为回调函数参数传递。</p>
+<p>让我们以下面的例子解释这个过程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//event.js 文件</span><br><span class="line">var events = require(&apos;events&apos;); </span><br><span class="line">var emitter = new events.EventEmitter(); </span><br><span class="line">emitter.on(&apos;someEvent&apos;, function(arg1, arg2) &#123; </span><br><span class="line">    console.log(&apos;listener1&apos;, arg1, arg2); </span><br><span class="line">&#125;); </span><br><span class="line">emitter.on(&apos;someEvent&apos;, function(arg1, arg2) &#123; </span><br><span class="line">    console.log(&apos;listener2&apos;, arg1, arg2); </span><br><span class="line">&#125;); </span><br><span class="line">emitter.emit(&apos;someEvent&apos;, &apos;arg1 参数&apos;, &apos;arg2 参数&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>执行以上代码，运行的结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ node event.js </span><br><span class="line">listener1 arg1 参数 arg2 参数</span><br><span class="line">listener2 arg1 参数 arg2 参数</span><br></pre></td></tr></table></figure></p>
+<p>以上例子中，emitter 为事件 someEvent 注册了两个事件监听器，然后触发了 someEvent 事件。运行结果中可以看到两个事件监听器回调函数被先后调用。 这就是EventEmitter最简单的用法。</p>
+<p>EventEmitter 提供了多个属性，如 <code>on</code>和 <code>emit</code>。<code>on</code> 函数用于绑定事件函数，<code>emit</code>属性用于触发一个事件。接下来我们来具体看下 EventEmitter 的属性介绍。</p>
+<p>###方法</p>
+<ol>
+<li><code>addListener(event, listener)</code>为指定事件添加一个监听器到监听器数组的尾部。</li>
+<li><p><code>on(event, listener)</code>为指定事件注册一个监听器，接受一个字符串 event 和一个回调函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.on(&apos;connection&apos;, function (stream) &#123;</span><br><span class="line">  console.log(&apos;someone connected!&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>once(event, listener)</code>为指定事件注册一个单次监听器，即 监听器最多只会触发一次，触发后立刻解除该监听器。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server.once(&apos;connection&apos;, function (stream) &#123;</span><br><span class="line">  console.log(&apos;Ah, we have our first user!&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>removeListener(event, listener)</code>移除指定事件的某个监听器，监听器必须是该事件已经注册过的监听器。它接受两个参数，第一个是事件名称，第二个是回调函数名称。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var callback = function(stream) &#123;</span><br><span class="line">  console.log(&apos;someone connected!&apos;);</span><br><span class="line">&#125;;</span><br><span class="line">server.on(&apos;connection&apos;, callback);</span><br><span class="line">server.removeListener(&apos;connection&apos;, callback);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>removeAllListeners([event])</code>移除所有事件的所有监听器， 如果指定事件，则移除指定事件的所有监听器。</p>
+</li>
+<li><code>setMaxListeners(n)</code>默认情况下， EventEmitters 如果你添加的监听器超过 10 个就会输出警告信息。 setMaxListeners 函数用于提高监听器的默认限制的数量。</li>
+<li><code>listeners(event)</code>返回指定事件的监听器数组。</li>
+<li><code>emit(event, [arg1], [arg2], [...])</code>按参数的顺序执行每个监听器，如果事件有注册监听返回 true，否则返回 false。</li>
+</ol>
+<h3 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h3><p><code>listenerCount(emitter, event)</code>返回指定事件的监听器数量。</p>
+<h3 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h3><ol>
+<li><code>newListener</code><br><code>event</code> - 字符串，事件名称<br><code>listener</code> - 处理事件函数<br>该事件在添加新监听器时被触发。</li>
+<li><code>removeListener</code><br><code>event</code> - 字符串，事件名称<br><code>listener</code> - 处理事件函数<br>从指定监听器数组中删除一个监听器。需要注意的是，此操作将会改变处于被删监听器之后的那些监听器的索引。</li>
+</ol>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><p>以下实例通过 connection（连接）事件演示了 EventEmitter 类的应用。<br>创建 main.js 文件，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">var events = require(&apos;events&apos;);</span><br><span class="line">var eventEmitter = new events.EventEmitter();</span><br><span class="line"></span><br><span class="line">// 监听器 #1</span><br><span class="line">var listener1 = function listener1() &#123;</span><br><span class="line">   console.log(&apos;监听器 listener1 执行。&apos;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 监听器 #2</span><br><span class="line">var listener2 = function listener2() &#123;</span><br><span class="line">  console.log(&apos;监听器 listener2 执行。&apos;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 绑定 connection 事件，处理函数为 listener1 </span><br><span class="line">eventEmitter.addListener(&apos;connection&apos;, listener1);</span><br><span class="line"></span><br><span class="line">// 绑定 connection 事件，处理函数为 listener2</span><br><span class="line">eventEmitter.on(&apos;connection&apos;, listener2);</span><br><span class="line"></span><br><span class="line">var eventListeners = require(&apos;events&apos;).EventEmitter.listenerCount(eventEmitter,&apos;connection&apos;);</span><br><span class="line">console.log(eventListeners + &quot; 个监听器监听连接事件。&quot;);</span><br><span class="line"></span><br><span class="line">// 处理 connection 事件 </span><br><span class="line">eventEmitter.emit(&apos;connection&apos;);</span><br><span class="line"></span><br><span class="line">// 移除监绑定的 listener1 函数</span><br><span class="line">eventEmitter.removeListener(&apos;connection&apos;, listener1);</span><br><span class="line">console.log(&quot;listener1 不再受监听。&quot;);</span><br><span class="line"></span><br><span class="line">// 触发连接事件</span><br><span class="line">eventEmitter.emit(&apos;connection&apos;);</span><br><span class="line"></span><br><span class="line">eventListeners = require(&apos;events&apos;).EventEmitter.listenerCount(eventEmitter,&apos;connection&apos;);</span><br><span class="line">console.log(eventListeners + &quot; 个监听器监听连接事件。&quot;);</span><br><span class="line"></span><br><span class="line">console.log(&quot;程序执行完毕。&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>以上代码，执行结果如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ node main.js</span><br><span class="line">2 个监听器监听连接事件。</span><br><span class="line">监听器 listener1 执行。</span><br><span class="line">监听器 listener2 执行。</span><br><span class="line">listener1 不再受监听。</span><br><span class="line">监听器 listener2 执行。</span><br><span class="line">1 个监听器监听连接事件。</span><br><span class="line">程序执行完毕</span><br></pre></td></tr></table></figure></p>
+<h2 id="error-事件"><a href="#error-事件" class="headerlink" title="error 事件"></a>error 事件</h2><p> EventEmitter 定义了一个特殊的事件 error，它包含了错误的语义，我们在遇到 异常的时候通常会触发 error 事件。当 error 被触发时，EventEmitter 规定如果没有响应的监听器，Node.js 会把它当作异常，退出程序并输出错误信息。我们一般要为会触发 error 事件的对象设置监听器，避免遇到错误后整个程序崩溃。例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var events = require(&apos;events&apos;); </span><br><span class="line">var emitter = new events.EventEmitter(); </span><br><span class="line">emitter.emit(&apos;error&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>运行时会显示以下错误：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">node.js:201 </span><br><span class="line">throw e; // process.nextTick error, or &apos;error&apos; event on first tick </span><br><span class="line">^ </span><br><span class="line">Error: Uncaught, unspecified &apos;error&apos; event. </span><br><span class="line">at EventEmitter.emit (events.js:50:15) </span><br><span class="line">at Object.&lt;anonymous&gt; (/home/byvoid/error.js:5:9) </span><br><span class="line">at Module._compile (module.js:441:26) </span><br><span class="line">at Object..js (module.js:459:10) </span><br><span class="line">at Module.load (module.js:348:31) </span><br><span class="line">at Function._load (module.js:308:12) </span><br><span class="line">at Array.0 (module.js:479:10) </span><br><span class="line">at EventEmitter._tickCallback (node.js:192:40)</span><br></pre></td></tr></table></figure></p>
+<h2 id="继承-EventEmitter"><a href="#继承-EventEmitter" class="headerlink" title="继承 EventEmitter"></a>继承 EventEmitter</h2><p>大多数时候我们不会直接使用 EventEmitter，而是在对象中继承它。包括 fs、net、 http 在内的，只要是支持事件响应的核心模块都是 EventEmitter 的子类。</p>
+<p>为什么要这样做呢？原因有两点：<br>首先，具有某个实体功能的对象实现事件符合语义， 事件的监听和发射应该是一个对象的方法。<br>其次 JavaScript 的对象机制是基于原型的，支持 部分多重继承，继承 EventEmitter 不会打乱对象原有的继承关系。</p>
+<blockquote>
+<p>参考自<a href="http://www.runoob.com/" target="_blank" rel="external">http://www.runoob.com/</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/NodeJS/" rel="tag"># NodeJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../Node08/" rel="next" title="Node学习(8)--文件系统">
+                <i class="fa fa-chevron-left"></i> Node学习(8)--文件系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../XSS/" rel="prev" title="了解web安全-XSS">
+                了解web安全-XSS <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Node-js-回调函数"><span class="nav-number">1.</span> <span class="nav-text">Node.js 回调函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#阻塞代码实例"><span class="nav-number">1.1.</span> <span class="nav-text">阻塞代码实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞代码实例"><span class="nav-number">1.2.</span> <span class="nav-text">非阻塞代码实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Node-js-事件循环"><span class="nav-number">2.</span> <span class="nav-text">Node.js 事件循环</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事件驱动程序"><span class="nav-number">2.1.</span> <span class="nav-text">事件驱动程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">2.1.1.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Node-js-EventEmitter"><span class="nav-number">3.</span> <span class="nav-text">Node.js EventEmitter</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EventEmitter-类"><span class="nav-number">3.1.</span> <span class="nav-text">EventEmitter 类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类方法"><span class="nav-number">3.1.1.</span> <span class="nav-text">类方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件"><span class="nav-number">3.1.2.</span> <span class="nav-text">事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例-1"><span class="nav-number">3.1.3.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#error-事件"><span class="nav-number">3.2.</span> <span class="nav-text">error 事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承-EventEmitter"><span class="nav-number">3.3.</span> <span class="nav-text">继承 EventEmitter</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
