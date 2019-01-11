@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Linux 命令-curl 常用命令下载单个文件cur http://www.demo.com 默认将输出打印到标准输出中(STDOUT)中 通过-o/-O 选项保存下载的文件到指定的文件中 -o：将文件保存为命令行中指定的文件名的文件中curl -o test.html http://www.demo.com/index.html 将文件保存到本地并命名为 test.html -O：使用 URL">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux 命令-curl 常用命令">
+<meta property="og:url" content="http://www.needqq.com/2018/12/10/Linux_curl/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="Linux 命令-curl 常用命令下载单个文件cur http://www.demo.com 默认将输出打印到标准输出中(STDOUT)中 通过-o/-O 选项保存下载的文件到指定的文件中 -o：将文件保存为命令行中指定的文件名的文件中curl -o test.html http://www.demo.com/index.html 将文件保存到本地并命名为 test.html -O：使用 URL">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-10T13:48:42.225Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux 命令-curl 常用命令">
+<meta name="twitter:description" content="Linux 命令-curl 常用命令下载单个文件cur http://www.demo.com 默认将输出打印到标准输出中(STDOUT)中 通过-o/-O 选项保存下载的文件到指定的文件中 -o：将文件保存为命令行中指定的文件名的文件中curl -o test.html http://www.demo.com/index.html 将文件保存到本地并命名为 test.html -O：使用 URL">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2018/12/10/Linux_curl/"/>
+
+
+
+
+
+  <title>Linux 命令-curl 常用命令 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux 命令-curl 常用命令</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-10T21:19:18+08:00">
+                2018-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Linux-命令-curl-常用命令"><a href="#Linux-命令-curl-常用命令" class="headerlink" title="Linux 命令-curl 常用命令"></a>Linux 命令-curl 常用命令</h1><h2 id="下载单个文件"><a href="#下载单个文件" class="headerlink" title="下载单个文件"></a>下载单个文件</h2><p><code>cur http://www.demo.com</code> 默认将输出打印到标准输出中(STDOUT)中</p>
+<h2 id="通过-o-O-选项保存下载的文件到指定的文件中"><a href="#通过-o-O-选项保存下载的文件到指定的文件中" class="headerlink" title="通过-o/-O 选项保存下载的文件到指定的文件中"></a>通过-o/-O 选项保存下载的文件到指定的文件中</h2><ol>
+<li><code>-o</code>：将文件保存为命令行中指定的文件名的文件中<br><code>curl -o test.html http://www.demo.com/index.html</code> 将文件保存到本地并命名为 test.html</li>
+<li><code>-O</code>：使用 URL 中默认的文件名保存文件到本地<br><code>curl -O http://www.demo.com/index.html</code> 将文件下载到本地并命名为 index.html</li>
+<li><code>curl -O URL1 -O URL2</code> 同时获取多个文件<br>若同时从同一站点下载多个文件时，curl 会尝试重用链接</li>
+</ol>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><ol>
+<li><code>curl http://www.demo.com/index.html &gt; test.html</code> 可以使用 &gt; 符号将输出重定向到本地文件中</li>
+<li>有时候下载图片可以能是前面的部分名称是一样的，就最后的尾椎名不一样 <code>curl -O http://www.linux.com/dodo[1-5].JPG</code> 这样就会把 dodo1，dodo2，dodo3，dodo4，dodo5 全部保存下来</li>
+<li>有时候下载的东西会比较大，这个时候我们可以分段下载。使用内置 option：-r</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># curl -r 0-100 -o dodo1_part1.JPG http://www.linux.com/dodo1.JPG</span><br><span class="line"># curl -r 100-200 -o dodo1_part2.JPG http://www.linux.com/dodo1.JPG</span><br><span class="line"># curl -r 200- -o dodo1_part3.JPG http://www.linux.com/dodo1.JPG</span><br><span class="line"># cat dodo1_part* &gt; dodo1.JPG</span><br></pre></td></tr></table></figure>
+<p>这样就可以查看 dodo1.JPG 的内容了</p>
+<h2 id="通过-L-选项进行重定向"><a href="#通过-L-选项进行重定向" class="headerlink" title="通过-L 选项进行重定向"></a>通过-L 选项进行重定向</h2><p><code>curl -L http://www.baidu.com</code> 有时候我们想要 curl 做的，就是像浏览器一样跟随链接的跳转，获取最终的网页内容。我们可以在命令中添加 -L 选项来跟随链接重定向</p>
+<h2 id="通过使用-C-选项可对大文件使用断点续传功能"><a href="#通过使用-C-选项可对大文件使用断点续传功能" class="headerlink" title="通过使用-C 选项可对大文件使用断点续传功能"></a>通过使用-C 选项可对大文件使用断点续传功能</h2><p><code>curl -C - -O http://www.demo.com/index.html</code> 通过添加-C 选项继续对该文件进行下载，已经下载过的文件不会被重新下载, 突然掉线了，也可以使用以下的方式续传</p>
+<h2 id="通过–limit-rate-选项对-CURL-的最大网络使用进行限制"><a href="#通过–limit-rate-选项对-CURL-的最大网络使用进行限制" class="headerlink" title="通过–limit-rate 选项对 CURL 的最大网络使用进行限制"></a>通过–limit-rate 选项对 CURL 的最大网络使用进行限制</h2><p><code>curl --limit-rate 1000B -O http://www.demo.com/index.html</code> 下载速度最大不会超过 1000B/second</p>
+<h2 id="通过使用-z-选项来实现下载指定时间内修改过的文件"><a href="#通过使用-z-选项来实现下载指定时间内修改过的文件" class="headerlink" title="通过使用-z 选项来实现下载指定时间内修改过的文件"></a>通过使用-z 选项来实现下载指定时间内修改过的文件</h2><ul>
+<li>当下载一个文件时，可对该文件的最后修改日期进行判断，如果该文件在指定日期内修改过，就进行下载，否则不下载。</li>
+<li><code>curl -z 21-Dec-11 http://www.demo.com/index.html</code> 若 index.html 文件在 2011/12/21 之后有过更新才会进行下载</li>
+</ul>
+<h2 id="通过-u-选项提供用户名和密码进行授权"><a href="#通过-u-选项提供用户名和密码进行授权" class="headerlink" title="通过-u 选项提供用户名和密码进行授权"></a>通过-u 选项提供用户名和密码进行授权</h2><ol>
+<li><code>curl -u username:password URL</code></li>
+<li><code>curl -u username URL</code> 通常的做法是在命令行只输入用户名，之后会提示输入密码，这样可以保证在查看历史记录时不会将密码泄露</li>
+</ol>
+<h2 id="从-FTP-服务器下载文件"><a href="#从-FTP-服务器下载文件" class="headerlink" title="从 FTP 服务器下载文件"></a>从 FTP 服务器下载文件</h2><ul>
+<li>CURL 同样支持 FTP 下载，若在 url 中指定的是某个文件路径而非具体的某个要下载的文件名，CURL 则会列出该目录下的所有文件名而并非下载该目录下的所有文件</li>
+<li><code>curl -u ftpuser:ftppass -O ftp://ftp_server/public_html/</code> 列出 public_html 下的所有文件夹和文件</li>
+<li><code>curl -u ftpuser:ftppass -O ftp://ftp_server/public_html/xss.php</code> 下载 xss.php 文件</li>
+</ul>
+<h3 id="补充-1"><a href="#补充-1" class="headerlink" title="补充"></a>补充</h3><ol>
+<li><code>curl -O -u 用户名:密码 ftp://www.linux.com/dodo1.JPG</code></li>
+<li><code>curl -O ftp://用户名:密码@www.linux.com/dodo1.JPG</code></li>
+<li>显示下载进度条 <code>curl -# -O http://www.linux.com/dodo1.JPG</code></li>
+<li>不会显示下载进度信息 <code>curl -s -O http://www.linux.com/dodo1.JPG</code></li>
+</ol>
+<h2 id="通过-T-选项可将指定的本地文件上传到-FTP-服务器上"><a href="#通过-T-选项可将指定的本地文件上传到-FTP-服务器上" class="headerlink" title="通过 -T 选项可将指定的本地文件上传到 FTP 服务器上"></a>通过 -T 选项可将指定的本地文件上传到 FTP 服务器上</h2><ol>
+<li><code>curl -u ftpuser:ftppass -T myfile.txt ftp://ftp.testserver.com</code> 将 myfile.txt 文件上传到服务器</li>
+<li><code>curl -u ftpuser:ftppass -T &quot;{file1,file2}&quot; ftp://ftp.testserver.com</code> 同时上传多个文件</li>
+<li><code>curl -u ftpuser:ftppass -T - ftp://ftp.testserver.com/myfile_1.txt</code> 从标准输入获取内容保存到服务器指定的文件中</li>
+</ol>
+<h2 id="通过使用-v-和-trace-获取更多的链接信息"><a href="#通过使用-v-和-trace-获取更多的链接信息" class="headerlink" title="通过使用 -v 和 -trace 获取更多的链接信息"></a>通过使用 -v 和 -trace 获取更多的链接信息</h2><h2 id="x-选项可以为-CURL-添加代理功能"><a href="#x-选项可以为-CURL-添加代理功能" class="headerlink" title="-x 选项可以为 CURL 添加代理功能"></a>-x 选项可以为 CURL 添加代理功能</h2><p><code>curl -x proxysever.test.com:3128 http://google.co.in</code> 指定代理主机和端口<br>指定 proxy 服务器以及其端口</p>
+<h3 id="补充-2"><a href="#补充-2" class="headerlink" title="补充"></a>补充</h3><p>很多时候上网需要用到代理服务器(比如是使用代理服务器上网或者因为使用 curl 别人网站而被别人屏蔽 IP 地址的时候)，幸运的是 curl 通过使用内置 option：-x 来支持设置代理<br><code>curl -x 192.168.100.100:1080 http://www.linux.com</code></p>
+<h2 id="保存与使用网站-cookie-信息"><a href="#保存与使用网站-cookie-信息" class="headerlink" title="保存与使用网站 cookie 信息"></a>保存与使用网站 cookie 信息</h2><ol>
+<li><code>curl -D sugarcookies http://localhost/sugarcrm/index.php</code> 将网站的 cookies 信息保存到 sugarcookies 文件中</li>
+<li><code>curl -b sugarcookies http://localhost/sugarcrm/index.php</code> 使用上次保存的 cookie 信息</li>
+</ol>
+<h3 id="补充-3"><a href="#补充-3" class="headerlink" title="补充"></a>补充</h3><ol>
+<li>使用 -c 保存 Cookie <code>curl -c &quot;cookie-example&quot; http://www.example.com</code></li>
+<li>使用 -b 读取 Cookie，-b 后面既可以是 Cookie 字符串，也可以是保存了 Cookie 的文件名<ul>
+<li><code>curl -b &quot;JSESSIONID=D0112A5063D938586B659EF8F939BE24&quot; http://www.example.com</code></li>
+<li><code>curl -b &quot;cookie-example&quot; http://www.example.com</code></li>
+</ul>
+</li>
+<li>保存 http 的 response 里面的 header 信息。内置 option: -D</li>
+</ol>
+<h2 id="传递请求数据"><a href="#传递请求数据" class="headerlink" title="传递请求数据"></a>传递请求数据</h2><p>默认 curl 使用 GET 方式请求数据，这种方式下直接通过 URL 传递数据,可以通过 –data/-d 方式指定使用 POST 方式传递数据</p>
+<ol>
+<li><code>curl -u username https://api.github.com/user?access_token=XXXXXXXXXX</code> GET 请求</li>
+<li><code>curl -u username --data &quot;param1=value1&amp;param2=value&quot; https://api.github.com</code> POST 请求</li>
+<li><code>curl --data @filename https://github.api.com/authorizations</code> 也可以指定一个文件，将该文件中的内容当作数据传递给服务器端</li>
+<li>默认情况下，通过 POST 方式传递过去的数据中若有特殊字符，首先需要将特殊字符转义在传递给服务器端，如 value 值中包含有空格，则需要先将空格转换成%20，如：<br><code>curl -d &quot;value%201&quot; http://hostname.com</code></li>
+<li>在新版本的 CURL 中，提供了新的选项 –data-urlencode，通过该选项提供的参数会自动转义特殊字符。<br><code>curl --data-urlencode &quot;value 1&quot; http://hostname.com</code></li>
+<li>除了使用 GET 和 POST 协议外，还可以通过 -X 选项指定其它协议，如：<br><code>curl -I -X DELETE https://api.github.cim</code></li>
+<li>上传文件<br><code>curl --form &quot;fileupload=@filename.txt&quot; http://hostname/resource</code></li>
+</ol>
+<h3 id="补充-4"><a href="#补充-4" class="headerlink" title="补充"></a>补充</h3><ol>
+<li>使用 -G 选项可指定 GET 方式</li>
+<li>带 Cookie 登录<br><code>curl -c &quot;cookie-login&quot; -d &quot;userName=tom&amp;passwd=123456&quot; http://www.example.com/login</code><br>再次访问该网站时，使用以下命令：<br><code>curl -b &quot;cookie-login&quot; http://www.example.com/login</code><br>这样，就能保持访问的是登录后的页面了。</li>
+</ol>
+<h2 id="可以使用-I-选项显示-HTTP-头，而不显示文件内容，也可以使用-i-选项同时显示-HTTP-头和文件内容"><a href="#可以使用-I-选项显示-HTTP-头，而不显示文件内容，也可以使用-i-选项同时显示-HTTP-头和文件内容" class="headerlink" title="可以使用 -I 选项显示 HTTP 头，而不显示文件内容，也可以使用 -i 选项同时显示 HTTP 头和文件内容"></a>可以使用 -I 选项显示 HTTP 头，而不显示文件内容，也可以使用 -i 选项同时显示 HTTP 头和文件内容</h2><ol>
+<li><code>curl -I http://www.codebelief.com</code></li>
+<li><code>curl -i http://www.codebelief.com</code></li>
+</ol>
+<h2 id="使用-A-自定义-User-Agent"><a href="#使用-A-自定义-User-Agent" class="headerlink" title="使用 -A 自定义 User-Agent"></a>使用 -A 自定义 User-Agent</h2><p>可以使用 -A 来自定义用户代理，例如下面的命令将伪装成安卓火狐浏览器对网页进行请求：<br><code>curl -A &quot;Mozilla/5.0 (Android; Mobile; rv:35.0) Gecko/35.0 Firefox/35.0&quot; http://www.baidu.com</code></p>
+<h2 id="使用-H-自定义-header"><a href="#使用-H-自定义-header" class="headerlink" title="使用 -H 自定义 header"></a>使用 -H 自定义 header</h2><p>当我们需要传递特定的 header 的时候，可以仿照以下命令来写：<br><code>curl -H &quot;Referer: www.example.com&quot; -H &quot;User-Agent: Custom-User-Agent&quot; http://www.baidu.com</code><br>可以看到，当我们使用 -H 来自定义 User-Agent 时，需要使用 “User-Agent: xxx” 的格式。<br>我们能够直接在 header 中传递 Cookie，格式与上面的例子一样：<br><code>curl -H &quot;Cookie: JSESSIONID=D0112A5063D938586B659EF8F939BE24&quot; http://www.example.com</code></p>
+<h2 id="伪造-referer（盗链）"><a href="#伪造-referer（盗链）" class="headerlink" title="伪造 referer（盗链）"></a>伪造 referer（盗链）</h2><p>很多服务器会检查 http 访问的 referer 从而来控制访问。比如：你是先访问首页，然后再访问首页中的邮箱页面，这里访问邮箱的 referer 地址就是访问首页成功后的页面地址，如果服务器发现对邮箱页面访问的 referer 地址不是首页的地址，就断定那是个盗连了<br>curl 中内置 option：-e 可以让我们设定 referer<br><code>curl -e &quot;www.linux.com&quot; http://mail.linux.com</code> 这样就会让服务器其以为你是从 www.linux.com 点击某个链接过来的</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../Linux/" rel="next" title="Linux 常用命令">
+                <i class="fa fa-chevron-left"></i> Linux 常用命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../MINA/" rel="prev" title="小程序开发">
+                小程序开发 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-命令-curl-常用命令"><span class="nav-number">1.</span> <span class="nav-text">Linux 命令-curl 常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下载单个文件"><span class="nav-number">1.1.</span> <span class="nav-text">下载单个文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过-o-O-选项保存下载的文件到指定的文件中"><span class="nav-number">1.2.</span> <span class="nav-text">通过-o/-O 选项保存下载的文件到指定的文件中</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#补充"><span class="nav-number">1.2.1.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过-L-选项进行重定向"><span class="nav-number">1.3.</span> <span class="nav-text">通过-L 选项进行重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过使用-C-选项可对大文件使用断点续传功能"><span class="nav-number">1.4.</span> <span class="nav-text">通过使用-C 选项可对大文件使用断点续传功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过–limit-rate-选项对-CURL-的最大网络使用进行限制"><span class="nav-number">1.5.</span> <span class="nav-text">通过–limit-rate 选项对 CURL 的最大网络使用进行限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过使用-z-选项来实现下载指定时间内修改过的文件"><span class="nav-number">1.6.</span> <span class="nav-text">通过使用-z 选项来实现下载指定时间内修改过的文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过-u-选项提供用户名和密码进行授权"><span class="nav-number">1.7.</span> <span class="nav-text">通过-u 选项提供用户名和密码进行授权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从-FTP-服务器下载文件"><span class="nav-number">1.8.</span> <span class="nav-text">从 FTP 服务器下载文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#补充-1"><span class="nav-number">1.8.1.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过-T-选项可将指定的本地文件上传到-FTP-服务器上"><span class="nav-number">1.9.</span> <span class="nav-text">通过 -T 选项可将指定的本地文件上传到 FTP 服务器上</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过使用-v-和-trace-获取更多的链接信息"><span class="nav-number">1.10.</span> <span class="nav-text">通过使用 -v 和 -trace 获取更多的链接信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x-选项可以为-CURL-添加代理功能"><span class="nav-number">1.11.</span> <span class="nav-text">-x 选项可以为 CURL 添加代理功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#补充-2"><span class="nav-number">1.11.1.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#保存与使用网站-cookie-信息"><span class="nav-number">1.12.</span> <span class="nav-text">保存与使用网站 cookie 信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#补充-3"><span class="nav-number">1.12.1.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传递请求数据"><span class="nav-number">1.13.</span> <span class="nav-text">传递请求数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#补充-4"><span class="nav-number">1.13.1.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可以使用-I-选项显示-HTTP-头，而不显示文件内容，也可以使用-i-选项同时显示-HTTP-头和文件内容"><span class="nav-number">1.14.</span> <span class="nav-text">可以使用 -I 选项显示 HTTP 头，而不显示文件内容，也可以使用 -i 选项同时显示 HTTP 头和文件内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-A-自定义-User-Agent"><span class="nav-number">1.15.</span> <span class="nav-text">使用 -A 自定义 User-Agent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-H-自定义-header"><span class="nav-number">1.16.</span> <span class="nav-text">使用 -H 自定义 header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#伪造-referer（盗链）"><span class="nav-number">1.17.</span> <span class="nav-text">伪造 referer（盗链）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

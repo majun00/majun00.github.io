@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Yarn," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="常用命令通过 npm 安装1npm install --global yarn 执行 set PATH=%PATH%;C:\.yarn\bin 来重新设置环境。 初始化一个新的项目1yarn init 添加一个依赖包123yarn add [package]yarn add [package]@[version]yarn add [package]@[tag] 更新一个依赖包123yarn upg">
+<meta name="keywords" content="Yarn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习yarn">
+<meta property="og:url" content="http://www.needqq.com/2018/03/19/yarn/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="常用命令通过 npm 安装1npm install --global yarn 执行 set PATH=%PATH%;C:\.yarn\bin 来重新设置环境。 初始化一个新的项目1yarn init 添加一个依赖包123yarn add [package]yarn add [package]@[version]yarn add [package]@[tag] 更新一个依赖包123yarn upg">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-10T14:53:17.494Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习yarn">
+<meta name="twitter:description" content="常用命令通过 npm 安装1npm install --global yarn 执行 set PATH=%PATH%;C:\.yarn\bin 来重新设置环境。 初始化一个新的项目1yarn init 添加一个依赖包123yarn add [package]yarn add [package]@[version]yarn add [package]@[tag] 更新一个依赖包123yarn upg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2018/03/19/yarn/"/>
+
+
+
+
+
+  <title>学习yarn | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">学习yarn</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T22:31:10+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/Yarn/" itemprop="url" rel="index">
+                    <span itemprop="name">Yarn</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><h4 id="通过-npm-安装"><a href="#通过-npm-安装" class="headerlink" title="通过 npm 安装"></a>通过 npm 安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --global yarn</span><br></pre></td></tr></table></figure>
+<p>执行 <code>set PATH=%PATH%;C:\.yarn\bin</code> 来重新设置环境。</p>
+<h4 id="初始化一个新的项目"><a href="#初始化一个新的项目" class="headerlink" title="初始化一个新的项目"></a>初始化一个新的项目</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn init</span><br></pre></td></tr></table></figure>
+<h4 id="添加一个依赖包"><a href="#添加一个依赖包" class="headerlink" title="添加一个依赖包"></a>添加一个依赖包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yarn add [package]</span><br><span class="line">yarn add [package]@[version]</span><br><span class="line">yarn add [package]@[tag]</span><br></pre></td></tr></table></figure>
+<h4 id="更新一个依赖包"><a href="#更新一个依赖包" class="headerlink" title="更新一个依赖包"></a>更新一个依赖包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yarn upgrade [package]</span><br><span class="line">yarn upgrade [package]@[version]</span><br><span class="line">yarn upgrade [package]@[tag]</span><br></pre></td></tr></table></figure>
+<h4 id="删除一个依赖包"><a href="#删除一个依赖包" class="headerlink" title="删除一个依赖包"></a>删除一个依赖包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn remove [package]</span><br></pre></td></tr></table></figure>
+<h4 id="安装所有的依赖包"><a href="#安装所有的依赖包" class="headerlink" title="安装所有的依赖包"></a>安装所有的依赖包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn</span><br></pre></td></tr></table></figure>
+<p>or<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn install</span><br></pre></td></tr></table></figure></p>
+<h1 id="使用教程"><a href="#使用教程" class="headerlink" title="使用教程"></a>使用教程</h1><h4 id="三步走"><a href="#三步走" class="headerlink" title="三步走"></a><strong>三步走</strong></h4><ol>
+<li>项目下初始化 - 切到你的项目下，执行<code>yarn init</code>，会在根目录下生成一个<code>package.json</code></li>
+<li>添加依赖安装</li>
+<li>开工</li>
+</ol>
+<h3 id="命令解释"><a href="#命令解释" class="headerlink" title="命令解释"></a><strong>命令解释</strong></h3><ul>
+<li><code>yarn init</code> </li>
+</ul>
+<h4 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a><strong>添加依赖</strong></h4><ul>
+<li>yarn add [package] — 添加包，会自动安装最新版本，注意会覆盖指定版本号！！！</li>
+<li><code>yarn add [package]@[version]</code> — 带版本号安装</li>
+<li><code>yarn add [package]@[tag]</code> — tag，是指代git上的推送的tag【no release!!】</li>
+</ul>
+<h4 id="更新依赖"><a href="#更新依赖" class="headerlink" title="更新依赖"></a><strong>更新依赖</strong></h4><ul>
+<li><code>yarn upgrade [package]</code> — 更新某个包</li>
+<li><code>yarn upgrade [package]@[version]</code> — 指定更新到某个版本</li>
+<li><code>yarn upgrade [package]@[tag]</code> — 指定更新版本到某个标签<br>以上不能使用， 唯一能用的是在项目下执行，<code>yarn upgarde</code>, 会遍历所有依赖，然后全部更新</li>
+</ul>
+<h4 id="移除依赖"><a href="#移除依赖" class="headerlink" title="移除依赖"></a><strong>移除依赖</strong></h4><ul>
+<li><code>yarn remove [package]</code> — 移除某个包 </li>
+</ul>
+<h4 id="在其他项目启动项目"><a href="#在其他项目启动项目" class="headerlink" title="在其他项目启动项目"></a><strong>在其他项目启动项目</strong></h4><p>类似npm，执行<code>npm install</code>;<br>yarn管理器支持两种安装所有依赖的命令：<code>yarn</code> 或者 <code>yarn install</code><br>yarn管理器有一个很重要的文件需要注意，就是<strong><code>yarn.lock</code></strong>，这个是用来依赖的正确性，快速可靠安装的；是执行cli的时候自动生成的，在项目的根目录下，需要保留！！！！不要编辑它，这是自动生成的 在其他电脑初始化，必须记得把<code>package.json</code>和<code>yarn.lock</code>复制过去，简直就是秒下载【缓存机制】</p>
+<h3 id="yarn-lock-文件"><a href="#yarn-lock-文件" class="headerlink" title="yarn.lock 文件"></a>yarn.lock 文件</h3><p>npm 和 Yarn 都使用 <code>package.json</code> 来跟踪项目的依赖，版本号并非一直准确，因为你可以定义版本号范围，这样你可以选择一个主版本和次要版本的包，但让 npm 安装最新的补丁也许可以修改一些 bug。</p>
+<p>理想状态下使用<a href="http://semver.org/" target="_blank" rel="external">语义化版本</a>发布补丁不会包含大的变化，但不幸的是这必非真理。npm 的这种策略可能导致两台拥有相同 <code>package.json</code> 文件的机子安装了不同版本的包，这可能导致一些错误。</p>
+<p>为了避免包版本的错误匹配，一个确定的安装版本被固定在一个锁文件中。每次模块被添加时，Yarn 就会创建（或更新）<code>yarn.lock</code> 文件，这样你就可以保证其它机子也安装相同版本的包，同时包含了 <code>package.json</code> 中定义的一系列允许的版本。</p>
+<p>在 npm 中同样可以使用 <code>npm shrinkwrap</code> 命令来生成一个锁文件，这样在使用 <code>npm install</code> 时会在读取 <code>package.json</code> 前先读取这个文件，就像 Yarn 会先读取<code>yarn.lock</code> 一样。这里的区别是 Yarn 总会自动更新 <code>yarn.lock</code>，而 npm 需要你重新操作。</p>
+<ol>
+<li><a href="https://yarnpkg.com/en/docs/configuration#toc-use-yarn-lock-to-pin-your-dependencies" target="_blank" rel="external">yarn.lock 文档</a></li>
+<li><a href="https://docs.npmjs.com/cli/shrinkwrap" target="_blank" rel="external">npm shrinkwrap 文档</a></li>
+</ol>
+<h3 id="并行安装"><a href="#并行安装" class="headerlink" title="并行安装"></a>并行安装</h3><p>每当 npm 或 Yarn 需要安装一个包时，它会进行一系列的任务。在 npm 中这些任务是按包的顺序一个个执行，这意味着必须等待上一个包被完整安装才会进入下一个；Yarn 则并行的执行这些任务，提高了性能。</p>
+<p>为了比较，我在没有使用 shrinkwrap/yarn.lock 的方式以及清理了缓存下使用 npm 与 Yarn 安装 <a href="https://www.npmjs.com/package/express" target="_blank" rel="external">express</a>，总共安装了 42 个依赖。</p>
+<ul>
+<li>npm: 9 s</li>
+<li>Yarn: 1.37 s</li>
+</ul>
+<p>我无法相信自己的眼睛，所以重复以上步骤，但得到相同结果。接着我安装 <a href="https://www.npmjs.com/package/gulp" target="_blank" rel="external">gulp</a> 进行测试，总共安装了 195 个依赖。</p>
+<ul>
+<li>npm: 11 s</li>
+<li>Yarn: 7.81 s</li>
+</ul>
+<p>似乎根据所需要安装的包的数量而有所不同，但 Yarn 依旧比较快。</p>
+<h3 id="清晰的输出"><a href="#清晰的输出" class="headerlink" title="清晰的输出"></a>清晰的输出</h3><p>npm 默认情况下非常冗余，例如使用 <code>npm install</code> 时它会递归列出所有安装的信息；而 Yarn 则一点也不冗余，当可以使用其它命令时，它适当的使用 emojis 表情来减少信息（Windows 除外）。</p>
+<h2 id="Yarn-vs-npm-CLI-的差异"><a href="#Yarn-vs-npm-CLI-的差异" class="headerlink" title="Yarn vs npm: CLI 的差异"></a>Yarn vs npm: CLI 的差异</h2><p>除了一些功能差异，Yarn 命令也存在一些区别。例如移除或修改了一些 npm 命令以及添加了几个有趣的命令。</p>
+<h3 id="yarn-global"><a href="#yarn-global" class="headerlink" title="yarn global"></a>yarn global</h3><p>不像 npm 添加 <code>-g</code> 或 <code>--global</code> 可以进行全局安装，Yarn 使用的是 <code>global</code> 前缀。不过与 npm 类似，项目依赖不推荐全局安装。</p>
+<p><code>global</code> 前缀只能用于 <code>yarn add</code>, <code>yarn bin</code>, <code>yarn ls</code> 和 <code>yarn remove</code>，除<code>yarn add</code> 外，这些命令都和 npm 等效。</p>
+<h3 id="yarn-install"><a href="#yarn-install" class="headerlink" title="yarn install"></a>yarn install</h3><p><code>npm install</code> 命令会根据 <code>package.json</code> 安装依赖以及允许你添加新的模块；<code>yarn install</code> 仅会按 <code>yarn.lock</code> 或 <code>package.json</code> 里面的依赖顺序来安装模块。</p>
+<ol>
+<li><a href="https://yarnpkg.com/en/docs/cli/install" target="_blank" rel="external">yarn install 文档</a></li>
+<li><a href="https://docs.npmjs.com/cli/install" target="_blank" rel="external">npm install 文档</a></li>
+</ol>
+<h3 id="yarn-add-–dev"><a href="#yarn-add-–dev" class="headerlink" title="yarn add [–dev]"></a>yarn add [–dev]</h3><p>与 <code>npm install</code> 类似，<code>yarn add</code> 允许你添加与安装模块，就像命令的名称一样，添加依赖意味着也会算定将依赖写入 <code>package.json</code>，类似 npm 的 <code>--save</code> 参数；Yarn 的 <code>--dev</code> 参数则是添加开发依赖，类似 npm 的 <code>--save-dev</code> 参数。</p>
+<ol>
+<li><a href="https://yarnpkg.com/en/docs/cli/add" target="_blank" rel="external">yarn add 文档</a></li>
+<li><a href="https://docs.npmjs.com/cli/install" target="_blank" rel="external">npm install 文档</a></li>
+</ol>
+<h3 id="yarn-licenses-ls-generate-disclaimer"><a href="#yarn-licenses-ls-generate-disclaimer" class="headerlink" title="yarn licenses [ls|generate-disclaimer]"></a>yarn licenses [ls|generate-disclaimer]</h3><p>npm 没有类似命令来方便编写自己的包。<code>yarn licenses ls</code> 列出所有已安装包的许可协议。<code>yarn licenses generate-disclaimer</code> 生成包含已安装包许可协议的免责声明。某些协议要求使用者必须在项目中包含该协议，这时候该命令将变得非常好用。</p>
+<ol>
+<li><a href="https://yarnpkg.com/en/docs/cli/licenses" target="_blank" rel="external">yarn licenses 文档</a></li>
+</ol>
+<h3 id="yarn-why"><a href="#yarn-why" class="headerlink" title="yarn why"></a>yarn why</h3><p>该命令会查找依赖关系并找出为什么会将某些包安装在你的项目中。也许你明确为什么添加，也许它只是你安装包中的一个依赖，<code>yarn why</code> 可以帮你弄找出。</p>
+<ol>
+<li><a href="https://yarnpkg.com/en/docs/cli/why" target="_blank" rel="external">yarn why 文档</a></li>
+</ol>
+<h3 id="yarn-upgrade"><a href="#yarn-upgrade" class="headerlink" title="yarn upgrade"></a>yarn upgrade</h3><p>该命令会根据符合 <code>package.json</code> 设定的规则而不是 <code>yarn.lock</code> 定义的确切版本来将包更新到最新版本。如果想用 npm 来实现相同目的，可以这样执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf node_modules</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></p>
+<p>不要将该命令与 <code>npm update</code> 混淆，它指的是更新到自己的最新版。</p>
+<ol>
+<li><a href="https://yarnpkg.com/en/docs/cli/upgrade" target="_blank" rel="external">yarn upgrade 文档</a></li>
+</ol>
+<h3 id="yarn-generate-lock-entry"><a href="#yarn-generate-lock-entry" class="headerlink" title="yarn generate-lock-entry"></a>yarn generate-lock-entry</h3><p><code>yarn generate-lock-entry</code> 会基于 <code>package.json</code> 设置的依赖生成 <code>yarn.lock</code> 文件，该命令与 <code>npm shrinkwrap</code> 类似，但应该小心使用，因为通过 <code>yarn add</code> 和 <code>yarn upgrade</code> 命令添加或更新依赖时会自动更新生成该锁文件。</p>
+<ol>
+<li><a href="https://yarnpkg.com/en/docs/cli/generate-lock-entry" target="_blank" rel="external">yarn generate-lock-entry 文档</a></li>
+<li><a href="https://docs.npmjs.com/cli/shrinkwrap" target="_blank" rel="external">npm shrinkwrap 文档</a></li>
+</ol>
+<p>下面介绍一些常用的命令：</p>
+<ul>
+<li><p><code>yarn</code>和 <code>yarn install</code> ，这两个命令的效果是一样的，等同于<code>npm install</code>，使用这个命令会在该目录生成一个yarn.lock的文件。</p>
+</li>
+<li><p><code>yarn add koa</code>，安装<code>koa</code>模块并更新package.json和yarn.lock文件，等同于<code>npm install koa --save</code>。也可以使用<code>yarn global add koa</code>，等同于<code>npm install koa -g</code>，将模块直接安装到全局环境变量里，方便使用。</p>
+</li>
+<li><p><code>yarn list</code>，根据当前项目的package.json查看模块的依赖及版本。</p>
+</li>
+<li><p><code>yarn info koa</code>，查看<code>koa</code>模块的详细信息，类似于<code>npm view koa</code>。</p>
+</li>
+<li><p><code>yarn init</code>，初始化项目package.json文件，等同于<code>npm init</code>。</p>
+</li>
+<li><p><code>yarn run</code>，运行package.json中的<code>script</code>。</p>
+</li>
+</ul>
+<p>注意 : 之前说了npm存在一些历史遗留问题 比如说你的项目模块依赖是图中描述的，<code>@1.2.1</code>代表这个模块的版本。在你安装A的时候需要安装依赖C和D，很多依赖不会指定版本号，默认会安装最新的版本，这样就会出现问题：比如今天安装模块的时候C和D是某一个版本，而当以后C、D更新的时候，再次安装模块就会安装C和D的最新版本，如果新的版本无法兼容你的项目，你的程序可能就会出BUG，甚至无法运行。这就是npm的弊端，而yarn为了解决这个问题推出了yarn.lock的机制，这是作者项目中的yarn.lock文件。大家会看到，这个文件已经把依赖模块的版本号全部锁定，当你执行<code>yarn install</code>的时候，yarn会读取这个文件获得依赖的版本号，然后依照这个版本号去安装对应的依赖模块，这样依赖就会被锁定，以后再也不用担心版本号的问题了。其他人或者其他环境下使用的时候，把这个yarn.lock拷贝到相应的环境项目下再安装即可，<strong>注意：这个文件不要手动修改它，当你使用一些操作如<code>yarn add</code>时，yarn会自动更新yarn.lock。</strong></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/Yarn/" rel="tag"># Yarn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../SASS/" rel="next" title="学习Sass">
+                <i class="fa fa-chevron-left"></i> 学习Sass
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../webpack/" rel="prev" title="学习Webpack">
+                学习Webpack <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过-npm-安装"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">通过 npm 安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化一个新的项目"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">初始化一个新的项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加一个依赖包"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">添加一个依赖包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新一个依赖包"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">更新一个依赖包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除一个依赖包"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">删除一个依赖包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装所有的依赖包"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">安装所有的依赖包</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用教程"><span class="nav-number">2.</span> <span class="nav-text">使用教程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#三步走"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">三步走</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令解释"><span class="nav-number">2.0.1.</span> <span class="nav-text">命令解释</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加依赖"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">添加依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新依赖"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">更新依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移除依赖"><span class="nav-number">2.0.1.3.</span> <span class="nav-text">移除依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在其他项目启动项目"><span class="nav-number">2.0.1.4.</span> <span class="nav-text">在其他项目启动项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-lock-文件"><span class="nav-number">2.0.2.</span> <span class="nav-text">yarn.lock 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并行安装"><span class="nav-number">2.0.3.</span> <span class="nav-text">并行安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清晰的输出"><span class="nav-number">2.0.4.</span> <span class="nav-text">清晰的输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Yarn-vs-npm-CLI-的差异"><span class="nav-number">2.1.</span> <span class="nav-text">Yarn vs npm: CLI 的差异</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-global"><span class="nav-number">2.1.1.</span> <span class="nav-text">yarn global</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-install"><span class="nav-number">2.1.2.</span> <span class="nav-text">yarn install</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-add-–dev"><span class="nav-number">2.1.3.</span> <span class="nav-text">yarn add [–dev]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-licenses-ls-generate-disclaimer"><span class="nav-number">2.1.4.</span> <span class="nav-text">yarn licenses [ls|generate-disclaimer]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-why"><span class="nav-number">2.1.5.</span> <span class="nav-text">yarn why</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-upgrade"><span class="nav-number">2.1.6.</span> <span class="nav-text">yarn upgrade</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yarn-generate-lock-entry"><span class="nav-number">2.1.7.</span> <span class="nav-text">yarn generate-lock-entry</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

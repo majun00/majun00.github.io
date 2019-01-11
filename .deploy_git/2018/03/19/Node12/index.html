@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NodeJS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Node.js 多进程我们都知道 Node.js 是以单线程的模式运行的，但它使用的是事件驱动来处理并发，这样有助于我们在多核 cpu 的系统上创建多个子进程，从而提高性能。 每个子进程总是带有三个流对象：child.stdin, child.stdout 和child.stderr。他们可能会共享父进程的 stdio 流，或者也可以是独立的被导流的流对象。Node 提供了 child_proce">
+<meta name="keywords" content="NodeJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node学习(12)--进程及打包">
+<meta property="og:url" content="http://www.needqq.com/2018/03/19/Node12/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="Node.js 多进程我们都知道 Node.js 是以单线程的模式运行的，但它使用的是事件驱动来处理并发，这样有助于我们在多核 cpu 的系统上创建多个子进程，从而提高性能。 每个子进程总是带有三个流对象：child.stdin, child.stdout 和child.stderr。他们可能会共享父进程的 stdio 流，或者也可以是独立的被导流的流对象。Node 提供了 child_proce">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-19T08:01:46.388Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node学习(12)--进程及打包">
+<meta name="twitter:description" content="Node.js 多进程我们都知道 Node.js 是以单线程的模式运行的，但它使用的是事件驱动来处理并发，这样有助于我们在多核 cpu 的系统上创建多个子进程，从而提高性能。 每个子进程总是带有三个流对象：child.stdin, child.stdout 和child.stderr。他们可能会共享父进程的 stdio 流，或者也可以是独立的被导流的流对象。Node 提供了 child_proce">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2018/03/19/Node12/"/>
+
+
+
+
+
+  <title>Node学习(12)--进程及打包 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Node学习(12)--进程及打包</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T15:40:27+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/NodeJS/" itemprop="url" rel="index">
+                    <span itemprop="name">NodeJS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Node-js-多进程"><a href="#Node-js-多进程" class="headerlink" title="Node.js 多进程"></a>Node.js 多进程</h1><p>我们都知道 Node.js 是以单线程的模式运行的，但它使用的是事件驱动来处理并发，这样有助于我们在多核 cpu 的系统上创建多个子进程，从而提高性能。</p>
+<p>每个子进程总是带有三个流对象：child.stdin, child.stdout 和child.stderr。他们可能会共享父进程的 stdio 流，或者也可以是独立的被导流的流对象。Node 提供了 child_process 模块来创建子进程，方法有：</p>
+<ul>
+<li><strong>exec</strong> - child_process.exec 使用子进程执行命令，缓存子进程的输出，并将子进程的输出以回调函数参数的形式返回。</li>
+<li><strong>spawn</strong> - child_process.spawn 使用指定的命令行参数创建新进程。</li>
+<li><strong>fork</strong> - child_process.fork 是 spawn()的特殊形式，用于在子进程中运行的模块，如 fork(‘./son.js’) 相当于 spawn(‘node’, [‘./son.js’]) 。与spawn方法不同的是，fork会在父进程与子进程之间，建立一个通信管道，用于进程之间的通信。</li>
+</ul>
+<h2 id="exec-方法"><a href="#exec-方法" class="headerlink" title="exec() 方法"></a>exec() 方法</h2><p>child_process.exec 使用子进程执行命令，缓存子进程的输出，并将子进程的输出以回调函数参数的形式返回。<br>语法如下所示：<code>child_process.exec(command[, options], callback)</code></p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>参数说明如下：<br><strong>command：</strong> 字符串， 将要运行的命令，参数使用空格隔开</p>
+<p><strong>options ：</strong></p>
+<ul>
+<li>cwd ，字符串，子进程的当前工作目录</li>
+<li>env，对象 环境变量键值对</li>
+<li>encoding ，字符串，字符编码（默认： ‘utf8’）</li>
+<li>shell ，字符串，将要执行命令的 Shell（默认: 在 UNIX 中为<code>/bin/sh</code>， 在 Windows 中为<code>cmd.exe</code>， Shell 应当能识别 <code>-c</code>开关在 UNIX 中，或 <code>/s /c</code> 在 Windows 中。 在Windows 中，命令行解析应当能兼容<code>cmd.exe</code>）</li>
+<li>timeout，数字，超时时间（默认： 0）</li>
+<li>maxBuffer，数字， 在 stdout 或 stderr 中允许存在的最大缓冲（二进制），如果超出那么子进程将会被杀死 （默认: 200*1024）</li>
+<li>killSignal ，字符串，结束信号（默认：’SIGTERM’）</li>
+<li>uid，数字，设置用户进程的 ID</li>
+<li>gid，数字，设置进程组的 ID</li>
+</ul>
+<p><strong>callback ：</strong>回调函数，包含三个参数error, stdout 和 stderr。</p>
+<p>exec() 方法返回最大的缓冲区，并等待进程结束，一次性返回缓冲区的内容。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>让我们创建两个 js 文件 support.js 和 master.js。</p>
+<p>support.js 文件代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&quot;进程 &quot; + process.argv[2] + &quot; 执行。&quot; );</span><br></pre></td></tr></table></figure></p>
+<p>master.js 文件代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&apos;fs&apos;);</span><br><span class="line">const child_process = require(&apos;child_process&apos;);</span><br><span class="line"></span><br><span class="line">for(var i=0; i&lt;3; i++) &#123;</span><br><span class="line">   var workerProcess = child_process.exec(&apos;node support.js &apos;+i,</span><br><span class="line">      function (error, stdout, stderr) &#123;</span><br><span class="line">         if (error) &#123;</span><br><span class="line">            console.log(error.stack);</span><br><span class="line">            console.log(&apos;Error code: &apos;+error.code);</span><br><span class="line">            console.log(&apos;Signal received: &apos;+error.signal);</span><br><span class="line">         &#125;</span><br><span class="line">         console.log(&apos;stdout: &apos; + stdout);</span><br><span class="line">         console.log(&apos;stderr: &apos; + stderr);</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      workerProcess.on(&apos;exit&apos;, function (code) &#123;</span><br><span class="line">      console.log(&apos;子进程已退出，退出码 &apos;+code);</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行以上代码，输出结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ node master.js </span><br><span class="line">子进程已退出，退出码 0</span><br><span class="line">stdout: 进程 1 执行。</span><br><span class="line"></span><br><span class="line">stderr: </span><br><span class="line">子进程已退出，退出码 0</span><br><span class="line">stdout: 进程 0 执行。</span><br><span class="line"></span><br><span class="line">stderr: </span><br><span class="line">子进程已退出，退出码 0</span><br><span class="line">stdout: 进程 2 执行。</span><br><span class="line"></span><br><span class="line">stderr:</span><br></pre></td></tr></table></figure></p>
+<h2 id="spawn-方法"><a href="#spawn-方法" class="headerlink" title="spawn() 方法"></a>spawn() 方法</h2><p>child_process.spawn 使用指定的命令行参数创建新进程，<br>语法格式如下：<code>child_process.spawn(command[, args][, options])</code></p>
+<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><p>参数说明如下：<br><strong>command：</strong> 将要运行的命令</p>
+<p><strong>args：</strong> Array 字符串参数数组<br><strong>options Object</strong></p>
+<ul>
+<li>cwd String 子进程的当前工作目录</li>
+<li>env Object 环境变量键值对</li>
+<li>stdio Array|String 子进程的 stdio 配置</li>
+<li>detached Boolean 这个子进程将会变成进程组的领导</li>
+<li>uid Number 设置用户进程的 ID</li>
+<li>gid Number 设置进程组的 ID</li>
+</ul>
+<p>spawn() 方法返回流 (stdout &amp; stderr)，在进程返回大量数据时使用。进程一旦开始执行时 spawn() 就开始接收响应。</p>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><p>让我们创建两个 js 文件 support.js 和 master.js。<br>support.js 文件代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&quot;进程 &quot; + process.argv[2] + &quot; 执行。&quot; );</span><br></pre></td></tr></table></figure></p>
+<p>master.js 文件代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&apos;fs&apos;);</span><br><span class="line">const child_process = require(&apos;child_process&apos;);</span><br><span class="line"> </span><br><span class="line">for(var i=0; i&lt;3; i++) &#123;</span><br><span class="line">   var workerProcess = child_process.spawn(&apos;node&apos;, [&apos;support.js&apos;, i]);</span><br><span class="line"></span><br><span class="line">   workerProcess.stdout.on(&apos;data&apos;, function (data) &#123;</span><br><span class="line">      console.log(&apos;stdout: &apos; + data);</span><br><span class="line">   &#125;);</span><br><span class="line"></span><br><span class="line">   workerProcess.stderr.on(&apos;data&apos;, function (data) &#123;</span><br><span class="line">      console.log(&apos;stderr: &apos; + data);</span><br><span class="line">   &#125;);</span><br><span class="line"></span><br><span class="line">   workerProcess.on(&apos;close&apos;, function (code) &#123;</span><br><span class="line">      console.log(&apos;子进程已退出，退出码 &apos;+code);</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行以上代码，输出结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ node master.js stdout: 进程 0 执行。</span><br><span class="line"></span><br><span class="line">子进程已退出，退出码 0</span><br><span class="line">stdout: 进程 1 执行。</span><br><span class="line"></span><br><span class="line">子进程已退出，退出码 0</span><br><span class="line">stdout: 进程 2 执行。</span><br><span class="line"></span><br><span class="line">子进程已退出，退出码 0</span><br></pre></td></tr></table></figure></p>
+<h2 id="fork-方法"><a href="#fork-方法" class="headerlink" title="fork 方法"></a>fork 方法</h2><p>child_process.fork 是 spawn() 方法的特殊形式，用于创建进程，<br>语法格式如下：<code>child_process.fork(modulePath[, args][, options])</code></p>
+<h3 id="参数-2"><a href="#参数-2" class="headerlink" title="参数"></a>参数</h3><p>参数说明如下：<br><strong>modulePath</strong>： String，将要在子进程中运行的模块</p>
+<p><strong>args</strong>： Array 字符串参数数组</p>
+<p><strong>options</strong>：Object</p>
+<ul>
+<li>cwd String 子进程的当前工作目录</li>
+<li>env Object 环境变量键值对</li>
+<li>execPath String 创建子进程的可执行文件</li>
+<li>execArgv Array 子进程的可执行文件的字符串参数数组（默认： process.execArgv）</li>
+<li>silent Boolean 如果为<code>true</code>，子进程的<code>stdin</code>，<code>stdout</code>和<code>stderr</code>将会被关联至父进程，否则，它们将会从父进程中继承。（默认为：<code>false</code>）</li>
+<li>uid Number 设置用户进程的 ID</li>
+<li>gid Number 设置进程组的 ID</li>
+</ul>
+<p>返回的对象除了拥有ChildProcess实例的所有方法，还有一个内建的通信信道。</p>
+<h3 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h3><p>让我们创建两个 js 文件 support.js 和 master.js。<br>support.js 文件代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log(&quot;进程 &quot; + process.argv[2] + &quot; 执行。&quot; );</span><br></pre></td></tr></table></figure></p>
+<p>master.js 文件代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&apos;fs&apos;);</span><br><span class="line">const child_process = require(&apos;child_process&apos;);</span><br><span class="line"> </span><br><span class="line">for(var i=0; i&lt;3; i++) &#123;</span><br><span class="line">   var worker_process = child_process.fork(&quot;support.js&quot;, [i]);    </span><br><span class="line"></span><br><span class="line">   worker_process.on(&apos;close&apos;, function (code) &#123;</span><br><span class="line">      console.log(&apos;子进程已退出，退出码 &apos; + code);</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行以上代码，输出结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ node master.js </span><br><span class="line">进程 0 执行。</span><br><span class="line">子进程已退出，退出码 0</span><br><span class="line">进程 1 执行。</span><br><span class="line">子进程已退出，退出码 0</span><br><span class="line">进程 2 执行。</span><br><span class="line">子进程已退出，退出码 0</span><br></pre></td></tr></table></figure></p>
+<h1 id="Node-js-JXcore-打包"><a href="#Node-js-JXcore-打包" class="headerlink" title="Node.js JXcore 打包"></a>Node.js JXcore 打包</h1><p>JXcore 是一个支持多线程的 Node.js 发行版本，基本不需要对你现有的代码做任何改动就可以直接线程安全地以多线程运行。</p>
+<h2 id="JXcore-安装"><a href="#JXcore-安装" class="headerlink" title="JXcore 安装"></a>JXcore 安装</h2><p>下载 JXcore 安装包，并解压，在解压的的目录下提供了 jx 二进制文件命令，接下来我们主要使用这个命令。</p>
+<h3 id="步骤1、下载"><a href="#步骤1、下载" class="headerlink" title="步骤1、下载"></a>步骤1、下载</h3><p>下载 JXcore 安装包 <a href="https://github.com/jxcore/jxcore-release" target="_blank" rel="external">https://github.com/jxcore/jxcore-release</a>，你需要根据你自己的系统环境来下载安装包。<br>1、Window 平台下载：<a href="https://raw.githubusercontent.com/jxcore/jxcore-release/master/0311/jx_win64v8.zip" target="_blank" rel="external">Download(Windows x64 (V8))</a>。<br>2、Linux/OSX 安装命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://jxcore.com/xil.sh | bash</span><br></pre></td></tr></table></figure></p>
+<p>如果权限不足，可以使用以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://jxcore.com/xil.sh | sudo bash</span><br></pre></td></tr></table></figure></p>
+<p>以上步骤如果操作正确，使用以下命令，会输出版本号信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ jx --version</span><br><span class="line">v0.10.32</span><br></pre></td></tr></table></figure></p>
+<h2 id="包代码"><a href="#包代码" class="headerlink" title="包代码"></a>包代码</h2><p>例如，我们的 Node.js 项目包含以下几个文件，其中 index.js 是主文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">drwxr-xr-x  2 root root  4096 Nov 13 12:42 images</span><br><span class="line">-rwxr-xr-x  1 root root 30457 Mar  6 12:19 index.htm</span><br><span class="line">-rwxr-xr-x  1 root root 30452 Mar  1 12:54 index.js</span><br><span class="line">drwxr-xr-x 23 root root  4096 Jan 15 03:48 node_modules</span><br><span class="line">drwxr-xr-x  2 root root  4096 Mar 21 06:10 scripts</span><br><span class="line">drwxr-xr-x  2 root root  4096 Feb 15 11:56 style</span><br></pre></td></tr></table></figure></p>
+<p>接下来我们使用 <strong>jx</strong> 命令打包以上项目，并指定 index.js 为 Node.js 项目的主文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jx package index.js index</span><br></pre></td></tr></table></figure></p>
+<p>以上命令执行成功，会生成以下两个文件：</p>
+<ul>
+<li><strong>index.jxp</strong> 这是一个中间件文件，包含了需要编译的完整项目信息。</li>
+<li><strong><a href="http://index.jx/" target="_blank" rel="external">index.jx</a></strong> 这是一个完整包信息的二进制文件，可运行在客户端上。</li>
+</ul>
+<h2 id="载入-JX-文件"><a href="#载入-JX-文件" class="headerlink" title="载入 JX 文件"></a>载入 JX 文件</h2><p>我们使用 <strong>jx</strong> 命令打包项目：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ node index.js command_line_arguments</span><br></pre></td></tr></table></figure></p>
+<p>使用 JXcore 编译后，我们可以使用以下命令来执行生成的 jx 二进制文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ jx index.jx command_line_arguments</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>参考自<a href="http://www.runoob.com/" target="_blank" rel="external">http://www.runoob.com/</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/NodeJS/" rel="tag"># NodeJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../Node11/" rel="next" title="Node学习(11)--web模块">
+                <i class="fa fa-chevron-left"></i> Node学习(11)--web模块
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../Node0/" rel="prev" title="Node知识点归纳整理">
+                Node知识点归纳整理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Node-js-多进程"><span class="nav-number">1.</span> <span class="nav-text">Node.js 多进程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#exec-方法"><span class="nav-number">1.1.</span> <span class="nav-text">exec() 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数"><span class="nav-number">1.1.1.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">1.1.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spawn-方法"><span class="nav-number">1.2.</span> <span class="nav-text">spawn() 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fork-方法"><span class="nav-number">1.3.</span> <span class="nav-text">fork 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">实例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Node-js-JXcore-打包"><span class="nav-number">2.</span> <span class="nav-text">Node.js JXcore 打包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JXcore-安装"><span class="nav-number">2.1.</span> <span class="nav-text">JXcore 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#步骤1、下载"><span class="nav-number">2.1.1.</span> <span class="nav-text">步骤1、下载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包代码"><span class="nav-number">2.2.</span> <span class="nav-text">包代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#载入-JX-文件"><span class="nav-number">2.3.</span> <span class="nav-text">载入 JX 文件</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

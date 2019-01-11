@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NodeJS,Jade," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Jade语法归纳把 Jade 编译为一个可供浏览器使用的单文件，只需要简单的执行:1make jade.js 如果你已经安装了 uglifyjs (npm install uglify-js)，你可以执行下面的命令它会生成所有的文件。其实每一个正式版本里都帮你做了这事。1make jade.min.js 标签1html 它会被转换为 &amp;lt;html&amp;gt;&amp;lt;/html&amp;gt; 12#foo">
+<meta name="keywords" content="NodeJS,Jade">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node模板引擎学习(2)--Jade语法归纳">
+<meta property="og:url" content="http://www.needqq.com/2018/03/19/Node_Jade01/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="Jade语法归纳把 Jade 编译为一个可供浏览器使用的单文件，只需要简单的执行:1make jade.js 如果你已经安装了 uglifyjs (npm install uglify-js)，你可以执行下面的命令它会生成所有的文件。其实每一个正式版本里都帮你做了这事。1make jade.min.js 标签1html 它会被转换为 &amp;lt;html&amp;gt;&amp;lt;/html&amp;gt; 12#foo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-19T07:56:51.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node模板引擎学习(2)--Jade语法归纳">
+<meta name="twitter:description" content="Jade语法归纳把 Jade 编译为一个可供浏览器使用的单文件，只需要简单的执行:1make jade.js 如果你已经安装了 uglifyjs (npm install uglify-js)，你可以执行下面的命令它会生成所有的文件。其实每一个正式版本里都帮你做了这事。1make jade.min.js 标签1html 它会被转换为 &amp;lt;html&amp;gt;&amp;lt;/html&amp;gt; 12#foo">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2018/03/19/Node_Jade01/"/>
+
+
+
+
+
+  <title>Node模板引擎学习(2)--Jade语法归纳 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Node模板引擎学习(2)--Jade语法归纳</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T15:40:27+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/NodeJS/" itemprop="url" rel="index">
+                    <span itemprop="name">NodeJS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Jade语法归纳"><a href="#Jade语法归纳" class="headerlink" title="Jade语法归纳"></a>Jade语法归纳</h1><p>把 Jade 编译为一个可供浏览器使用的单文件，只需要简单的执行:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make jade.js</span><br></pre></td></tr></table></figure></p>
+<p>如果你已经安装了 uglifyjs (<code>npm install uglify-js</code>)，你可以执行下面的命令它会生成所有的文件。其实每一个正式版本里都帮你做了这事。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make jade.min.js</span><br></pre></td></tr></table></figure></p>
+<h3 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">html</span><br></pre></td></tr></table></figure>
+<p>它会被转换为 <code>&lt;html&gt;&lt;/html&gt;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#foo</span><br><span class="line">.bar</span><br></pre></td></tr></table></figure>
+<p>会输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;foo&quot;&gt;&lt;/div&gt;&lt;div class=&quot;bar&quot;&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="标签文本"><a href="#标签文本" class="headerlink" title="标签文本"></a>标签文本</h3><p>只需要简单的把内容放在标签之后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p wahoo!</span><br></pre></td></tr></table></figure></p>
+<p>它会被渲染为 <code>&lt;p&gt;wahoo!&lt;/p&gt;</code>.</p>
+<p>大段的文本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">p</span><br><span class="line">  | foo bar baz</span><br><span class="line">  | rawr rawr</span><br><span class="line">  | super cool</span><br><span class="line">  | go jade go</span><br></pre></td></tr></table></figure></p>
+<p>渲染为 <code>&lt;p&gt;foo bar baz rawr.....&lt;/p&gt;</code></p>
+<p>所有类型的文本展示都可以和数据结合起来，如果我们把 <code>{ name: &#39;tj&#39;, email: &#39;tj@vision-media.ca&#39; }</code>传给编译函数，下面是模板上的写法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#user #&#123;name&#125; &amp;lt;#&#123;email&#125;&amp;gt;</span><br></pre></td></tr></table></figure></p>
+<p>它会被渲染为 <code>&lt;div id=&quot;user&quot;&gt;tj &amp;lt;tj@vision-media.ca&amp;gt;&lt;/div&gt;</code></p>
+<p>当就是要输出 <code>#{}</code> 的时候怎么办? 转义一下!<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p \#&#123;something&#125;</span><br></pre></td></tr></table></figure></p>
+<p>它会输出 <code>&lt;p&gt;#{something}&lt;/p&gt;</code></p>
+<p>同样可以使用非转义的变量 <code>!{html}</code>, 下面的模板将直接输出一个 <code>&lt;script&gt;</code> 标签:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- var html = &quot;&lt;script&gt;&lt;/script&gt;&quot;</span><br><span class="line">| !&#123;html&#125;</span><br></pre></td></tr></table></figure></p>
+<p>内联标签同样可以使用文本块来包含文本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">label</span><br><span class="line">  | Username:</span><br><span class="line">  input(name=&apos;user[name]&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>或者直接使用标签文本:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">label Username:</span><br><span class="line">  input(name=&apos;user[name]&apos;)</span><br></pre></td></tr></table></figure></p>
+<p><em>只</em> 包含文本的标签，比如 <code>&lt;script&gt;</code>, <code>&lt;style&gt;</code>, 和 <code>&lt;textarea&gt;</code> 不需要前缀 <code>|</code> 字符, 比如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    title Example</span><br><span class="line">    script</span><br><span class="line">      if (foo) &#123;</span><br><span class="line">        bar();</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        baz();</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里还有一种选择，可以使用 <code>.</code> 来开始一段文本块，比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">p.</span><br><span class="line">  foo asdf</span><br><span class="line">  asdf</span><br><span class="line">   asdfasdfaf</span><br><span class="line">   asdf</span><br><span class="line">  asd.</span><br></pre></td></tr></table></figure></p>
+<p>会被渲染为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;foo asdf</span><br><span class="line">asdf</span><br><span class="line">  asdfasdfaf</span><br><span class="line">  asdf</span><br><span class="line">asd</span><br><span class="line">.</span><br><span class="line">&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这和带一个空格的 <code>.</code> 是不一样的, 带空格的会被 Jade 的解析器忽略，当作一个普通的文字:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p .</span><br></pre></td></tr></table></figure></p>
+<p>渲染为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;.&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是文本块需要两次转义。比如想要输出下面的文本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;/p&gt;foo\bar&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
+<p>使用:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p.</span><br><span class="line">  foo\\bar</span><br></pre></td></tr></table></figure></p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>单行注释和 JavaScript 里是一样的，通过 <code>//</code> 来开始，并且必须单独一行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// just some paragraphs</span><br><span class="line">p foo</span><br><span class="line">p bar</span><br></pre></td></tr></table></figure></p>
+<p>渲染为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- just some paragraphs --&gt;</span><br><span class="line">&lt;p&gt;foo&lt;/p&gt;</span><br><span class="line">&lt;p&gt;bar&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Jade 同样支持不输出的注释，加一个短横线就行了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//- will not output within markup</span><br><span class="line">p foo</span><br><span class="line">p bar</span><br></pre></td></tr></table></figure></p>
+<p>渲染为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;foo&lt;/p&gt;</span><br><span class="line">&lt;p&gt;bar&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="块注释"><a href="#块注释" class="headerlink" title="块注释"></a>块注释</h3><p>块注释也是支持的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">body</span><br><span class="line">  //</span><br><span class="line">    #content</span><br><span class="line">      h1 Example</span><br></pre></td></tr></table></figure></p>
+<p>渲染为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;!--</span><br><span class="line">  &lt;div id=&quot;content&quot;&gt;</span><br><span class="line">    &lt;h1&gt;Example&lt;/h1&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  --&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Jade 同样很好的支持了条件注释：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">body</span><br><span class="line">  //if IE</span><br><span class="line">    a(href=&apos;http://www.mozilla.com/en-US/firefox/&apos;) Get Firefox</span><br></pre></td></tr></table></figure></p>
+<p>渲染为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;!--[if IE]&gt;</span><br><span class="line">    &lt;a href=&quot;http://www.mozilla.com/en-US/firefox/&quot;&gt;Get Firefox&lt;/a&gt;</span><br><span class="line">  &lt;![endif]--&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="内联"><a href="#内联" class="headerlink" title="内联"></a>内联</h3><p>Jade 支持以自然的方式定义标签嵌套:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ul</span><br><span class="line">  li.first</span><br><span class="line">    a(href=&apos;#&apos;) foo</span><br><span class="line">  li</span><br><span class="line">    a(href=&apos;#&apos;) bar</span><br><span class="line">  li.last</span><br><span class="line">    a(href=&apos;#&apos;) baz</span><br></pre></td></tr></table></figure></p>
+<h3 id="块展开"><a href="#块展开" class="headerlink" title="块展开"></a>块展开</h3><p>块展开可以帮助你在一行内创建嵌套的标签，下面的例子和上面的是一样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ul</span><br><span class="line">  li.first: a(href=&apos;#&apos;) foo</span><br><span class="line">  li: a(href=&apos;#&apos;) bar</span><br><span class="line">  li.last: a(href=&apos;#&apos;) baz</span><br></pre></td></tr></table></figure></p>
+<h3 id="Case"><a href="#Case" class="headerlink" title="Case"></a>Case</h3><p><code>case</code> 表达式按下面这样的形式写:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  body</span><br><span class="line">    friends = 10</span><br><span class="line">    case friends</span><br><span class="line">      when 0</span><br><span class="line">        p you have no friends</span><br><span class="line">      when 1</span><br><span class="line">        p you have a friend</span><br><span class="line">      default</span><br><span class="line">        p you have #&#123;friends&#125; friends</span><br></pre></td></tr></table></figure></p>
+<p>块展开在这里也可以使用:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">friends = 5</span><br><span class="line">html</span><br><span class="line">  body</span><br><span class="line">    case friends</span><br><span class="line">      when 0: p you have no friends</span><br><span class="line">      when 1: p you have a friend</span><br><span class="line">      default: p you have #&#123;friends&#125; friends</span><br></pre></td></tr></table></figure></p>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>Jade 现在支持使用 <code>(</code> 和 <code>)</code> 作为属性分隔符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a(href=&apos;/login&apos;, title=&apos;View login page&apos;) Login</span><br></pre></td></tr></table></figure></p>
+<p>当一个值是 <code>undefined</code> 或者 <code>null</code> 属性 <em>不</em> 会被加上,<br>所以呢，它不会编译出 ‘something=”null”‘.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">div(something=null)</span><br></pre></td></tr></table></figure></p>
+<p>Boolean 属性也是支持的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input(type=&quot;checkbox&quot;, checked)</span><br></pre></td></tr></table></figure></p>
+<p>使用代码的 Boolean 属性只有当属性为 <code>true</code> 时才会输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input(type=&quot;checkbox&quot;, checked=someValue)</span><br></pre></td></tr></table></figure></p>
+<p>多行同样也是可用的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">input(type=&apos;checkbox&apos;,</span><br><span class="line">  name=&apos;agreement&apos;,</span><br><span class="line">  checked)</span><br></pre></td></tr></table></figure></p>
+<p>多行的时候可以不加逗号：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">input(type=&apos;checkbox&apos;</span><br><span class="line">  name=&apos;agreement&apos;</span><br><span class="line">  checked)</span><br></pre></td></tr></table></figure></p>
+<p>加点空格，格式好看一点？同样支持<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">input(</span><br><span class="line">  type=&apos;checkbox&apos;</span><br><span class="line">  name=&apos;agreement&apos;</span><br><span class="line">  checked)</span><br></pre></td></tr></table></figure></p>
+<p>冒号也是支持的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rss(xmlns:atom=&quot;atom&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>假如我有一个 <code>user</code> 对象 <code>{ id: 12, name: &#39;tobi&#39; }</code><br>我们希望创建一个指向 <code>/user/12</code> 的链接 <code>href</code>, 我们可以使用普通的 JavaScript 字符串连接，如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a(href=&apos;/user/&apos; + user.id)= user.name</span><br></pre></td></tr></table></figure></p>
+<p>或者我们使用 Jade 的修改方式, 这个我想很多使用 Ruby 或者 CoffeeScript 的人会看起来像普通的 JS..:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a(href=&apos;/user/#&#123;user.id&#125;&apos;)= user.name</span><br></pre></td></tr></table></figure></p>
+<p><code>class</code> 属性是一个特殊的属性，你可以直接传递一个数组，比如 <code>bodyClasses = [&#39;user&#39;, &#39;authenticated&#39;]</code> :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">body(class=bodyClasses)</span><br></pre></td></tr></table></figure></p>
+<h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><p>内联的 HTML 是可以的，我们可以使用管道定义一段文本 :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  body</span><br><span class="line">    | &lt;h1&gt;Title&lt;/h1&gt;</span><br><span class="line">    | &lt;p&gt;foo bar baz&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
+<p>或者我们可以使用 <code>.</code> 来告诉 Jade 我们需要一段文本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  body.</span><br><span class="line">    &lt;h1&gt;Title&lt;/h1&gt;</span><br><span class="line">    &lt;p&gt;foo bar baz&lt;/p&gt;</span><br></pre></td></tr></table></figure></p>
+<p>上面的两个例子都会渲染成相同的结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;&lt;body&gt;&lt;h1&gt;Title&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;foo bar baz&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这条规则适应于在 Jade 里的任何文本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  body</span><br><span class="line">    h1 User &lt;em&gt;#&#123;name&#125;&lt;/em&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Doctypes"><a href="#Doctypes" class="headerlink" title="Doctypes"></a>Doctypes</h3><p>添加文档类型只需要简单的使用 <code>!!!</code>, 或者 <code>doctype</code> 跟上下面的可选项:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!!!</span><br></pre></td></tr></table></figure></p>
+<p>会渲染出 <em>transitional</em> 文档类型, 或者:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!!! 5</span><br></pre></td></tr></table></figure></p>
+<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!!! html</span><br></pre></td></tr></table></figure></p>
+<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doctype html</span><br></pre></td></tr></table></figure></p>
+<p>Doctype 是大小写不敏感的, 所以下面两个是一样的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">doctype Basic</span><br><span class="line">doctype basic</span><br></pre></td></tr></table></figure></p>
+<p>当然也是可以直接传递一段文档类型的文本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">doctype html PUBLIC &quot;-//W3C//DTD XHTML Basic 1.1//EN&quot;</span><br></pre></td></tr></table></figure></p>
+<p>渲染后:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML Basic 1.1//EN&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p>会输出 <em>HTML5</em> 文档类型. 下面的默认的文档类型，可以很简单的扩展：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var doctypes = exports.doctypes = &#123;</span><br><span class="line">  &apos;5&apos;: &apos;&lt;!DOCTYPE html&gt;&apos;,</span><br><span class="line">  &apos;xml&apos;: &apos;&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;&apos;,</span><br><span class="line">  &apos;default&apos;: &apos;&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;&apos;,</span><br><span class="line">  &apos;transitional&apos;: &apos;&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;&apos;,</span><br><span class="line">  &apos;strict&apos;: &apos;&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;&apos;,</span><br><span class="line">  &apos;frameset&apos;: &apos;&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Frameset//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd&quot;&gt;&apos;,</span><br><span class="line">  &apos;1.1&apos;: &apos;&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot; &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;&apos;,</span><br><span class="line">  &apos;basic&apos;: &apos;&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML Basic 1.1//EN&quot; &quot;http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd&quot;&gt;&apos;,</span><br><span class="line">  &apos;mobile&apos;: &apos;&lt;!DOCTYPE html PUBLIC &quot;-//WAPFORUM//DTD XHTML Mobile 1.2//EN&quot; &quot;http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd&quot;&gt;&apos;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>通过下面的代码可以很简单的改变默认的文档类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jade.doctypes.default = &apos;whatever you want&apos;;</span><br></pre></td></tr></table></figure></p>
+<h2 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h2><p>过滤器前缀 <code>:</code>, 比如 <code>:markdown</code> 会把下面块里的文本交给专门的函数进行处理。查看顶部 <em>特性</em> 里有哪些可用的过滤器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">body</span><br><span class="line">  :markdown</span><br><span class="line">    Woah! jade _and_ markdown, very **cool**</span><br><span class="line">    we can even link to [stuff](http://google.com)</span><br></pre></td></tr></table></figure></p>
+<p>渲染为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;&lt;p&gt;Woah! jade &lt;em&gt;and&lt;/em&gt; markdown, very &lt;strong&gt;cool&lt;/strong&gt; we can even link to &lt;a href=&quot;http://google.com&quot;&gt;stuff&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>Jade 目前支持三种类型的可执行代码。第一种是前缀 <code>-</code>， 这是不会被输出的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- var foo = &apos;bar&apos;;</span><br></pre></td></tr></table></figure></p>
+<p>这可以用在条件语句或者循环中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- for (var key in obj)</span><br><span class="line">  p= obj[key]</span><br></pre></td></tr></table></figure></p>
+<p>由于 Jade 的缓存技术，下面的代码也是可以的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- if (foo)</span><br><span class="line">  ul</span><br><span class="line">    li yay</span><br><span class="line">    li foo</span><br><span class="line">    li worked</span><br><span class="line">- else</span><br><span class="line">  p oh no! didnt work</span><br></pre></td></tr></table></figure></p>
+<p>哈哈，甚至是很长的循环也是可以的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- if (items.length)</span><br><span class="line">  ul</span><br><span class="line">    - items.forEach(function(item)&#123;</span><br><span class="line">      li= item</span><br><span class="line">    - &#125;)</span><br></pre></td></tr></table></figure></p>
+<p>所以你想要的！下一步我们要 <em>转义</em> 输出的代码，比如我们返回一个值，只要前缀一个 <code>=</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- var foo = &apos;bar&apos;</span><br><span class="line">= foo</span><br><span class="line">h1= foo</span><br></pre></td></tr></table></figure></p>
+<p>它会渲染为 <code>bar&lt;h1&gt;bar&lt;/h1&gt;</code>. 为了安全起见，使用 <code>=</code> 输出的代码默认是转义的,如果想直接输出不转义的值可以使用 <code>!=</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p!= aVarContainingMoreHTML</span><br></pre></td></tr></table></figure></p>
+<p>Jade 同样是设计师友好的，它可以使 JavaScript 更直接更富表现力。比如下面的赋值语句是相等的，同时表达式还是通常的 JavaScript：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- var foo = &apos;foo &apos; + &apos;bar&apos;</span><br><span class="line">foo = &apos;foo &apos; + &apos;bar&apos;</span><br></pre></td></tr></table></figure></p>
+<p>Jade 会把 <code>if</code>, <code>else if</code>, <code>else</code>, <code>until</code>, <code>while</code>, <code>unless</code> 同别的优先对待, 但是你得记住它们还是普通的 JavaScript：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if foo == &apos;bar&apos;</span><br><span class="line">  ul</span><br><span class="line">    li yay</span><br><span class="line">    li foo</span><br><span class="line">    li worked</span><br><span class="line">else</span><br><span class="line">  p oh no! didnt work</span><br></pre></td></tr></table></figure></p>
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>尽管已经支持 JavaScript 原生代码，Jade 还是支持了一些特殊的标签，它们可以让模板更加易于理解，其中之一就是 <code>each</code>, 这种形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">each VAL[, KEY] in OBJ</span><br></pre></td></tr></table></figure></p>
+<p>一个遍历数组的例子 ：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- var items = [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]</span><br><span class="line">each item in items</span><br><span class="line">  li= item</span><br></pre></td></tr></table></figure></p>
+<p>渲染为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;li&gt;one&lt;/li&gt;</span><br><span class="line">&lt;li&gt;two&lt;/li&gt;</span><br><span class="line">&lt;li&gt;three&lt;/li&gt;</span><br></pre></td></tr></table></figure></p>
+<p>遍历一个数组同时带上索引：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">items = [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]</span><br><span class="line">each item, i in items</span><br><span class="line">  li #&#123;item&#125;: #&#123;i&#125;</span><br></pre></td></tr></table></figure></p>
+<p>渲染为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;li&gt;one: 0&lt;/li&gt;</span><br><span class="line">&lt;li&gt;two: 1&lt;/li&gt;</span><br><span class="line">&lt;li&gt;three: 2&lt;/li&gt;</span><br></pre></td></tr></table></figure></p>
+<p>遍历一个数组的键值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">obj = &#123; foo: &apos;bar&apos; &#125;</span><br><span class="line">each val, key in obj</span><br><span class="line">  li #&#123;key&#125;: #&#123;val&#125;</span><br></pre></td></tr></table></figure></p>
+<p>将会渲染为：<code>&lt;li&gt;foo: bar&lt;/li&gt;</code></p>
+<p>Jade 在内部会把这些语句转换成原生的 JavaScript 语句，就像使用 <code>users.forEach(function(user){</code>, 词法作用域和嵌套会像在普通的 JavaScript 中一样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">each user in users</span><br><span class="line">  each role in user.roles</span><br><span class="line">    li= role</span><br></pre></td></tr></table></figure></p>
+<p>如果你喜欢，也可以使用 <code>for</code> ：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for user in users</span><br><span class="line">  for role in user.roles</span><br><span class="line">    li= role</span><br></pre></td></tr></table></figure></p>
+<h2 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h2><p>Jade 条件语句和使用了(<code>-</code>) 前缀的 JavaScript 语句是一致的,然后它允许你不使用圆括号，这样会看上去对设计师更友好一点，同时要在心里记住这个表达式渲染出的是 <em>常规</em> JavaScript：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for user in users</span><br><span class="line">  if user.role == &apos;admin&apos;</span><br><span class="line">    p #&#123;user.name&#125; is an admin</span><br><span class="line">  else</span><br><span class="line">    p= user.name</span><br></pre></td></tr></table></figure></p>
+<p>和下面的使用了常规 JavaScript 的代码是相等的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for user in users</span><br><span class="line">  - if (user.role == &apos;admin&apos;)</span><br><span class="line">    p #&#123;user.name&#125; is an admin</span><br><span class="line">  - else</span><br><span class="line">    p= user.name</span><br></pre></td></tr></table></figure></p>
+<p>Jade 同时支持 <code>unless</code>, 这和 <code>if (!(expr))</code> 是等价的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for user in users</span><br><span class="line">  unless user.isAnonymous</span><br><span class="line">    p</span><br><span class="line">      | Click to view</span><br><span class="line">      a(href=&apos;/users/&apos; + user.id)= user.name</span><br></pre></td></tr></table></figure></p>
+<h2 id="模板继承"><a href="#模板继承" class="headerlink" title="模板继承"></a>模板继承</h2><p>Jade 支持通过 <code>block</code> 和 <code>extends</code> 关键字来实现模板继承。 一个块就是一个 Jade 的 block ，它将在子模板中实现，同时是支持递归的。<br>Jade 块如果没有内容，Jade 会添加默认内容，下面的代码默认会输出 <code>block scripts</code>, <code>block content</code>, 和 <code>block foot</code>.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    h1 My Site - #&#123;title&#125;</span><br><span class="line">    block scripts</span><br><span class="line">      script(src=&apos;/jquery.js&apos;)</span><br><span class="line">  body</span><br><span class="line">    block content</span><br><span class="line">    block foot</span><br><span class="line">      #footer</span><br><span class="line">        p some footer content</span><br></pre></td></tr></table></figure></p>
+<p>现在我们来继承这个布局，简单创建一个新文件，像下面那样直接使用 <code>extends</code>，给定路径（可以选择带 <code>.jade</code> 扩展名或者不带）. 你可以定义一个或者更多的块来覆盖父级块内容, 注意到这里的 <code>foot</code> 块 <em>没有</em> 定义，所以它还会输出父级的 “some footer content”。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">extends extend-layout</span><br><span class="line"></span><br><span class="line">block scripts</span><br><span class="line">  script(src=&apos;/jquery.js&apos;)</span><br><span class="line">  script(src=&apos;/pets.js&apos;)</span><br><span class="line"></span><br><span class="line">block content</span><br><span class="line">  h1= title</span><br><span class="line">  each pet in pets</span><br><span class="line">    include pet</span><br></pre></td></tr></table></figure></p>
+<p>同样可以在一个子块里添加块，就像下面实现的块 <code>content</code> 里又定义了两个可以被实现的块 <code>sidebar</code> 和 <code>primary</code>，或者子模板直接实现 <code>content</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">extends regular-layout</span><br><span class="line"></span><br><span class="line">block content</span><br><span class="line">  .sidebar</span><br><span class="line">    block sidebar</span><br><span class="line">      p nothing</span><br><span class="line">  .primary</span><br><span class="line">    block primary</span><br><span class="line">      p nothing</span><br></pre></td></tr></table></figure></p>
+<h2 id="前置、追加代码块"><a href="#前置、追加代码块" class="headerlink" title="前置、追加代码块"></a>前置、追加代码块</h2><p>Jade允许你 <em>替换</em> （默认）、 <em>前置</em> 和 <em>追加</em> blocks. 比如，假设你希望在 <em>所有</em> 页面的头部都加上默认的脚本，你可以这么做：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    block head</span><br><span class="line">      script(src=&apos;/vendor/jquery.js&apos;)</span><br><span class="line">      script(src=&apos;/vendor/caustic.js&apos;)</span><br><span class="line">  body</span><br><span class="line">    block content</span><br></pre></td></tr></table></figure></p>
+<p>现在假设你有一个Javascript游戏的页面，你希望在默认的脚本之外添加一些游戏相关的脚本，你可以直接<code>append</code>上代码块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">extends layout</span><br><span class="line"></span><br><span class="line">block append head</span><br><span class="line">  script(src=&apos;/vendor/three.js&apos;)</span><br><span class="line">  script(src=&apos;/game.js&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>使用 <code>block append</code> 或 <code>block prepend</code> 时 <code>block</code> 是可选的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">extends layout</span><br><span class="line"></span><br><span class="line">append head</span><br><span class="line">  script(src=&apos;/vendor/three.js&apos;)</span><br><span class="line">  script(src=&apos;/game.js&apos;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="包含"><a href="#包含" class="headerlink" title="包含"></a>包含</h2><p>Includes 允许你静态包含一段 Jade, 或者别的存放在单个文件中的东西比如 CSS, HTML 非常常见的例子是包含头部和页脚。 假设我们有一个下面目录结构的文件夹：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./layout.jade</span><br><span class="line">./includes/</span><br><span class="line">  ./head.jade</span><br><span class="line">  ./tail.jade</span><br></pre></td></tr></table></figure></p>
+<p>下面是 <code>layout.jade</code> 的内容:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  include includes/head  </span><br><span class="line">  body</span><br><span class="line">    h1 My Site</span><br><span class="line">    p Welcome to my super amazing site.</span><br><span class="line">    include includes/foot</span><br></pre></td></tr></table></figure></p>
+<p>这两个包含 <code>includes/head</code> 和 <code>includes/foot</code> 都会读取相对于给 <code>layout.jade</code> 参数<code>filename</code> 的路径的文件, 这是一个绝对路径，不用担心Express帮你搞定这些了。Include 会解析这些文件，并且插入到已经生成的语法树中，然后渲染为你期待的内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;title&gt;My Site&lt;/title&gt;</span><br><span class="line">    &lt;script src=&quot;/javascripts/jquery.js&quot;&gt;</span><br><span class="line">    &lt;/script&gt;&lt;script src=&quot;/javascripts/app.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;h1&gt;My Site&lt;/h1&gt;</span><br><span class="line">    &lt;p&gt;Welcome to my super lame site.&lt;/p&gt;</span><br><span class="line">    &lt;div id=&quot;footer&quot;&gt;</span><br><span class="line">      &lt;p&gt;Copyright&gt;(c) foobar&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>前面已经提到，<code>include</code> 可以包含比如 HTML 或者 CSS 这样的内容。给定一个扩展名后，Jade 不会把这个文件当作一个 Jade 源代码，并且会把它当作一个普通文本包含进来：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    //- css and js have simple filters that wrap them in</span><br><span class="line">        &lt;style&gt; and &lt;script&gt; tags, respectively</span><br><span class="line">    include stylesheet.css</span><br><span class="line">    include script.js</span><br><span class="line">  body</span><br><span class="line">    //- &quot;markdown&quot; files will use the &quot;markdown&quot; filter</span><br><span class="line">        to convert Markdown to HTML</span><br><span class="line">    include introduction.markdown</span><br><span class="line">    //- html files have no filter and are included verbatim</span><br><span class="line">    include content.html</span><br></pre></td></tr></table></figure></p>
+<p>Include 也可以接受块内容，给定的块将会附加到包含文件 <em>最后</em> 的块里。 举个例子，<code>head.jade</code> 包含下面的内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">head</span><br><span class="line">  script(src=&apos;/jquery.js&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>我们可以像下面给<code>include head</code>添加内容, 这里是添加两个脚本.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  include head</span><br><span class="line">    script(src=&apos;/foo.js&apos;)</span><br><span class="line">    script(src=&apos;/bar.js&apos;)</span><br><span class="line">  body</span><br><span class="line">    h1 test</span><br></pre></td></tr></table></figure></p>
+<p>在被包含的模板中，你也可以使用<code>yield</code>语句。<code>yield</code>语句允许你明确地标明<code>include</code>的代码块的放置位置。比如，假设你希望把代码块放在scripts之前，而不是附加在scripts之后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">head</span><br><span class="line">  yield</span><br><span class="line">  script(src=&apos;/jquery.js&apos;)</span><br><span class="line">  script(src=&apos;/jquery.ui.js&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>由于被包含的Jade会按字面解析并合并到AST中，词法范围的变量的效果和直接写在同一个文件中的相同。这就意味着<code>include</code>可以用作partial的替代，例如，假设我们有一个引用了<code>user</code>变量的user.jade`文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">h1= user.name</span><br><span class="line">p= user.occupation</span><br></pre></td></tr></table></figure></p>
+<p>接着，当我们迭代users的时候，只需简单地加上<code>include user</code>。因为在循环中<code>user</code>变量已经被定义了，被包含的模板可以访问它。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">users = [&#123; name: &apos;Tobi&apos;, occupation: &apos;Ferret&apos; &#125;]</span><br><span class="line">each user in users</span><br><span class="line">  .user</span><br><span class="line">    include user</span><br></pre></td></tr></table></figure></p>
+<p>以上代码会生成：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;user&quot;&gt;</span><br><span class="line">  &lt;h1&gt;Tobi&lt;/h1&gt;</span><br><span class="line">  &lt;p&gt;Ferret&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p><code>user.jade</code>引用了<code>user</code>变量，如果我们希望使用一个不同的变量<code>user</code>，那么我们可以直接定义一个新变量<code>user = person</code>，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">each person in users</span><br><span class="line">  .user</span><br><span class="line">    user = person</span><br><span class="line">    include user</span><br></pre></td></tr></table></figure></p>
+<h2 id="Mixins"><a href="#Mixins" class="headerlink" title="Mixins"></a>Mixins</h2><p>Mixins 在编译的模板里会被 Jade 转换为普通的 JavaScript 函数。 Mixins 可以带参数，但不是必需的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mixin list</span><br><span class="line">  ul</span><br><span class="line">    li foo</span><br><span class="line">    li bar</span><br><span class="line">    li baz</span><br></pre></td></tr></table></figure></p>
+<p>使用不带参数的 mixin 看上去非常简单，在一个块外：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">h2 Groceries</span><br><span class="line">mixin list</span><br></pre></td></tr></table></figure></p>
+<p>Mixins 也可以带一个或者多个参数，参数就是普通的 JavaScript 表达式，比如下面的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mixin pets(pets)</span><br><span class="line">  ul.pets</span><br><span class="line">    - each pet in pets</span><br><span class="line">      li= pet</span><br><span class="line"></span><br><span class="line">mixin profile(user)</span><br><span class="line">  .user</span><br><span class="line">    h2= user.name</span><br><span class="line">    mixin pets(user.pets)</span><br></pre></td></tr></table></figure></p>
+<p>会输出像下面的 HTML:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;user&quot;&gt;</span><br><span class="line">  &lt;h2&gt;tj&lt;/h2&gt;</span><br><span class="line">  &lt;ul class=&quot;pets&quot;&gt;</span><br><span class="line">    &lt;li&gt;tobi&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;loki&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;jane&lt;/li&gt;</span><br><span class="line">    &lt;li&gt;manny&lt;/li&gt;</span><br><span class="line">  &lt;/ul&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="产生输出"><a href="#产生输出" class="headerlink" title="产生输出"></a>产生输出</h2><p>假设我们有下面的 Jade 源码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- var title = &apos;yay&apos;</span><br><span class="line">h1.title #&#123;title&#125;</span><br><span class="line">p Just an example</span><br></pre></td></tr></table></figure></p>
+<p>当 <code>compileDebug</code> 选项不是 <code>false</code>, Jade 会编译时会把函数里加上 <code>__.lineno = n;</code>, 这个参数会在编译出错时传递给 <code>rethrow()</code>, 而这个函数会在 Jade 初始输出时给出一个有用的错误信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">function anonymous(locals) &#123;</span><br><span class="line">  var __ = &#123; lineno: 1, input: &quot;- var title = &apos;yay&apos;\nh1.title #&#123;title&#125;\np Just an example&quot;, filename: &quot;testing/test.js&quot; &#125;;</span><br><span class="line">  var rethrow = jade.rethrow;</span><br><span class="line">  try &#123;</span><br><span class="line">    var attrs = jade.attrs, escape = jade.escape;</span><br><span class="line">    var buf = [];</span><br><span class="line">    with (locals || &#123;&#125;) &#123;</span><br><span class="line">      var interp;</span><br><span class="line">      __.lineno = 1;</span><br><span class="line">       var title = &apos;yay&apos;</span><br><span class="line">      __.lineno = 2;</span><br><span class="line">      buf.push(&apos;&lt;h1&apos;);</span><br><span class="line">      buf.push(attrs(&#123; &quot;class&quot;: (&apos;title&apos;) &#125;));</span><br><span class="line">      buf.push(&apos;&gt;&apos;);</span><br><span class="line">      buf.push(&apos;&apos; + escape((interp = title) == null ? &apos;&apos; : interp) + &apos;&apos;);</span><br><span class="line">      buf.push(&apos;&lt;/h1&gt;&apos;);</span><br><span class="line">      __.lineno = 3;</span><br><span class="line">      buf.push(&apos;&lt;p&gt;&apos;);</span><br><span class="line">      buf.push(&apos;Just an example&apos;);</span><br><span class="line">      buf.push(&apos;&lt;/p&gt;&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">    return buf.join(&quot;&quot;);</span><br><span class="line">  &#125; catch (err) &#123;</span><br><span class="line">    rethrow(err, __.input, __.filename, __.lineno);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当 <code>compileDebug</code> 参数是 <code>false</code>, 这个参数会被去掉，这样对于轻量级的浏览器端模板是非常有用的。结合 Jade 的参数和当前源码库里的 <code>./runtime.js</code> 文件，你可以通过 <code>toString()</code> 来编译模板而不需要在浏览器端运行整个 Jade 库，这样可以提高性能，也可以减少载入的 JavaScript 数量。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function anonymous(locals) &#123;</span><br><span class="line">  var attrs = jade.attrs, escape = jade.escape;</span><br><span class="line">  var buf = [];</span><br><span class="line">  with (locals || &#123;&#125;) &#123;</span><br><span class="line">    var interp;</span><br><span class="line">    var title = &apos;yay&apos;</span><br><span class="line">    buf.push(&apos;&lt;h1&apos;);</span><br><span class="line">    buf.push(attrs(&#123; &quot;class&quot;: (&apos;title&apos;) &#125;));</span><br><span class="line">    buf.push(&apos;&gt;&apos;);</span><br><span class="line">    buf.push(&apos;&apos; + escape((interp = title) == null ? &apos;&apos; : interp) + &apos;&apos;);</span><br><span class="line">    buf.push(&apos;&lt;/h1&gt;&apos;);</span><br><span class="line">    buf.push(&apos;&lt;p&gt;&apos;);</span><br><span class="line">    buf.push(&apos;Just an example&apos;);</span><br><span class="line">    buf.push(&apos;&lt;/p&gt;&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">  return buf.join(&quot;&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Makefile-的一个例子"><a href="#Makefile-的一个例子" class="headerlink" title="Makefile 的一个例子"></a>Makefile 的一个例子</h2><p>通过执行 <code>make</code>， 下面的 Makefile 例子可以把 <code>pages/*.jade</code> 编译为 <code>pages/*.html</code> 。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">JADE = $(shell find pages/*.jade)</span><br><span class="line">HTML = $(JADE:.jade=.html)</span><br><span class="line"></span><br><span class="line">all: $(HTML)</span><br><span class="line"></span><br><span class="line">%.html: %.jade</span><br><span class="line">    jade &lt; $&lt; --path $&lt; &gt; $@</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">    rm -f $(HTML)</span><br><span class="line"></span><br><span class="line">.PHONY: clean</span><br></pre></td></tr></table></figure></p>
+<p>这个可以和 <code>watch(1)</code> 命令起来产生像下面的行为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ watch make</span><br></pre></td></tr></table></figure></p>
+<h2 id="命令行的-Jade"><a href="#命令行的-Jade" class="headerlink" title="命令行的 Jade"></a>命令行的 Jade</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">使用: jade [options] [dir|file ...]</span><br><span class="line"></span><br><span class="line">选项:</span><br><span class="line">  -h, --help         输出帮助信息</span><br><span class="line">  -v, --version      输出版本号</span><br><span class="line">  -o, --out &lt;dir&gt;    输出编译后的 HTML 到 &lt;dir&gt;</span><br><span class="line">  -O, --obj &lt;str&gt;    JavaScript 选项</span><br><span class="line">  -p, --path &lt;path&gt;  在处理 stdio 时，查找包含文件时的查找路径</span><br><span class="line">  -P, --pretty       格式化 HTML 输出</span><br><span class="line">  -c, --client       编译浏览器端可用的 runtime.js</span><br><span class="line">  -D, --no-debug     关闭编译的调试选项(函数会更小)</span><br><span class="line">  -w, --watch        监视文件改变自动刷新编译结果</span><br><span class="line"></span><br><span class="line">Examples:</span><br><span class="line">  # 编译整个目录</span><br><span class="line">  $ jade templates</span><br><span class="line"></span><br><span class="line">  # 生成 &#123;foo,bar&#125;.html</span><br><span class="line">  $ jade &#123;foo,bar&#125;.jade</span><br><span class="line"></span><br><span class="line">  # 在标准IO下使用jade </span><br><span class="line">  $ jade &lt; my.jade &gt; my.html</span><br><span class="line"></span><br><span class="line">  # 在标准IO下使用jade, 同时指定用于查找包含的文件</span><br><span class="line">  $ jade &lt; my.jade -p my.jade &gt; my.html</span><br><span class="line"></span><br><span class="line">  # 在标准IO下使用jade </span><br><span class="line">  $ echo &quot;h1 Jade!&quot; | jade</span><br><span class="line"></span><br><span class="line">  # foo, bar 目录渲染到 /tmp</span><br><span class="line">  $ jade foo bar --out /tmp</span><br></pre></td></tr></table></figure>
+<p><em>注意: 从 <code>v0.31.0</code> 的 <code>-o</code> 选项已经指向 <code>--out</code>, <code>-O</code> 相应做了交换</em></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/NodeJS/" rel="tag"># NodeJS</a>
+          
+            <a href="../../../../tags/Jade/" rel="tag"># Jade</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../Node_Jade00/" rel="next" title="Node模板引擎学习(1)--Jade">
+                <i class="fa fa-chevron-left"></i> Node模板引擎学习(1)--Jade
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../Node_EJS/" rel="prev" title="Node模板引擎学习(3)--EJS">
+                Node模板引擎学习(3)--EJS <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Jade语法归纳"><span class="nav-number">1.</span> <span class="nav-text">Jade语法归纳</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标签"><span class="nav-number">1.0.1.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标签文本"><span class="nav-number">1.0.2.</span> <span class="nav-text">标签文本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注释"><span class="nav-number">1.0.3.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#块注释"><span class="nav-number">1.0.4.</span> <span class="nav-text">块注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内联"><span class="nav-number">1.0.5.</span> <span class="nav-text">内联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#块展开"><span class="nav-number">1.0.6.</span> <span class="nav-text">块展开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Case"><span class="nav-number">1.0.7.</span> <span class="nav-text">Case</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性"><span class="nav-number">1.0.8.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML"><span class="nav-number">1.0.9.</span> <span class="nav-text">HTML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Doctypes"><span class="nav-number">1.0.10.</span> <span class="nav-text">Doctypes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤器"><span class="nav-number">1.1.</span> <span class="nav-text">过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">1.2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环"><span class="nav-number">1.3.</span> <span class="nav-text">循环</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件语句"><span class="nav-number">1.4.</span> <span class="nav-text">条件语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模板继承"><span class="nav-number">1.5.</span> <span class="nav-text">模板继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前置、追加代码块"><span class="nav-number">1.6.</span> <span class="nav-text">前置、追加代码块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#包含"><span class="nav-number">1.7.</span> <span class="nav-text">包含</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mixins"><span class="nav-number">1.8.</span> <span class="nav-text">Mixins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#产生输出"><span class="nav-number">1.9.</span> <span class="nav-text">产生输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Makefile-的一个例子"><span class="nav-number">1.10.</span> <span class="nav-text">Makefile 的一个例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令行的-Jade"><span class="nav-number">1.11.</span> <span class="nav-text">命令行的 Jade</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Fetch," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="语法说明12345fetch(url, options).then(function(response) &amp;#123;  // handle HTTP response&amp;#125;, function(error) &amp;#123;  // handle network error&amp;#125;) 实例1234567891011121314151617181920212223//兼容包require(&amp;">
+<meta name="keywords" content="Fetch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Fetch">
+<meta property="og:url" content="http://www.needqq.com/2018/03/19/HTTP_Fetch/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="语法说明12345fetch(url, options).then(function(response) &amp;#123;  // handle HTTP response&amp;#125;, function(error) &amp;#123;  // handle network error&amp;#125;) 实例1234567891011121314151617181920212223//兼容包require(&amp;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-10T13:50:57.549Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习Fetch">
+<meta name="twitter:description" content="语法说明12345fetch(url, options).then(function(response) &amp;#123;  // handle HTTP response&amp;#125;, function(error) &amp;#123;  // handle network error&amp;#125;) 实例1234567891011121314151617181920212223//兼容包require(&amp;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2018/03/19/HTTP_Fetch/"/>
+
+
+
+
+
+  <title>学习Fetch | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">学习Fetch</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T15:20:21+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/Fetch/" itemprop="url" rel="index">
+                    <span itemprop="name">Fetch</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="语法说明"><a href="#语法说明" class="headerlink" title="语法说明"></a>语法说明</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fetch(url, options).then(function(response) &#123;</span><br><span class="line">  // handle HTTP response</span><br><span class="line">&#125;, function(error) &#123;</span><br><span class="line">  // handle network error</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">//兼容包</span><br><span class="line">require(&apos;babel-polyfill&apos;)</span><br><span class="line">require(&apos;es6-promise&apos;).polyfill()</span><br><span class="line"></span><br><span class="line">import &apos;whatwg-fetch&apos;</span><br><span class="line"></span><br><span class="line">fetch(url, &#123;</span><br><span class="line">  method: &quot;POST&quot;,</span><br><span class="line">  body: JSON.stringify(data),</span><br><span class="line">  headers: &#123;</span><br><span class="line">    &quot;Content-Type&quot;: &quot;application/json&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  credentials: &quot;same-origin&quot;</span><br><span class="line">&#125;).then(function(response) &#123;</span><br><span class="line">  response.status     //=&gt; number 100–599</span><br><span class="line">  response.statusText //=&gt; String</span><br><span class="line">  response.headers    //=&gt; Headers</span><br><span class="line">  response.url        //=&gt; String</span><br><span class="line"></span><br><span class="line">  response.text().then(function(responseText) &#123; ... &#125;)</span><br><span class="line">&#125;, function(error) &#123;</span><br><span class="line">  error.message //=&gt; String</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="url"><a href="#url" class="headerlink" title="url"></a>url</h2><p>定义要获取的资源。这可能是：</p>
+<ul>
+<li>一个 USVString 字符串，包含要获取资源的 URL。</li>
+<li>一个 Request 对象。</li>
+</ul>
+<h2 id="options（可选）"><a href="#options（可选）" class="headerlink" title="options（可选）"></a>options（可选）</h2><p>一个配置项对象，包括所有对请求的设置。可选的参数有：</p>
+<ul>
+<li>method: 请求使用的方法，如 GET、POST。</li>
+<li>headers: 请求的头信息，形式为 Headers 对象或 ByteString。</li>
+<li>body: 请求的 body 信息：可能是一个 Blob、BufferSource、FormData、URLSearchParams 或者 USVString 对象。注意 GET 或 HEAD 方法的请求不能包含 body 信息。</li>
+<li>mode: 请求的模式，如 cors、 no-cors 或者 same-origin。</li>
+<li>credentials: 请求的 credentials，如 omit、same-origin 或者 include。</li>
+<li>cache: 请求的 cache 模式: default, no-store, reload, no-cache, force-cache, 或者 only-if-cached。</li>
+</ul>
+<h2 id="response"><a href="#response" class="headerlink" title="response"></a>response</h2><p>一个 Promise，resolve 时回传 Response 对象：</p>
+<h4 id="属性："><a href="#属性：" class="headerlink" title="属性："></a>属性：</h4><ul>
+<li>status (number) - HTTP请求结果参数，在100–599 范围</li>
+<li>statusText (String) - 服务器返回的状态报告</li>
+<li>ok (boolean) - 如果返回200表示请求成功则为true</li>
+<li>headers (Headers) - 返回头部信息，下面详细介绍</li>
+<li>url (String) - 请求的地址</li>
+</ul>
+<h4 id="方法："><a href="#方法：" class="headerlink" title="方法："></a>方法：</h4><ul>
+<li>text() - 以string的形式生成请求text</li>
+<li>json() - 生成JSON.parse(responseText)的结果</li>
+<li>blob() - 生成一个Blob</li>
+<li>arrayBuffer() - 生成一个ArrayBuffer</li>
+<li>formData() - 生成格式化的数据，可用于其他的请求</li>
+</ul>
+<h4 id="其他方法："><a href="#其他方法：" class="headerlink" title="其他方法："></a>其他方法：</h4><ul>
+<li>clone()</li>
+<li>Response.error()</li>
+<li>Response.redirect()</li>
+</ul>
+<h2 id="response-headers"><a href="#response-headers" class="headerlink" title="response.headers"></a>response.headers</h2><ul>
+<li>has(name) (boolean) - 判断是否存在该信息头</li>
+<li>get(name) (String) - 获取信息头的数据</li>
+<li>getAll(name) (Array) - 获取所有头部数据</li>
+<li>set(name, value) - 设置信息头的参数</li>
+<li>append(name, value) - 添加header的内容</li>
+<li>delete(name) - 删除header的信息</li>
+<li>forEach(function(value, name){ … }, [thisContext]) - 循环读取header的信息</li>
+</ul>
+<h2 id="使用案例"><a href="#使用案例" class="headerlink" title="使用案例"></a>使用案例</h2><h4 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h4><ol>
+<li><p>HTML</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fetch(&apos;/users.html&apos;)</span><br><span class="line">  .then(function(response) &#123;</span><br><span class="line">    return response.text()</span><br><span class="line">  &#125;).then(function(body) &#123;</span><br><span class="line">    document.body.innerHTML = body</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>IMAGE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var myImage = document.querySelector(&apos;img&apos;);</span><br><span class="line"></span><br><span class="line">fetch(&apos;flowers.jpg&apos;)</span><br><span class="line">  .then(function(response) &#123;</span><br><span class="line">    return response.blob();</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(function(myBlob) &#123;</span><br><span class="line">    var objectURL = URL.createObjectURL(myBlob);</span><br><span class="line">    myImage.src = objectURL;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JSON</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fetch(url)</span><br><span class="line">  .then(function(response) &#123;</span><br><span class="line">    return response.json();</span><br><span class="line">  &#125;).then(function(data) &#123;</span><br><span class="line">    console.log(data);</span><br><span class="line">  &#125;).catch(function(e) &#123;</span><br><span class="line">    console.log(&quot;Oops, error&quot;);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>使用 ES6 的 箭头函数 后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fetch(url)</span><br><span class="line">  .then(response =&gt; response.json())</span><br><span class="line">  .then(data =&gt; console.log(data))</span><br><span class="line">  .catch(e =&gt; console.log(&quot;Oops, error&quot;, e))</span><br></pre></td></tr></table></figure></p>
+<p>response的数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">fetch(&apos;/users.json&apos;).then(function(response) &#123;</span><br><span class="line">  console.log(response.headers.get(&apos;Content-Type&apos;))</span><br><span class="line">  console.log(response.headers.get(&apos;Date&apos;))</span><br><span class="line">  console.log(response.status)</span><br><span class="line">  console.log(response.statusText)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fetch(&apos;/users&apos;, &#123;</span><br><span class="line">  method: &apos;POST&apos;,</span><br><span class="line">  headers: &#123;</span><br><span class="line">    &apos;Accept&apos;: &apos;application/json&apos;,</span><br><span class="line">    &apos;Content-Type&apos;: &apos;application/json&apos;</span><br><span class="line">  &#125;,</span><br><span class="line">  body: JSON.stringify(&#123;</span><br><span class="line">    name: &apos;Hubot&apos;,</span><br><span class="line">    login: &apos;hubot&apos;,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>检查请求状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function checkStatus(response) &#123;</span><br><span class="line">  if (response.status &gt;= 200 &amp;&amp; response.status &lt; 300) &#123;</span><br><span class="line">    return response</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    var error = new Error(response.statusText)</span><br><span class="line">    error.response = response</span><br><span class="line">    throw error</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function parseJSON(response) &#123;</span><br><span class="line">  return response.json()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fetch(&apos;/users&apos;)</span><br><span class="line">  .then(checkStatus)</span><br><span class="line">  .then(parseJSON)</span><br><span class="line">  .then(function(data) &#123;</span><br><span class="line">    console.log(&apos;request succeeded with JSON response&apos;, data)</span><br><span class="line">  &#125;).catch(function(error) &#123;</span><br><span class="line">    console.log(&apos;request failed&apos;, error)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="采用promise形式"><a href="#采用promise形式" class="headerlink" title="采用promise形式"></a>采用promise形式</h2><p>Promise 对象是一个返回值的代理，这个返回值在promise对象创建时未必已知。它允许你为异步操作的成功或失败指定处理方法。 这使得异步方法可以像同步方法那样返回值：异步方法会返回一个包含了原返回值的 promise 对象来替代原返回值。</p>
+<p>Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve方法和reject方法。如果异步操作成功，则用resolve方法将Promise对象的状态变为“成功”（即从pending变为resolved）；如果异步操作失败，则用reject方法将状态变为“失败”（即从pending变为rejected）。</p>
+<p>promise实例生成以后，可以用then方法分别指定resolve方法和reject方法的回调函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//创建一个promise对象</span><br><span class="line">var promise = new Promise(function(resolve, reject) &#123;</span><br><span class="line">  if (/* 异步操作成功 */)&#123;</span><br><span class="line">    resolve(value);</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    reject(error);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line">//then方法可以接受两个回调函数作为参数。</span><br><span class="line">//第一个回调函数是Promise对象的状态变为Resolved时调用，第二个回调函数是Promise对象的状态变为Reject时调用。</span><br><span class="line">//其中，第二个函数是可选的，不一定要提供。这两个函数都接受Promise对象传出的值作为参数。</span><br><span class="line">promise.then(function(value) &#123;</span><br><span class="line">  // success</span><br><span class="line">&#125;, function(value) &#123;</span><br><span class="line">  // failure</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>那么结合promise后fetch的用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">//Fetch.js</span><br><span class="line">export function Fetch(url, options) &#123;</span><br><span class="line">  options.body = JSON.stringify(options.body)</span><br><span class="line"></span><br><span class="line">  const defer = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    fetch(url, options)</span><br><span class="line">      .then(response =&gt; &#123;</span><br><span class="line">        return response.json()</span><br><span class="line">      &#125;)</span><br><span class="line">      .then(data =&gt; &#123;</span><br><span class="line">        if (data.code === 0) &#123;</span><br><span class="line">          resolve(data) //返回成功数据</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            if (data.code === 401) &#123;</span><br><span class="line">            //失败后的一种状态</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">            //失败的另一种状态</span><br><span class="line">            &#125;</span><br><span class="line">          reject(data) //返回失败数据</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">      .catch(error =&gt; &#123;</span><br><span class="line">        //捕获异常</span><br><span class="line">        console.log(error.msg)</span><br><span class="line">        reject() </span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  return defer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用Fech方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &#123; Fetch &#125; from &apos;./Fetch&apos;</span><br><span class="line"></span><br><span class="line">Fetch(getAPI(&apos;search&apos;), &#123;</span><br><span class="line">  method: &apos;POST&apos;,</span><br><span class="line">  options</span><br><span class="line">&#125;)</span><br><span class="line">.then(data =&gt; &#123;</span><br><span class="line">  console.log(data)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="支持状况及解决方案"><a href="#支持状况及解决方案" class="headerlink" title="支持状况及解决方案"></a>支持状况及解决方案</h2><p>原生支持率并不高，幸运的是，引入下面这些 polyfill 后可以完美支持 IE8+ ：<br>由于 IE8 是 ES3，需要引入 ES5 的 polyfill: es5-shim, es5-sham<br>引入 Promise 的 polyfill: es6-promise<br>引入 fetch 探测库：fetch-detector<br>引入 fetch 的 polyfill: fetch-ie8<br>可选：如果你还使用了 jsonp，引入 fetch-jsonp<br>可选：开启 Babel 的 runtime 模式，现在就使用 async/await</p>
+<blockquote>
+<p>参考自: <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API" target="_blank" rel="external">https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/Fetch/" rel="tag"># Fetch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../HTTP_Axios/" rel="next" title="学习Axios">
+                <i class="fa fa-chevron-left"></i> 学习Axios
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../JS02/" rel="prev" title="JS实现简单算法排序">
+                JS实现简单算法排序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#语法说明"><span class="nav-number">1.</span> <span class="nav-text">语法说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">2.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#url"><span class="nav-number">3.</span> <span class="nav-text">url</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#options（可选）"><span class="nav-number">4.</span> <span class="nav-text">options（可选）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#response"><span class="nav-number">5.</span> <span class="nav-text">response</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#属性："><span class="nav-number">5.0.1.</span> <span class="nav-text">属性：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法："><span class="nav-number">5.0.2.</span> <span class="nav-text">方法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他方法："><span class="nav-number">5.0.3.</span> <span class="nav-text">其他方法：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#response-headers"><span class="nav-number">6.</span> <span class="nav-text">response.headers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用案例"><span class="nav-number">7.</span> <span class="nav-text">使用案例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GET请求"><span class="nav-number">7.0.1.</span> <span class="nav-text">GET请求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST请求"><span class="nav-number">8.</span> <span class="nav-text">POST请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#采用promise形式"><span class="nav-number">9.</span> <span class="nav-text">采用promise形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持状况及解决方案"><span class="nav-number">10.</span> <span class="nav-text">支持状况及解决方案</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

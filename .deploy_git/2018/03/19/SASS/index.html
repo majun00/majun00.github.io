@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Sass," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="css扩展语言 面向对象 变量 嵌套 混合 导入  安装Sass和Compass sass基于Ruby语言开发而成，因此安装sass前需要安装Ruby。window下安装SASS首先需要安装Ruby，先从官网下载Ruby并安装。安装过程中请注意勾选Add Ruby executables to your PATH添加到系统环境变量。安装完成后需测试安装有没有成功,运行CMD输入以下命令： 123">
+<meta name="keywords" content="Sass">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习Sass">
+<meta property="og:url" content="http://www.needqq.com/2018/03/19/SASS/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="css扩展语言 面向对象 变量 嵌套 混合 导入  安装Sass和Compass sass基于Ruby语言开发而成，因此安装sass前需要安装Ruby。window下安装SASS首先需要安装Ruby，先从官网下载Ruby并安装。安装过程中请注意勾选Add Ruby executables to your PATH添加到系统环境变量。安装完成后需测试安装有没有成功,运行CMD输入以下命令： 123">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-19T14:33:13.855Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习Sass">
+<meta name="twitter:description" content="css扩展语言 面向对象 变量 嵌套 混合 导入  安装Sass和Compass sass基于Ruby语言开发而成，因此安装sass前需要安装Ruby。window下安装SASS首先需要安装Ruby，先从官网下载Ruby并安装。安装过程中请注意勾选Add Ruby executables to your PATH添加到系统环境变量。安装完成后需测试安装有没有成功,运行CMD输入以下命令： 123">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2018/03/19/SASS/"/>
+
+
+
+
+
+  <title>学习Sass | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">学习Sass</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T22:31:10+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/Sass/" itemprop="url" rel="index">
+                    <span itemprop="name">Sass</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>css扩展语言 面向对象 变量 嵌套 混合 导入</p>
+</blockquote>
+<h2 id="安装Sass和Compass"><a href="#安装Sass和Compass" class="headerlink" title="安装Sass和Compass"></a>安装Sass和Compass</h2><ol>
+<li><p>sass基于Ruby语言开发而成，因此安装sass前需要安装Ruby。window下安装SASS首先需要安装Ruby，先从官网下载Ruby并安装。安装过程中请注意勾选Add Ruby executables to your PATH添加到系统环境变量。安装完成后需测试安装有没有成功,运行CMD输入以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ruby -v</span><br><span class="line"></span><br><span class="line">//如安装成功会打印</span><br><span class="line"></span><br><span class="line">ruby 2.2.2p95 (2015-04-13 revision 50295) [i386-mingw32]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>因为国内网络的问题导致gem源间歇性中断因此我们需要更换gem源。（使用淘宝的gem源<a href="https://ruby.taobao.org/）如下：" target="_blank" rel="external">https://ruby.taobao.org/）如下：</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//1.删除原gem源</span><br><span class="line">gem sources --remove https://rubygems.org/</span><br><span class="line"></span><br><span class="line">//2.添加国内淘宝源</span><br><span class="line">gem sources -a https://ruby.taobao.org/</span><br><span class="line"></span><br><span class="line">//3.打印是否替换成功</span><br><span class="line">gem sources -l</span><br><span class="line"></span><br><span class="line">//4.更换成功后打印如下</span><br><span class="line">*** CURRENT SOURCES ***</span><br><span class="line">https://ruby.taobao.org/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Ruby自带一个叫做RubyGems的系统，用来安装基于Ruby的软件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//安装如下(如mac安装遇到权限问题需加 sudo gem install sass)</span><br><span class="line">gem install sass</span><br><span class="line">gem install compass</span><br><span class="line">//安装完成之后通过运行下面的命令来确认应用已经正确地安装到了电脑中：</span><br><span class="line"></span><br><span class="line">sass -v</span><br><span class="line">Sass 3.x.x (Selective Steve)</span><br><span class="line"></span><br><span class="line">compass -v</span><br><span class="line">Compass 1.x.x (Polaris)</span><br><span class="line">Copyright (c) 2008-2015 Chris Eppstein</span><br><span class="line">Released under the MIT License.</span><br><span class="line">Compass is charityware.</span><br><span class="line">Please make a tax deductable donation for a worthy cause: http://umdf.org/compass</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>sass常用更新、查看版本、sass命令帮助等命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//更新sass</span><br><span class="line">gem update sass</span><br><span class="line"></span><br><span class="line">//查看sass版本</span><br><span class="line">sass -v</span><br><span class="line"></span><br><span class="line">//查看sass帮助</span><br><span class="line">sass -h</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="编译sass"><a href="#编译sass" class="headerlink" title="编译sass"></a>编译sass</h2><blockquote>
+<p>sass编译有很多种方式，如命令行编译模式、sublime插件SASS-Build、编译软件koala、前端自动化软件codekit、Grunt打造前端自动化工作流grunt-sass、Gulp打造前端自动化工作流gulp-ruby-sass等。</p>
+</blockquote>
+<h4 id="1-使用变量"><a href="#1-使用变量" class="headerlink" title="1. 使用变量;"></a>1. 使用变量;</h4><p>sass使用$符号来标识变量</p>
+<ol>
+<li><p>变量声明;<br><code>$highlight-color: #F90;</code><br>与CSS属性不同，变量可以在css规则块定义之外存在。当变量定义在css规则块内，那么该变量只能在此规则块内使用。如果它们出现在任何形式的{…}块中（如@media或者@font-face块），情况也是如此。(即存在作用域)</p>
+</li>
+<li><p>变量引用;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$highlight-color: #F90;</span><br><span class="line">$highlight-border: 1px solid $highlight-color;</span><br><span class="line">.selected &#123;</span><br><span class="line">  border: $highlight-border;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//编译后</span><br><span class="line">.selected &#123;</span><br><span class="line">  border: 1px solid #F90;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>变量名用中划线还是下划线分隔;<br>使用中划线的方式更为普遍，但两种用法相互兼容。用中划线声明的变量可以使用下划线的方式引用，反之亦然。</p>
+</li>
+</ol>
+<h4 id="2-嵌套CSS-规则"><a href="#2-嵌套CSS-规则" class="headerlink" title="2. 嵌套CSS 规则;"></a>2. 嵌套CSS 规则;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#content &#123;</span><br><span class="line">  article &#123;</span><br><span class="line">    h1 &#123; color: #333 &#125;</span><br><span class="line">    p &#123; margin-bottom: 1.4em &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  #content aside &#123; background-color: #EEE &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>父选择器的标识符&amp;;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">article a &#123;</span><br><span class="line">  color: blue;</span><br><span class="line">  &amp;:hover &#123; color: red &#125;</span><br><span class="line">&#125;</span><br><span class="line">article a &#123; color: blue &#125;</span><br><span class="line">article a:hover &#123; color: red &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>还有另外一种用法，你可以在父选择器之前添加选择器。举例来说，当用户在使用IE浏览器时，你会通过JavaScript在<body>标签上添 加一个ie的类名，为这种情况编写特殊的样式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#content aside &#123;</span><br><span class="line">  color: red;</span><br><span class="line">  body.ie &amp; &#123; color: green &#125;</span><br><span class="line">&#125;</span><br><span class="line">/*编译后*/</span><br><span class="line">#content aside &#123;color: red&#125;;</span><br><span class="line">body.ie #content aside &#123; color: green &#125;</span><br></pre></td></tr></table></figure></body></p>
+<ol>
+<li><p>群组选择器的嵌套;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.container &#123;</span><br><span class="line">  h1, h2, h3 &#123;margin-bottom: .8em&#125;</span><br><span class="line">&#125;</span><br><span class="line">nav, aside &#123;</span><br><span class="line">  a &#123;color: blue&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>子组合选择器和同层组合选择器：&gt;、+和~;</p>
+</li>
+</ol>
+<ul>
+<li>子组合选择器&gt;选择一个元素的直接子元素</li>
+<li>用同层相邻组合选择器+选择header元素后紧跟的p元素</li>
+<li>用同层全体组合选择器~，选择所有跟在article后的同层article元素<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">article &#123;</span><br><span class="line">  ~ article &#123; border-top: 1px dashed #ccc &#125;</span><br><span class="line">  &gt; section &#123; background: #eee &#125;</span><br><span class="line">  dl &gt; &#123;</span><br><span class="line">    dt &#123; color: #333 &#125;</span><br><span class="line">    dd &#123; color: #555 &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  nav + &amp; &#123; margin-top: 0 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li>嵌套属性;<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">nav &#123;</span><br><span class="line">  border: &#123;</span><br><span class="line">  style: solid;</span><br><span class="line">  width: 1px;</span><br><span class="line">  color: #ccc;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 编译后</span><br><span class="line">nav &#123;</span><br><span class="line">  border-style: solid;</span><br><span class="line">  border-width: 1px;</span><br><span class="line">  border-color: #ccc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>嵌套属性的规则是这样的：把属性名从中划线-的地方断开，在根属性后边添加一个冒号:，紧跟一个{ }块，把子属性部分写在这个{ }块中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">nav &#123;</span><br><span class="line">  border: 1px solid #ccc &#123;</span><br><span class="line">  left: 0px;</span><br><span class="line">  right: 0px;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">// 编译后</span><br><span class="line">nav &#123;</span><br><span class="line">  border: 1px solid #ccc;</span><br><span class="line">  border-left: 0px;</span><br><span class="line">  border-right: 0px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-导入SASS文件"><a href="#3-导入SASS文件" class="headerlink" title="3. 导入SASS文件;"></a>3. 导入SASS文件;</h4><ol>
+<li><p>使用SASS导入部分文件;<br>当通过@import把sass样式分散到多个文件时，你通常只想生成少数几个css文件。那些专门为@import命令而编写的sass文件，并不需要生成对应的独立css文件，这样的sass文件称为局部文件。对此，sass有一个特殊的约定来命名这些文件。此约定即：sass局部文件的文件名以下划线开头。这样，sass就不会在编译时单独编译这个文件输出css，而只把这个文件用作导入。当你@import一个局部文件时，还可以不写文件的全名，即省略文件名开头的下划线。举例来说，你想导入themes/_night-sky.scss这个局部文件里的变量，你只需在样式表中写@import “themes/night-sky”;。</p>
+</li>
+<li><p>默认变量值;<br>当一些样式需要在多个页面甚至多个项目中使用时，这非常有用。在这种情况下，有时需要在你的样式表中对导入的样式稍作修改，sass有一个功能刚好可以解决这个问题，即默认变量值。使用sass的!default标签可以实现这个目的。它很像css属性中!important标签的对立面，不同的是!default用于变量，含义是：如果这个变量被声明赋值了，那就用它声明的值，否则就用这个默认值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$fancybox-width: 400px !default;</span><br><span class="line">.fancybox &#123;</span><br><span class="line">width: $fancybox-width;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在上例中，如果用户在导入你的sass局部文件之前声明了一个$fancybox-width变量，那么你的局部文件中对$fancybox-width赋值400px的操作就无效。如果用户没有做这样的声明，则$fancybox-width将默认为400px。</p>
+<ol>
+<li>嵌套导入;<br>sass允许@import命令写在css规则内。这种导入方式下，生成对应的css文件时，局部文件会被直接插入到css规则内导入它的地方。<br>举例说明，有一个名为_blue-theme.scss的局部文件，内容如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">aside &#123;</span><br><span class="line">  background: blue;</span><br><span class="line">  color: white;</span><br><span class="line">&#125;</span><br><span class="line">// 然后把它导入到一个CSS规则内，如下所示：</span><br><span class="line"></span><br><span class="line">.blue-theme &#123;@import &quot;blue-theme&quot;&#125;</span><br><span class="line"></span><br><span class="line">// 生成的结果跟你直接在.blue-theme选择器内写_blue-theme.scss文件的内容完全一样。</span><br><span class="line"></span><br><span class="line">.blue-theme &#123;</span><br><span class="line">  aside &#123;</span><br><span class="line">    background: blue;</span><br><span class="line">    color: #fff;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>被导入的局部文件中定义的所有变量和混合器，也会在这个规则范围内生效。这些变量和混合器不会全局有效，这样我们就可以通过嵌套导入只对站点中某一特定区域运用某种颜色主题或其他通过变量配置的样式。</p>
+<ol>
+<li>原生的CSS导入;<br>在下列三种情况下会生成原生的CSS@import，尽管这会造成浏览器解析css时的额外下载：</li>
+</ol>
+<ul>
+<li>被导入文件的名字以.css结尾；</li>
+<li>被导入文件的名字是一个URL地址（比如<a href="http://www.sass.hk/css/css.css），由此可用谷歌字体API提供的相应服务；" target="_blank" rel="external">http://www.sass.hk/css/css.css），由此可用谷歌字体API提供的相应服务；</a></li>
+<li>被导入文件的名字是CSS的url()值。<blockquote>
+<p>这就是说，你不能用sass的@import直接导入一个原始的css文件，因为sass会认为你想用css原生的@import。但是，因为sass的语法完全兼容css，所以你可以把原始的css文件改名为.scss后缀，即可直接导入了。</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="4-静默注释"><a href="#4-静默注释" class="headerlink" title="4. 静默注释;"></a>4. 静默注释;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">body &#123;</span><br><span class="line">  color: #333; // 这种注释内容不会出现在生成的css文件中</span><br><span class="line">  padding: 0; /* 这种注释内容会出现在生成的css文件中 */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>####5. 混合器;<br>混合器使用@mixin标识符定义，实现大段样式的重用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@mixin rounded-corners &#123;</span><br><span class="line">  -moz-border-radius: 5px;</span><br><span class="line">  -webkit-border-radius: 5px;</span><br><span class="line">  border-radius: 5px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后就可以在你的样式表中通过@include来使用这个混合器。@include调用会把混合器中的所有样式提取出来放在@include被调用的地方。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">notice &#123;</span><br><span class="line">  background-color: green;</span><br><span class="line">  border: 2px solid #00aa00;</span><br><span class="line">  @include rounded-corners;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//sass最终生成：</span><br><span class="line">.notice &#123;</span><br><span class="line">  background-color: green;</span><br><span class="line">  border: 2px solid #00aa00;</span><br><span class="line">  -moz-border-radius: 5px;</span><br><span class="line">  -webkit-border-radius: 5px;</span><br><span class="line">  border-radius: 5px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><p>何时使用混合器;<br>判断一组属性是否应该组合成一个混合器，一条经验法则就是你能否为这个混合器想出一个好的名字。</p>
+</li>
+<li><p>混合器中的CSS规则;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@mixin no-bullets &#123;</span><br><span class="line">  list-style: none;</span><br><span class="line">  li &#123;</span><br><span class="line">    list-style-image: none;</span><br><span class="line">    list-style-type: none;</span><br><span class="line">    margin-left: 0px;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">ul.plain &#123;</span><br><span class="line">  color: #444;</span><br><span class="line">  @include no-bullets;</span><br><span class="line">&#125;</span><br><span class="line">ul.plain &#123;</span><br><span class="line">  color: #444;</span><br><span class="line">  list-style: none;</span><br><span class="line">&#125;</span><br><span class="line">ul.plain li &#123;</span><br><span class="line">  list-style-image: none;</span><br><span class="line">  list-style-type: none;</span><br><span class="line">  margin-left: 0px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>给混合器传参;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@mixin link-colors($normal, $hover, $visited) &#123;</span><br><span class="line">  color: $normal;</span><br><span class="line">  &amp;:hover &#123; color: $hover; &#125;</span><br><span class="line">  &amp;:visited &#123; color: $visited; &#125;</span><br><span class="line">&#125;</span><br><span class="line">a &#123;</span><br><span class="line">  @include link-colors(blue, red, green);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//Sass最终生成的是：</span><br><span class="line"></span><br><span class="line">a &#123; color: blue; &#125;</span><br><span class="line">a:hover &#123; color: red; &#125;</span><br><span class="line">a:visited &#123; color: green; &#125;</span><br><span class="line">// sass允许通过语法$name: value的形式指定每个参数的值。这种形式的传参，参数顺序就不必再在乎了，只需要保证没有漏掉参数即可：</span><br><span class="line"></span><br><span class="line">a &#123;</span><br><span class="line">    @include link-colors(</span><br><span class="line">      $normal: blue,</span><br><span class="line">      $visited: green,</span><br><span class="line">      $hover: red</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>默认参数值;<br>为了在@include混合器时不必传入所有的参数，我们可以给参数指定一个默认值。参数默认值使用$name: default-value的声明形式，默认值可以是任何有效的css属性值，甚至是其他参数的引用，如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@mixin link-colors($normal,$hover: $normal,$visited: $normal)&#123;</span><br><span class="line">  color: $normal;</span><br><span class="line">  &amp;:hover &#123; color: $hover; &#125;</span><br><span class="line">  &amp;:visited &#123; color: $visited; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>如果像下边这样调用：@include link-colors(red) $hover和$visited也会被自动赋值为red。</p>
+<h4 id="6-使用选择器继承来精简CSS"><a href="#6-使用选择器继承来精简CSS" class="headerlink" title="6. 使用选择器继承来精简CSS;"></a>6. 使用选择器继承来精简CSS;</h4><p>选择器继承是说一个选择器可以继承为另一个选择器定义的所有样式。这个通过@extend语法实现，如下代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//通过选择器继承继承样式</span><br><span class="line">.error &#123;</span><br><span class="line">  border: 1px solid red;</span><br><span class="line">  background-color: #fdd;</span><br><span class="line">&#125;</span><br><span class="line">.seriousError &#123;</span><br><span class="line">  @extend .error;</span><br><span class="line">  border-width: 3px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在上边的代码中，.seriousError将会继承样式表中任何位置处为.error定义的所有样式。以class=”seriousError” 修饰的html元素最终的展示效果就好像是class=”seriousError error”。相关元素不仅会拥有一个3px宽的边框，而且这个边框将变成红色的，这个元素同时还会有一个浅红色的背景，因为这些都是在.error里边定义的样式。.seriousError不仅会继承.error自身的所有样式，任何跟.error有关的组合选择器样式也会被.seriousError以组合选择器的形式继承，如下代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//.seriousError从.error继承样式</span><br><span class="line">.error a&#123;  //应用到.seriousError a</span><br><span class="line">  color: red;</span><br><span class="line">  font-weight: 100;</span><br><span class="line">&#125;</span><br><span class="line">h1.error &#123; //应用到hl.seriousError</span><br><span class="line">  font-size: 1.2rem;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如上所示，在class=”seriousError”的html元素内的超链接也会变成红色和粗体。</p>
+<ol>
+<li><p>何时使用继承;<br>当一个元素拥有的类（比如说.seriousError）表明它属于另一个类（比如说.error），这时使用继承再合适不过了。</p>
+</li>
+<li><p>继承的高级用法;<br>假如一条样式规则继承了一个复杂的选择器，那么它只会继承这个复杂选择器命中的元素所应用的样式。举例来说， 如果.seriousError@extend.important.error ， 那么.important.error 和h1.important.error 的样式都会被.seriousError继承， 但是.important或者.error下的样式则不会被继承。这种情况下你很可能希望.seriousError能够分别继承.important或者.error下的样式。如果一个选择器序列（#main .seriousError）@extend另一个选择器（.error），那么只有完全匹配#main .seriousError这个选择器的元素才会继承.error的样式，就像单个类 名继承那样。拥有class=”seriousError”的#main元素之外的元素不会受到影响。像#main .error这种选择器序列是不能被继承的。这是因为从#main .error中继承的样式一般情况下会跟直接从.error中继承的样式基本一致，细微的区别往往使人迷惑。</p>
+</li>
+<li><p>继承的工作细节;</p>
+</li>
+<li>使用继承的最佳实践;<br>值得一提的是，只要你想，你完全可以放心地继承有后代选择器修饰规则的选择器，不管后代选择器多长，但有一个前提就是，不要用后代选择器去继承。</li>
+</ol>
+<blockquote>
+<p>参考自<a href="https://www.sass.hk" target="_blank" rel="external">https://www.sass.hk</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/Sass/" rel="tag"># Sass</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../Compass/" rel="next" title="学习Compass">
+                <i class="fa fa-chevron-left"></i> 学习Compass
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../yarn/" rel="prev" title="学习yarn">
+                学习yarn <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Sass和Compass"><span class="nav-number">1.</span> <span class="nav-text">安装Sass和Compass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译sass"><span class="nav-number">2.</span> <span class="nav-text">编译sass</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-使用变量"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. 使用变量;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-嵌套CSS-规则"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. 嵌套CSS 规则;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-导入SASS文件"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. 导入SASS文件;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-静默注释"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. 静默注释;</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-使用选择器继承来精简CSS"><span class="nav-number">2.0.5.</span> <span class="nav-text">6. 使用选择器继承来精简CSS;</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

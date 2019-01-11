@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MongoDB," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="MongoDB 条件操作符条件操作符用于比较两个表达式并从mongoDB集合中获取数据。 MongoDB中条件操作符有：  (&amp;gt;) 大于 - $gt (&amp;lt;) 小于 - $lt (&amp;gt;=) 大于等于 - $gte (&amp;lt;= ) 小于等于 - $lte  我们使用的数据库名称为”hello” 我们的集合名称为”col”，以下为我们插入的数据。为了方便测试，我们可以先使用以下命令清空">
+<meta name="keywords" content="MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB学习(3)--常用操作符">
+<meta property="og:url" content="http://www.needqq.com/2018/03/19/MongoDB03/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="MongoDB 条件操作符条件操作符用于比较两个表达式并从mongoDB集合中获取数据。 MongoDB中条件操作符有：  (&amp;gt;) 大于 - $gt (&amp;lt;) 小于 - $lt (&amp;gt;=) 大于等于 - $gte (&amp;lt;= ) 小于等于 - $lte  我们使用的数据库名称为”hello” 我们的集合名称为”col”，以下为我们插入的数据。为了方便测试，我们可以先使用以下命令清空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-19T10:00:05.675Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB学习(3)--常用操作符">
+<meta name="twitter:description" content="MongoDB 条件操作符条件操作符用于比较两个表达式并从mongoDB集合中获取数据。 MongoDB中条件操作符有：  (&amp;gt;) 大于 - $gt (&amp;lt;) 小于 - $lt (&amp;gt;=) 大于等于 - $gte (&amp;lt;= ) 小于等于 - $lte  我们使用的数据库名称为”hello” 我们的集合名称为”col”，以下为我们插入的数据。为了方便测试，我们可以先使用以下命令清空">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2018/03/19/MongoDB03/"/>
+
+
+
+
+
+  <title>MongoDB学习(3)--常用操作符 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MongoDB学习(3)--常用操作符</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T17:56:58+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="MongoDB-条件操作符"><a href="#MongoDB-条件操作符" class="headerlink" title="MongoDB 条件操作符"></a>MongoDB 条件操作符</h1><p>条件操作符用于比较两个表达式并从mongoDB集合中获取数据。</p>
+<p>MongoDB中条件操作符有：</p>
+<ul>
+<li>(&gt;) 大于 - $gt</li>
+<li>(&lt;) 小于 - $lt</li>
+<li>(&gt;=) 大于等于 - $gte</li>
+<li>(&lt;= ) 小于等于 - $lte</li>
+</ul>
+<p><strong>我们使用的数据库名称为”hello” 我们的集合名称为”col”，以下为我们插入的数据。</strong><br>为了方便测试，我们可以先使用以下命令清空集合 “col” 的数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.col.remove(&#123;&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>插入以下数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;db.col.insert(&#123;</span><br><span class="line">    title: &apos;PHP 教程&apos;, </span><br><span class="line">    description: &apos;PHP 是一种创建动态交互性站点的强有力的服务器端脚本语言。&apos;,</span><br><span class="line">    by: &apos;教程&apos;,</span><br><span class="line">    url: &apos;http://www.hello.com&apos;,</span><br><span class="line">    tags: [&apos;php&apos;],</span><br><span class="line">    likes: 200</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;db.col.insert(&#123;title: &apos;Java 教程&apos;, </span><br><span class="line">    description: &apos;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&apos;,</span><br><span class="line">    by: &apos;教程&apos;,</span><br><span class="line">    url: &apos;http://www.hello.com&apos;,</span><br><span class="line">    tags: [&apos;java&apos;],</span><br><span class="line">    likes: 150</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;db.col.insert(&#123;title: &apos;MongoDB 教程&apos;, </span><br><span class="line">    description: &apos;MongoDB 是一个 Nosql 数据库&apos;,</span><br><span class="line">    by: &apos;教程&apos;,</span><br><span class="line">    url: &apos;http://www.hello.com&apos;,</span><br><span class="line">    tags: [&apos;mongodb&apos;],</span><br><span class="line">    likes: 100</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>使用find()命令查看数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.col.find()</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066542ade2f21f36b0313a&quot;), &quot;title&quot; : &quot;PHP 教程&quot;, &quot;description&quot; : &quot;PHP 是一种创建动态交互性站点的强有力的服务器端脚本语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;php&quot; ], &quot;likes&quot; : 200 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066549ade2f21f36b0313b&quot;), &quot;title&quot; : &quot;Java 教程&quot;, &quot;description&quot; : &quot;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;java&quot; ], &quot;likes&quot; : 150 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5606654fade2f21f36b0313c&quot;), &quot;title&quot; : &quot;MongoDB 教程&quot;, &quot;description&quot; : &quot;MongoDB 是一个 Nosql 数据库&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;mongodb&quot; ], &quot;likes&quot; : 100 &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="MongoDB-gt-大于操作符-gt"><a href="#MongoDB-gt-大于操作符-gt" class="headerlink" title="MongoDB (&gt;) 大于操作符 - $gt"></a>MongoDB (&gt;) 大于操作符 - $gt</h2><p>如果你想获取 “col” 集合中 “likes” 大于 100 的数据，你可以使用以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.col.find(&#123;&quot;likes&quot; : &#123;$gt : 100&#125;&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>类似于SQL语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Select * from col where likes &gt; 100;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.col.find(&#123;&quot;likes&quot; : &#123;$gt : 100&#125;&#125;)</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066542ade2f21f36b0313a&quot;), &quot;title&quot; : &quot;PHP 教程&quot;, &quot;description&quot; : &quot;PHP 是一种创建动态交互性站点的强有力的服务器端脚本语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;php&quot; ], &quot;likes&quot; : 200 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066549ade2f21f36b0313b&quot;), &quot;title&quot; : &quot;Java 教程&quot;, &quot;description&quot; : &quot;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;java&quot; ], &quot;likes&quot; : 150 &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="MongoDB（-gt-）大于等于操作符-gte"><a href="#MongoDB（-gt-）大于等于操作符-gte" class="headerlink" title="MongoDB（&gt;=）大于等于操作符 - $gte"></a>MongoDB（&gt;=）大于等于操作符 - $gte</h2><p>如果你想获取”col”集合中 “likes” 大于等于 100 的数据，你可以使用以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.col.find(&#123;likes : &#123;$gte : 100&#125;&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>类似于SQL语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Select * from col where likes &gt;=100;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.col.find(&#123;likes : &#123;$gte : 100&#125;&#125;)</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066542ade2f21f36b0313a&quot;), &quot;title&quot; : &quot;PHP 教程&quot;, &quot;description&quot; : &quot;PHP 是一种创建动态交互性站点的强有力的服务器端脚本语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;php&quot; ], &quot;likes&quot; : 200 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066549ade2f21f36b0313b&quot;), &quot;title&quot; : &quot;Java 教程&quot;, &quot;description&quot; : &quot;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;java&quot; ], &quot;likes&quot; : 150 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5606654fade2f21f36b0313c&quot;), &quot;title&quot; : &quot;MongoDB 教程&quot;, &quot;description&quot; : &quot;MongoDB 是一个 Nosql 数据库&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;mongodb&quot; ], &quot;likes&quot; : 100 &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="MongoDB-lt-小于操作符-lt"><a href="#MongoDB-lt-小于操作符-lt" class="headerlink" title="MongoDB (&lt;) 小于操作符 - $lt"></a>MongoDB (&lt;) 小于操作符 - $lt</h2><p>如果你想获取”col”集合中 “likes” 小于 150 的数据，你可以使用以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.col.find(&#123;likes : &#123;$lt : 150&#125;&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>类似于SQL语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Select * from col where likes &lt; 150;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.col.find(&#123;likes : &#123;$lt : 150&#125;&#125;)</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5606654fade2f21f36b0313c&quot;), &quot;title&quot; : &quot;MongoDB 教程&quot;, &quot;description&quot; : &quot;MongoDB 是一个 Nosql 数据库&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;mongodb&quot; ], &quot;likes&quot; : 100 &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="MongoDB-lt-小于操作符-lte"><a href="#MongoDB-lt-小于操作符-lte" class="headerlink" title="MongoDB (&lt;=) 小于操作符 - $lte"></a>MongoDB (&lt;=) 小于操作符 - $lte</h2><p>如果你想获取”col”集合中 “likes” 小于等于 150 的数据，你可以使用以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.col.find(&#123;likes : &#123;$lte : 150&#125;&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>类似于SQL语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Select * from col where likes &lt;= 150;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.col.find(&#123;likes : &#123;$lte : 150&#125;&#125;)</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066549ade2f21f36b0313b&quot;), &quot;title&quot; : &quot;Java 教程&quot;, &quot;description&quot; : &quot;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;java&quot; ], &quot;likes&quot; : 150 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5606654fade2f21f36b0313c&quot;), &quot;title&quot; : &quot;MongoDB 教程&quot;, &quot;description&quot; : &quot;MongoDB 是一个 Nosql 数据库&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;mongodb&quot; ], &quot;likes&quot; : 100 &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="MongoDB-使用-lt-和-gt-查询-lt-和-gt"><a href="#MongoDB-使用-lt-和-gt-查询-lt-和-gt" class="headerlink" title="MongoDB 使用 (&lt;) 和 (&gt;) 查询 - $lt 和 $gt"></a>MongoDB 使用 (&lt;) 和 (&gt;) 查询 - $lt 和 $gt</h2><p>如果你想获取”col”集合中 “likes” 大于100，小于 200 的数据，你可以使用以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.col.find(&#123;likes : &#123;$lt :200, $gt : 100&#125;&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>类似于SQL语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Select * from col where likes&gt;100 AND  likes&lt;200;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.col.find(&#123;likes : &#123;$lt :200, $gt : 100&#125;&#125;)</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066549ade2f21f36b0313b&quot;), &quot;title&quot; : &quot;Java 教程&quot;, &quot;description&quot; : &quot;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;java&quot; ], &quot;likes&quot; : 150 &#125;</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$gt -------- greater than  &gt;</span><br><span class="line"></span><br><span class="line">$gte --------- gt equal  &gt;=</span><br><span class="line"></span><br><span class="line">$lt -------- less than  &lt;</span><br><span class="line"></span><br><span class="line">$lte --------- lt equal  &lt;=</span><br><span class="line"></span><br><span class="line">$ne ----------- not equal  !=</span><br><span class="line"></span><br><span class="line">$eq  --------  equal  =</span><br></pre></td></tr></table></figure>
+<h1 id="MongoDB-type-操作符"><a href="#MongoDB-type-操作符" class="headerlink" title="MongoDB $type 操作符"></a>MongoDB $type 操作符</h1><p>$type操作符是基于BSON类型来检索集合中匹配的数据类型，并返回结果。</p>
+<p>MongoDB 中可以使用的类型如下表所示：<br>Double    1<br>String    2<br>Object    3<br>Array    4<br>Binary data    5<br>Undefined    6    已废弃。<br>Object id    7<br>Boolean    8<br>Date    9<br>Null    10<br>Regular Expression    11<br>JavaScript    13<br>Symbol    14<br>JavaScript (with scope)    15<br>32-bit integer    16<br>Timestamp    17<br>64-bit integer    18<br>Min key    255    Query with -1.<br>Max key    127     </p>
+<p><strong>我们使用的数据库名称为”hello” 我们的集合名称为”col”，以下为我们插入的数据。</strong><br>简单的集合”col”：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt;db.col.insert(&#123;</span><br><span class="line">    title: &apos;PHP 教程&apos;, </span><br><span class="line">    description: &apos;PHP 是一种创建动态交互性站点的强有力的服务器端脚本语言。&apos;,</span><br><span class="line">    by: &apos;教程&apos;,</span><br><span class="line">    url: &apos;http://www.hello.com&apos;,</span><br><span class="line">    tags: [&apos;php&apos;],</span><br><span class="line">    likes: 200</span><br><span class="line">&#125;)</span><br><span class="line">&gt;db.col.insert(&#123;title: &apos;Java 教程&apos;, </span><br><span class="line">    description: &apos;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&apos;,</span><br><span class="line">    by: &apos;教程&apos;,</span><br><span class="line">    url: &apos;http://www.hello.com&apos;,</span><br><span class="line">    tags: [&apos;java&apos;],</span><br><span class="line">    likes: 150</span><br><span class="line">&#125;)</span><br><span class="line">&gt;db.col.insert(&#123;title: &apos;MongoDB 教程&apos;, </span><br><span class="line">    description: &apos;MongoDB 是一个 Nosql 数据库&apos;,</span><br><span class="line">    by: &apos;教程&apos;,</span><br><span class="line">    url: &apos;http://www.hello.com&apos;,</span><br><span class="line">    tags: [&apos;mongodb&apos;],</span><br><span class="line">    likes: 100</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>使用find()命令查看数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.col.find()</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066542ade2f21f36b0313a&quot;), &quot;title&quot; : &quot;PHP 教程&quot;, &quot;description&quot; : &quot;PHP 是一种创建动态交互性站点的强有力的服务器端脚本语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;php&quot; ], &quot;likes&quot; : 200 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066549ade2f21f36b0313b&quot;), &quot;title&quot; : &quot;Java 教程&quot;, &quot;description&quot; : &quot;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;java&quot; ], &quot;likes&quot; : 150 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5606654fade2f21f36b0313c&quot;), &quot;title&quot; : &quot;MongoDB 教程&quot;, &quot;description&quot; : &quot;MongoDB 是一个 Nosql 数据库&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;mongodb&quot; ], &quot;likes&quot; : 100 &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="MongoDB-操作符-type-实例"><a href="#MongoDB-操作符-type-实例" class="headerlink" title="MongoDB 操作符 - $type 实例"></a>MongoDB 操作符 - $type 实例</h2><p>如果想获取 “col” 集合中 title 为 String 的数据，你可以使用以下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.col.find(&#123;&quot;title&quot; : &#123;$type : 2&#125;&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066542ade2f21f36b0313a&quot;), &quot;title&quot; : &quot;PHP 教程&quot;, &quot;description&quot; : &quot;PHP 是一种创建动态交互性站点的强有力的服务器端脚本语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;php&quot; ], &quot;likes&quot; : 200 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;56066549ade2f21f36b0313b&quot;), &quot;title&quot; : &quot;Java 教程&quot;, &quot;description&quot; : &quot;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;java&quot; ], &quot;likes&quot; : 150 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5606654fade2f21f36b0313c&quot;), &quot;title&quot; : &quot;MongoDB 教程&quot;, &quot;description&quot; : &quot;MongoDB 是一个 Nosql 数据库&quot;, &quot;by&quot; : &quot;教程&quot;, &quot;url&quot; : &quot;http://www.hello.com&quot;, &quot;tags&quot; : [ &quot;mongodb&quot; ], &quot;likes&quot; : 100 &#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>参考自:<a href="http://www.runoob.com/" target="_blank" rel="external">http://www.runoob.com/</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/MongoDB/" rel="tag"># MongoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../MongoDB02/" rel="next" title="MongoDB学习(2)--常用操作">
+                <i class="fa fa-chevron-left"></i> MongoDB学习(2)--常用操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../MongoDB04/" rel="prev" title="MongoDB学习(4)--Limit和Skip">
+                MongoDB学习(4)--Limit和Skip <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MongoDB-条件操作符"><span class="nav-number">1.</span> <span class="nav-text">MongoDB 条件操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB-gt-大于操作符-gt"><span class="nav-number">1.1.</span> <span class="nav-text">MongoDB (>) 大于操作符 - $gt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB（-gt-）大于等于操作符-gte"><span class="nav-number">1.2.</span> <span class="nav-text">MongoDB（>=）大于等于操作符 - $gte</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB-lt-小于操作符-lt"><span class="nav-number">1.3.</span> <span class="nav-text">MongoDB (<) 小于操作符 - $lt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB-lt-小于操作符-lte"><span class="nav-number">1.4.</span> <span class="nav-text">MongoDB (<=) 小于操作符 - $lte</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB-使用-lt-和-gt-查询-lt-和-gt"><span class="nav-number">1.5.</span> <span class="nav-text">MongoDB 使用 (<) 和 (>) 查询 - $lt 和 $gt</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MongoDB-type-操作符"><span class="nav-number">2.</span> <span class="nav-text">MongoDB $type 操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB-操作符-type-实例"><span class="nav-number">2.1.</span> <span class="nav-text">MongoDB 操作符 - $type 实例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

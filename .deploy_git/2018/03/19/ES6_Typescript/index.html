@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Typescript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是 TypeScript？TypeScript 是一种由微软开发的自由和开源的编程语言，它是JavaScript的一个超集，扩展了JavaScript的语法。 语法特性 类 Classes 接口 Interfaces 模块 Modules  类型注解 Type annotations 编译时类型检查 Compile time type checking  Arrow 函数 (类似 C# 的 L">
+<meta name="keywords" content="Typescript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Typescript学习">
+<meta property="og:url" content="http://www.needqq.com/2018/03/19/ES6_Typescript/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="什么是 TypeScript？TypeScript 是一种由微软开发的自由和开源的编程语言，它是JavaScript的一个超集，扩展了JavaScript的语法。 语法特性 类 Classes 接口 Interfaces 模块 Modules  类型注解 Type annotations 编译时类型检查 Compile time type checking  Arrow 函数 (类似 C# 的 L">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-19T09:54:38.692Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Typescript学习">
+<meta name="twitter:description" content="什么是 TypeScript？TypeScript 是一种由微软开发的自由和开源的编程语言，它是JavaScript的一个超集，扩展了JavaScript的语法。 语法特性 类 Classes 接口 Interfaces 模块 Modules  类型注解 Type annotations 编译时类型检查 Compile time type checking  Arrow 函数 (类似 C# 的 L">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2018/03/19/ES6_Typescript/"/>
+
+
+
+
+
+  <title>Typescript学习 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Typescript学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T15:17:41+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/Typescript/" itemprop="url" rel="index">
+                    <span itemprop="name">Typescript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是-TypeScript？"><a href="#什么是-TypeScript？" class="headerlink" title="什么是 TypeScript？"></a>什么是 TypeScript？</h2><p>TypeScript 是一种由微软开发的自由和开源的编程语言，它是JavaScript的一个超集，扩展了JavaScript的语法。</p>
+<h3 id="语法特性"><a href="#语法特性" class="headerlink" title="语法特性"></a>语法特性</h3><ul>
+<li>类 Classes</li>
+<li>接口 Interfaces</li>
+<li>模块 Modules </li>
+<li>类型注解 Type annotations</li>
+<li>编译时类型检查 Compile time type checking </li>
+<li>Arrow 函数 (类似 C# 的 Lambda 表达式)</li>
+</ul>
+<h3 id="JavaScript-与-TypeScript-的区别"><a href="#JavaScript-与-TypeScript-的区别" class="headerlink" title="JavaScript 与 TypeScript 的区别"></a>JavaScript 与 TypeScript 的区别</h3><p>TypeScript 是 JavaScript 的超集，扩展了 JavaScript 的语法，因此现有的 JavaScript 代码可与 TypeScript 一起工作无需任何修改，TypeScript 通过类型注解提供编译时的静态类型检查。</p>
+<p>TypeScript 可处理已有的 JavaScript 代码，并只对其中的 TypeScript 代码进行编译。</p>
+<h2 id="TypeScript-安装"><a href="#TypeScript-安装" class="headerlink" title="TypeScript 安装"></a>TypeScript 安装</h2><p>我们可以通过以下两种方式来安装 TypeScript：</p>
+<ul>
+<li>通过 Node.js 包管理器 (npm)</li>
+<li>通过与 Visual Studio 2012 继承的 MSI. (<a href="http://go.microsoft.com/fwlink/?LinkID=266563" target="_blank" rel="external">Click here to download</a>) </li>
+</ul>
+<h3 id="通过-npm-按安装的步骤："><a href="#通过-npm-按安装的步骤：" class="headerlink" title="通过 npm 按安装的步骤："></a>通过 npm 按安装的步骤：</h3><p>1、安装 npm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://npmjs.org/install.sh | sh</span><br><span class="line">$  npm --version</span><br><span class="line">2.15.1</span><br></pre></td></tr></table></figure></p>
+<p>2、安装 TypeScript npm 包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g typescript</span><br></pre></td></tr></table></figure></p>
+<p>安装完成后我们就可以使用 TypeScript 编译器，名称叫 tsc，可将编译结果生成 js 文件。<br>要编译 TypeScript 文件，可使用如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc filename.ts</span><br></pre></td></tr></table></figure></p>
+<p>一旦编译成功，就会在相同目录下生成一个同名 js 文件，你也可以通过命令参数来修改默认的输出名称。</p>
+<p>默认情况下编译器以ECMAScript 3（ES3）为目标但ES5也是受支持的一个选项。TypeScript增加了对为即将到来的ECMAScript 6标准所建议的特性的支持。</p>
+<h2 id="TypeScript-Hello-World"><a href="#TypeScript-Hello-World" class="headerlink" title="TypeScript Hello World"></a>TypeScript Hello World</h2><p>首先，我们创建一个 index.html 文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt; </span><br><span class="line">&lt;html&gt; </span><br><span class="line">&lt;head&gt; </span><br><span class="line">&lt;meta charset=&quot;utf-8&quot;&gt; </span><br><span class="line">&lt;title&gt;Learning TypeScript&lt;/title&gt;</span><br><span class="line">&lt;/head&gt; </span><br><span class="line">&lt;body&gt; </span><br><span class="line">    &lt;script src=&quot;hello.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/body&gt; </span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p>创建 hello.ts 文件， *.ts 是 TypeScript 文件的后缀，向 hello.ts 文件添加如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(&apos;hello world in TypeScript!&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>接下来，我们打开命令行，使用 tsc 命令编译 hello.ts 文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tsc hello.ts</span><br></pre></td></tr></table></figure></p>
+<p>在相同目录下就会生成一个 hello.js 文件</p>
+<h2 id="类型批注"><a href="#类型批注" class="headerlink" title="类型批注"></a>类型批注</h2><p>TypeScript 通过类型批注提供静态类型以在编译时启动类型检查。这是可选的，而且可以被忽略而使用 JavaScript 常规的动态类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">function Add(left: number, right: number): number &#123;</span><br><span class="line">    return left + right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对于基本类型的批注是number, bool和string。而弱或动态类型的结构则是any类型。</p>
+<p>类型批注可以被导出到一个单独的声明文件以让使用类型的已被编译为JavaScript的TypeScript脚本的类型信息可用。批注可以为一个现有的JavaScript库声明，就像已经为Node.js和jQuery所做的那样。</p>
+<p>当类型没有给出时，TypeScript编译器利用类型推断以推断类型。如果由于缺乏声明，没有类型可以被推断出，那么它就会默认为是动态的any类型。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><p>接下来我们在 TypeScript 文件 type.ts 中创建一个简单的 area() 函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function area(shape: string, width: number, height: number) &#123;</span><br><span class="line">    var area = width * height;</span><br><span class="line">    return &quot;I&apos;m a &quot; + shape + &quot; with an area of &quot; + area + &quot; cm squared.&quot;;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">document.body.innerHTML = area(&quot;rectangle&quot;, 30, 15);</span><br></pre></td></tr></table></figure></p>
+<p>接下来，修改 <code>index.html</code> 的 js 文件为 <code>[type.js](http://type.js/)</code> 然后编译 TypeScript 文件： <code>tsc type.ts</code>。</p>
+<h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>接下来，我们通过一个接口来扩展以上实例，创建一个 interface.ts 文件，修改 <code>index.html</code> 的 js 文件为interface.js<br>interface.js 文件代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">interface Shape &#123;</span><br><span class="line">    name: string;</span><br><span class="line">    width: number;</span><br><span class="line">    height: number;</span><br><span class="line">    color?: string;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">function area(shape : Shape) &#123;</span><br><span class="line">    var area = shape.width * shape.height;</span><br><span class="line">    return &quot;I&apos;m &quot; + shape.name + &quot; with area &quot; + area + &quot; cm squared&quot;;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">console.log( area( &#123;name: &quot;rectangle&quot;, width: 30, height: 15&#125; ) );</span><br><span class="line">console.log( area( &#123;name: &quot;square&quot;, width: 30, height: 30, color: &quot;blue&quot;&#125; ) );</span><br></pre></td></tr></table></figure></p>
+<p>接口可以作为一个类型批注。</p>
+<p>编译以上代码 <strong>tsc interface.ts</strong> 不会出现错误，但是如果你在以上代码后面添加缺失 name 参数的语句则在编译时会报错：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.log( area( &#123;width: 30, height: 15&#125; ) );</span><br></pre></td></tr></table></figure></p>
+<p>重新编译，错误信息如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ tsc hello.ts </span><br><span class="line">hello.ts(15,20): error TS2345: Argument of type &apos;&#123; width: number; height: number; &#125;&apos; is not assignable to parameter of type &apos;Shape&apos;.</span><br><span class="line">  Property &apos;name&apos; is missing in type &apos;&#123; width: number; height: number; &#125;&apos;.</span><br></pre></td></tr></table></figure></p>
+<h2 id="箭头函数表达式（lambda表达式）"><a href="#箭头函数表达式（lambda表达式）" class="headerlink" title="箭头函数表达式（lambda表达式）"></a>箭头函数表达式（lambda表达式）</h2><p>lambda表达式 <strong>()=&gt;{something}或()=&gt;something </strong>相当于js中的函数,它的好处是可以自动将函数中的this附加到上下文中。</p>
+<p>尝试执行以下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var shape = &#123;</span><br><span class="line">    name: &quot;rectangle&quot;,</span><br><span class="line">    popup: function() &#123;</span><br><span class="line"> </span><br><span class="line">        console.log(&apos;This inside popup(): &apos; + this.name);</span><br><span class="line"> </span><br><span class="line">        setTimeout(function() &#123;</span><br><span class="line">            console.log(&apos;This inside setTimeout(): &apos; + this.name);</span><br><span class="line">            console.log(&quot;I&apos;m a &quot; + this.name + &quot;!&quot;);</span><br><span class="line">        &#125;, 3000);</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">shape.popup();</span><br></pre></td></tr></table></figure></p>
+<p>实例中的 this.name 是一个空值</p>
+<p>接下来我们使用 TypeScript 的箭头函数。把 <strong>function()</strong> 替换为 <strong>() =&gt;：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var shape = &#123;</span><br><span class="line">    name: &quot;rectangle&quot;,</span><br><span class="line">    popup: function() &#123;</span><br><span class="line"> </span><br><span class="line">        console.log(&apos;This inside popup(): &apos; + this.name);</span><br><span class="line"> </span><br><span class="line">        setTimeout( () =&gt; &#123;</span><br><span class="line">            console.log(&apos;This inside setTimeout(): &apos; + this.name);</span><br><span class="line">            console.log(&quot;I&apos;m a &quot; + this.name + &quot;!&quot;);</span><br><span class="line">        &#125;, 3000);</span><br><span class="line"> </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line">shape.popup();</span><br></pre></td></tr></table></figure></p>
+<p>在以上实例编译后端 js 文件中，我们可以看到一行 <strong>var _this = this;</strong>，<strong>_this</strong> 在 setTimeout() 的回调函数引用了 name 属性。</p>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>TypeScript支持集成了可选的类型批注支持的ECMAScript 6的类。<br>接下来我们创建一个类文件 class.ts，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class Shape &#123;</span><br><span class="line"> </span><br><span class="line">    area: number;</span><br><span class="line">    color: string;</span><br><span class="line"> </span><br><span class="line">    constructor ( name: string, width: number, height: number ) &#123;</span><br><span class="line">        this.area = width * height;</span><br><span class="line">        this.color = &quot;pink&quot;;</span><br><span class="line">    &#125;;</span><br><span class="line"> </span><br><span class="line">    shoutout() &#123;</span><br><span class="line">        return &quot;I&apos;m &quot; + this.color + &quot; &quot; + this.name +  &quot; with an area of &quot; + this.area + &quot; cm squared.&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">var square = new Shape(&quot;square&quot;, 30, 30);</span><br><span class="line"> </span><br><span class="line">console.log( square.shoutout() );</span><br><span class="line">console.log( &apos;Area of Shape: &apos; + square.area );</span><br><span class="line">console.log( &apos;Name of Shape: &apos; + square.name );</span><br><span class="line">console.log( &apos;Color of Shape: &apos; + square.color );</span><br><span class="line">console.log( &apos;Width of Shape: &apos; + square.width );</span><br><span class="line">console.log( &apos;Height of Shape: &apos; + square.height );</span><br></pre></td></tr></table></figure></p>
+<p>以上 Shape 类中有两个属性 area 和 color，一个构造器 (constructor()), 一个方法是 shoutout() 。</p>
+<p>构造器中参数(name, width 和 height) 的作用域是局部变量，所以编译以上文件，在浏览器输出错误结果如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class.ts(12,42): The property &apos;name&apos; does not exist on value of type &apos;Shape&apos;</span><br><span class="line">class.ts(20,40): The property &apos;name&apos; does not exist on value of type &apos;Shape&apos;</span><br><span class="line">class.ts(22,41): The property &apos;width&apos; does not exist on value of type &apos;Shape&apos;</span><br><span class="line">class.ts(23,42): The property &apos;height&apos; does not exist on value of type &apos;Shape&apos;</span><br></pre></td></tr></table></figure></p>
+<p>接下来，我们添加 public 和 private 访问修饰符。Public 成员可以在任何地方访问， private 成员只允许在类中访问。接下来我们修改以上代码，将 color 声明为 private，构造函数的参数 name 声明为 public：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">private color: string;</span><br><span class="line">...</span><br><span class="line">constructor ( public name: string, width: number, height: number ) &#123;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>由于 color 成员变量设置了 private，所以会出现以下信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class.ts(24,41): The property &apos;color&apos; does not exist on value of type &apos;Shape&apos;</span><br></pre></td></tr></table></figure></p>
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>最后，我们可以继承一个已存在的类并创建一个派生类，继承使用关键字 <strong>extends</strong>。</p>
+<p>接下来我们在 class.ts 文件末尾添加以下代码，如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Shape3D extends Shape &#123;</span><br><span class="line"> </span><br><span class="line">    volume: number;</span><br><span class="line"> </span><br><span class="line">    constructor ( public name: string, width: number, height: number, length: number ) &#123;</span><br><span class="line">        super( name, width, height );</span><br><span class="line">        this.volume = length * this.area;</span><br><span class="line">    &#125;;</span><br><span class="line"> </span><br><span class="line">    shoutout() &#123;</span><br><span class="line">        return &quot;I&apos;m &quot; + this.name +  &quot; with a volume of &quot; + this.volume + &quot; cm cube.&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    superShout() &#123;</span><br><span class="line">        return super.shoutout();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">var cube = new Shape3D(&quot;cube&quot;, 30, 30, 30);</span><br><span class="line">console.log( cube.shoutout() );</span><br><span class="line">console.log( cube.superShout() );</span><br></pre></td></tr></table></figure></p>
+<p>派生类 Shape3D 说明：</p>
+<ul>
+<li>Shape3D 继承了 Shape 类, 也继承了 Shape 类的 color 属性。</li>
+<li>构造函数中，super 方法调用了基类 Shape 的构造函数 Shape，传递了参数 name, width, 和 height 值。 继承允许我们复用 Shape 类的代码，所以我们可以通过继承 area 属性来计算 this.volume。</li>
+<li>Shape3D 的 shoutout() 方法重写基类的实现。superShout() 方法通过使用 super 关键字直接返回了基类的 shoutout() 方法。</li>
+<li>其他的代码我们可以通过自己的需求来完成自己想要的功能。</li>
+</ul>
+<blockquote>
+<p>参考自:<a href="https://www.tslang.cn" target="_blank" rel="external">https://www.tslang.cn</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/Typescript/" rel="tag"># Typescript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../ES6_Thunk/" rel="next" title="ES6学习--异步编程--Thunk">
+                <i class="fa fa-chevron-left"></i> ES6学习--异步编程--Thunk
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../HTTP00/" rel="prev" title="学习HTTP">
+                学习HTTP <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-TypeScript？"><span class="nav-number">1.</span> <span class="nav-text">什么是 TypeScript？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法特性"><span class="nav-number">1.1.</span> <span class="nav-text">语法特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript-与-TypeScript-的区别"><span class="nav-number">1.2.</span> <span class="nav-text">JavaScript 与 TypeScript 的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TypeScript-安装"><span class="nav-number">2.</span> <span class="nav-text">TypeScript 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过-npm-按安装的步骤："><span class="nav-number">2.1.</span> <span class="nav-text">通过 npm 按安装的步骤：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TypeScript-Hello-World"><span class="nav-number">3.</span> <span class="nav-text">TypeScript Hello World</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型批注"><span class="nav-number">4.</span> <span class="nav-text">类型批注</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实例"><span class="nav-number">4.1.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口"><span class="nav-number">5.</span> <span class="nav-text">接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#箭头函数表达式（lambda表达式）"><span class="nav-number">6.</span> <span class="nav-text">箭头函数表达式（lambda表达式）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类"><span class="nav-number">7.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继承"><span class="nav-number">8.</span> <span class="nav-text">继承</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

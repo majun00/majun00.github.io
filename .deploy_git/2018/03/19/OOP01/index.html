@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="../../../../lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="../../../../lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="../../../../css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../../images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../../images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../../../../images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="../../../../images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面向对象," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="JavaScript-多范式编程语言 js是一个基于对象的多范式编程语言  多范式编程 面向过程 面向对象 函数式(链式编程):以点语法为基本规则  面向对象基本概念面向过程 一步一步 前因后果  面向对象 只求结果 不管实现过程,实际上就是对面向过程中的每一步进行封装  面向对象三大特征 封装:将面向过程每一步进行推进:对同种对象的属性和方法进行抽象，成为一个类(js中没有类的概念，实际上也是一">
+<meta name="keywords" content="面向对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OOP-(1)--基础知识回顾">
+<meta property="og:url" content="http://www.needqq.com/2018/03/19/OOP01/index.html">
+<meta property="og:site_name" content="Majun">
+<meta property="og:description" content="JavaScript-多范式编程语言 js是一个基于对象的多范式编程语言  多范式编程 面向过程 面向对象 函数式(链式编程):以点语法为基本规则  面向对象基本概念面向过程 一步一步 前因后果  面向对象 只求结果 不管实现过程,实际上就是对面向过程中的每一步进行封装  面向对象三大特征 封装:将面向过程每一步进行推进:对同种对象的属性和方法进行抽象，成为一个类(js中没有类的概念，实际上也是一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-10T13:53:42.808Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OOP-(1)--基础知识回顾">
+<meta name="twitter:description" content="JavaScript-多范式编程语言 js是一个基于对象的多范式编程语言  多范式编程 面向过程 面向对象 函数式(链式编程):以点语法为基本规则  面向对象基本概念面向过程 一步一步 前因后果  面向对象 只求结果 不管实现过程,实际上就是对面向过程中的每一步进行封装  面向对象三大特征 封装:将面向过程每一步进行推进:对同种对象的属性和方法进行抽象，成为一个类(js中没有类的概念，实际上也是一">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.needqq.com/2018/03/19/OOP01/"/>
+
+
+
+
+
+  <title>OOP-(1)--基础知识回顾 | Majun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Majun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.needqq.com">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Majun">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Majun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OOP-(1)--基础知识回顾</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T15:26:48+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/JS/" itemprop="url" rel="index">
+                    <span itemprop="name">JS</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="../../../../categories/JS/JS-OOP/" itemprop="url" rel="index">
+                    <span itemprop="name">JS_OOP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="JavaScript-多范式编程语言"><a href="#JavaScript-多范式编程语言" class="headerlink" title="JavaScript-多范式编程语言"></a>JavaScript-多范式编程语言</h2><blockquote>
+<p>js是一个基于对象的多范式编程语言</p>
+</blockquote>
+<h3 id="多范式编程"><a href="#多范式编程" class="headerlink" title="多范式编程"></a>多范式编程</h3><ul>
+<li>面向过程</li>
+<li>面向对象</li>
+<li>函数式(链式编程):以点语法为基本规则</li>
+</ul>
+<h2 id="面向对象基本概念"><a href="#面向对象基本概念" class="headerlink" title="面向对象基本概念"></a>面向对象基本概念</h2><h3 id="面向过程"><a href="#面向过程" class="headerlink" title="面向过程"></a>面向过程</h3><ul>
+<li>一步一步 前因后果</li>
+</ul>
+<h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><ul>
+<li>只求结果 不管实现过程,实际上就是对面向过程中的每一步进行封装</li>
+</ul>
+<h3 id="面向对象三大特征"><a href="#面向对象三大特征" class="headerlink" title="面向对象三大特征"></a>面向对象三大特征</h3><ul>
+<li><strong>封装</strong>:将面向过程每一步进行推进:对同种对象的属性和方法进行抽象，成为一个<strong>类</strong>(js中没有类的概念，实际上也是一个对象)，然后通过<strong>类</strong>的方法和属性来访问<strong>类</strong></li>
+<li><strong>继承</strong>:在封装的基础上，将同类事物继续抽象，继承时，子类拥有父类的属性和方法，同时拥有自己特有的属性和方法</li>
+<li><strong>多态</strong>:不同对象对同一事物做出不同的回应，通常出现在继承后对方法的重写</li>
+</ul>
+<blockquote>
+<p>封装 继承 多态 都是对具体事务的<strong>抽象</strong> </p>
+<p><strong>抽象</strong>是实现面向对象编程的基本思想</p>
+<p><strong>抽象</strong>抽取事务主要特征对事务进行描述</p>
+</blockquote>
+<h2 id="什么是对象"><a href="#什么是对象" class="headerlink" title="什么是对象"></a>什么是对象</h2><blockquote>
+<p>万物皆对象</p>
+</blockquote>
+<h3 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h3><ul>
+<li>很多数据放到一起:例如数组中的数据，对象中的数据 都是将零散的数据放到一个数据集中,这个数据集就是指数组这个对象以及Object这个对象</li>
+</ul>
+<h3 id="功能集"><a href="#功能集" class="headerlink" title="功能集"></a>功能集</h3><ul>
+<li>函数集&amp;方法集:重复的代码封装到函数中，将所有的函数放到一个对象中成为对象的方法，此对象就可以看做是一个函数集</li>
+</ul>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="基本数据类型-值类型"><a href="#基本数据类型-值类型" class="headerlink" title="基本数据类型(值类型)"></a>基本数据类型(值类型)</h3><pre><code>// 基本数据类型
+string number boolean
+
+// 检测基本数据类型
+var str = “123”;
+console.log(typeof str);// string
+</code></pre><h3 id="复杂数据类型（引用数据类型）"><a href="#复杂数据类型（引用数据类型）" class="headerlink" title="复杂数据类型（引用数据类型）"></a>复杂数据类型（引用数据类型）</h3><pre><code>// Object(数组，时间，函数，正则...)
+
+// 检测复杂数据类型
+1.使用typeof不能检测到真实类型(函数例外)
+
+var arr = [ 1, 2, 3 ];
+var fn = function () {};
+var o = { name: &apos;itcast&apos; };
+
+console.log( typeof arr ); // object
+console.log( typeof fn ); // function
+console.log( typeof o ); // object
+console.log( typeof new Date() ); // object
+
+2.使用Object.prototype.tostring.apply()
+
+console.log(  Object.prototype.toString.apply( arr ) );//[object Array]
+console.log(  Object.prototype.toString.apply( fn ) ); //[object Function]
+console.log(  Object.prototype.toString.apply( o ) ); // [object Object]
+console.log(  Object.prototype.toString.apply( new Date() ) );// [object Date]
+
+console.log(  Object.prototype.toString.apply( null ) );// [object Null]
+console.log(  Object.prototype.toString.apply( undefined ) ); // [object Undefined]
+</code></pre><h3 id="空类型"><a href="#空类型" class="headerlink" title="空类型"></a>空类型</h3><pre><code>null undefined
+</code></pre><h2 id="引用类型的拷贝"><a href="#引用类型的拷贝" class="headerlink" title="引用类型的拷贝"></a>引用类型的拷贝</h2><pre><code>var p = {
+    name: &apos;张三&apos;,
+    age: 19,
+    gender: &apos;男&apos;,
+    clone: function () {
+        // 目的是为了完成对自己的拷贝
+        var temp = {};
+        temp.name = this.name;
+        temp.age = this.age;
+        temp.gender = this.gender;
+        temp.clone = this.clone;
+        return temp;
+    }
+};
+
+var p1 = p.clone();
+
+p.name = &apos;李四&apos;;
+
+var p2 = p1.clone();
+p1.name = &apos;王五&apos;;
+</code></pre><h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><ul>
+<li>拷贝引用:如果对象的属性也是一个引用类型,拷贝的时候不重新创建一个新的对象来实现该属性的拷贝,那么就是浅拷贝</li>
+<li>对象的直接赋值就是浅拷贝</li>
+</ul>
+<h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><ul>
+<li>拷贝数据:将两个对象完全从内存中隔离开,就是深拷贝。即每一个引用属性,以及引用属性的引用属性,全部拷贝出来.</li>
+<li>遍历对象的每一项数据,实现复制就是深拷贝</li>
+</ul>
+<h2 id="构造函数-构造器"><a href="#构造函数-构造器" class="headerlink" title="构造函数(构造器)"></a>构造函数(构造器)</h2><h3 id="对象的动态特性"><a href="#对象的动态特性" class="headerlink" title="对象的动态特性"></a>对象的动态特性</h3><ul>
+<li><p>js中的对象如果没有设置指定的属性,只需要利用赋值就可以给该对象提供该属性</p>
+<pre><code>var o = {}; // 没有添加任何属性的对象
+o.name = &quot;zxx&quot;; // 赋值时动态添加了name属性
+</code></pre></li>
+</ul>
+<h3 id="点语法-amp-关联数组语法"><a href="#点语法-amp-关联数组语法" class="headerlink" title="点语法&amp;关联数组语法"></a>点语法&amp;关联数组语法</h3><ul>
+<li><p>点语法</p>
+<pre><code>var o = {};
+o.name = &apos;zxx&apos;;// 点语法赋值
+console.log(o.name);// 点语法取值
+</code></pre></li>
+<li><p>关联数组语法</p>
+<pre><code>var o = {};
+o[&apos;name&apos;] = &apos;zxx&apos;; // 关联数组语法赋值
+console.log(o[&apos;name&apos;]);// 关联数组语法取值
+</code></pre></li>
+</ul>
+<blockquote>
+<p>name这个变量尽量少用,系统中存在一个变量叫name,有可能会冲突</p>
+</blockquote>
+<h3 id="工厂函数模式"><a href="#工厂函数模式" class="headerlink" title="工厂函数模式"></a>工厂函数模式</h3><pre><code>function Person(name,age,gender){
+    var p = {};
+    p.name = name;
+    p.age = age;
+    p.gender = gender;
+    return p; 
+}
+
+var p1 = Person(&apos;zs&apos;,18,&apos;男&apos;);
+var p2 = Person(&apos;ls&apos;,16,&apos;女&apos;);
+</code></pre><h3 id="构造函数模式"><a href="#构造函数模式" class="headerlink" title="构造函数模式"></a>构造函数模式</h3><pre><code>// 构造器定义:1.不需要再函数内部显示创建对象 2.属性和方法绑定到this上 3.不需要return
+function Person(name,age,gender){
+    this.name = name;
+    this.age = age;
+    this.gender = gender;
+}
+
+// 构造器创建对象 使用 new 创建对象
+var p = new Person(‘zs’,18,&apos;男&apos;);
+</code></pre><h2 id="异常与捕获"><a href="#异常与捕获" class="headerlink" title="异常与捕获"></a>异常与捕获</h2><h3 id="常见异常"><a href="#常见异常" class="headerlink" title="常见异常"></a>常见异常</h3><pre><code>Uncaught ReferenceError 未捕获的引用错误
+Uncaught TypeError 未捕获的类型错误
+Uncaught SyntaxError 未捕获的语法错误
+</code></pre><h3 id="异常捕获语法"><a href="#异常捕获语法" class="headerlink" title="异常捕获语法"></a>异常捕获语法</h3><pre><code>try{
+    // 正常执行的代码
+}catch(e){
+    // 出现异常执行
+}
+
+********
+try{
+    // 正常执行的代码
+}catch(e){
+    // 出现异常执行
+}finally{
+    // 无论是否出现异常 try-catch执行完毕 都会执行这里面的代码
+    // 一般用于释放资源
+}
+</code></pre><h3 id="自定义抛出异常"><a href="#自定义抛出异常" class="headerlink" title="自定义抛出异常"></a>自定义抛出异常</h3><ul>
+<li><p>语法: <code>throw new Error( 错误的消息 )</code></p>
+<pre><code>console.log( &apos;123&apos; );
+try {
+    var e1 = new Error( &apos;用户自己定义的异常对象&apos; );
+    throw e1;
+} catch ( e ) {
+    console.log( e1 === e );
+}
+console.log( &apos;456&apos; );
+</code></pre></li>
+</ul>
+<h2 id="DOM操作复习"><a href="#DOM操作复习" class="headerlink" title="DOM操作复习"></a>DOM操作复习</h2><h3 id="获取元素"><a href="#获取元素" class="headerlink" title="获取元素"></a>获取元素</h3><h4 id="获取指定元素"><a href="#获取指定元素" class="headerlink" title="获取指定元素"></a>获取指定元素</h4><p><strong><code>document.getElementById</code>: 通过id寻找一个元素（找到的是一个元素对象） 该方法只能被document对象调用（同一个文档中id不能重复）</strong></p>
+<pre><code>&lt;div id=&quot;box&quot;&gt;&lt;/div&gt;
+var box = document.getElementById(“box”);
+</code></pre><p><strong><code>document.getElementsByTagName</code>: 通过标签名寻找一类元素（找到的是由元素对象组成的伪数组,既可以被document调用，又可以被元素对象调用，被元素对象调时表示在该元素对象内部执行查找</strong></p>
+<pre><code>&lt;div class=&quot;cl&quot; id=“cl”&gt;
+    &lt;div class=&quot;cl2&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;cl2&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;cl&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;cl&quot;&gt;&lt;/div&gt;
+
+var divs = document.getElementsByTagName(&quot;div&quot;);// 获取页面上所有的div,divs是一个伪数组
+var cl = document.getElementById(&quot;cl&quot;);// 获取id为cl的元素
+var cl2s = cl.getElementsByTagName(&quot;div&quot;);// 获取cl元素下面所有的div标签,cl2s是一个伪数组
+</code></pre><p><strong><code>document.getElementsByClassName</code>: 通过类名寻找包含这个类名的元素</strong></p>
+<pre><code> &lt;div class=&quot;cl main&quot; id=“cl”&gt;
+    &lt;p class=&quot;cl fl&quot;&gt;&lt;/div&gt;
+    &lt;span class=&quot;cl&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;a class=&quot;cl&quot;&gt;&lt;/a&gt;
+
+var cls = document.getElementsByClassName(&quot;cl&quot;);//获取到的是一个伪数组,里面装的是div p span a这四个元素对象(只要标签中的class中有传入的类名就能获取到)
+</code></pre><h4 id="获取子元素-amp-兄弟元素-amp-父元素"><a href="#获取子元素-amp-兄弟元素-amp-父元素" class="headerlink" title="获取子元素&amp;兄弟元素&amp;父元素"></a>获取子元素&amp;兄弟元素&amp;父元素</h4><p><strong><code>element.childNodes</code>: 获取指定元素的子节点,包括文本节点、元素节点等</strong><br><strong><code>element.children</code>: 获取指定元素的子元素,只会获取元素节点</strong><br><strong><code>element.nextSibling</code>: 获取指定元素的下一个兄弟节点</strong><br><strong><code>element.nextElementSibling</code>: 获取指定元素的下一个兄弟元素</strong><br><strong><code>element.previousSibling</code>: 获取指定元素的上一个兄弟节点</strong><br><strong><code>element.previousElementSibling</code>: 获取指定元素的上一个兄弟元素</strong><br><strong><code>element.parentNode</code>: 获取元素的父节点,父节点肯定是一个元素</strong></p>
+<pre><code>&lt;ul id=&quot;list&quot;&gt;
+    &lt;li id=&quot;firstlink&quot;&gt;&lt;a href=&quot;javascript:void(0)&quot;&gt;首页&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;javascript:void(0)&quot;&gt;播客&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;javascript:void(0)&quot;&gt;博客&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;javascript:void(0)&quot;&gt;相册&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;javascript:void(0)&quot;&gt;关于&lt;/a&gt;&lt;/li&gt;
+    &lt;li id=&quot;lastlink&quot;&gt;&lt;a href=&quot;javascript:void(0)&quot;&gt;帮助&lt;/a&gt;&lt;/li&gt;
+
+&lt;/ul&gt;
+
+// 通过id获取元素对象
+var ul = document.getElementById(&quot;list&quot;);
+// 通过标签名获取元素数组
+var lis = ul.getElementsByTagName(&quot;li&quot;);
+// 不关心层级 只找指定标签
+// 缺点:如果内部还有li 也会找到
+
+var nodes = ul.childNodes;
+//子节点 只找子级
+//缺点:除了我们想要的元素节点 还会获取到其他节点
+
+var children = ul.children;//只获取ul下的子元素
+
+var link = document.getElementById(&quot;firstlink&quot;);
+var nextNodeSibling = link.nextSibling; // 获取到的是换行(文本节点)
+var nextElementSibling = link.nextElementSibling;//获取到的是下一个li标签
+
+var parentNode = link.parentNode;// 获取到的是ul
+</code></pre><h4 id="获取第一-amp-最后一个子元素"><a href="#获取第一-amp-最后一个子元素" class="headerlink" title="获取第一&amp;最后一个子元素"></a>获取第一&amp;最后一个子元素</h4><p><strong><code>element.firstChild</code>: 获取指定元素下面的第一个子节点</strong><br><strong><code>element.firstElementChild</code>: 获取指定元素下面的第一个子元素</strong><br><strong><code>element.lastChild</code>: 获取指定元素下面的最后一个子节点</strong><br><strong><code>element.lastElementChild</code>: 获取指定元素下面的最后一个子元素</strong></p>
+<pre><code>var firstNode = ul.firstChild;// 获取到的是换行(文本节点)
+var firstElement = ul.firstElementChild;// 获取到的是firstlink
+var lastNode = ul.lastChild;// 获取到的是换行(文本节点)
+var lastElement = ul.lastElementChild;// 获取到的是lastlink
+</code></pre><h3 id="节点操作"><a href="#节点操作" class="headerlink" title="节点操作"></a>节点操作</h3><h4 id="克隆节点-cloneNode"><a href="#克隆节点-cloneNode" class="headerlink" title="克隆节点 - cloneNode()"></a>克隆节点 - cloneNode()</h4><ul>
+<li><strong><code>element.cloneNode()</code>: 复制element节点</strong></li>
+<li><p><strong>参数:布尔值</strong></p>
+<ul>
+<li><strong>true代表深层克隆,把当前节点和内部所有节点都复制一份</strong></li>
+<li><p><strong>false代表浅层克隆,只复制当前节点</strong></p>
+<pre><code>&lt;div id=&quot;father&quot;&gt;
+&lt;div id=&quot;son&quot;&gt;&lt;div/&gt;
+&lt;/div&gt;
+
+var father = document.getElementById(&quot;father&quot;);
+var son = document.getElementById(&quot;son&quot;);
+var clone = son.cloneNode(true);// 把son这个div复制一份 复制出来的clone和son没有任何关系了
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<h4 id="添加节点-appendChild"><a href="#添加节点-appendChild" class="headerlink" title="添加节点 - appendChild()"></a>添加节点 - appendChild()</h4><p><strong><code>father.appendChild(son)</code>:将son节点追加到father内部的最后位置</strong></p>
+<pre><code>&lt;div id=&quot;father&quot;&gt;
+   &lt;div id=&quot;son&quot;&gt;&lt;div/&gt;
+&lt;/div&gt;
+&lt;div id=&quot;demo&quot;&gt;&lt;/div&gt;
+
+var father = document.getElementById(&quot;father&quot;);
+var demo = document.getElementById(&quot;demo&quot;);
+var clone = demo.cloneNode(true);// 将demo克隆一份 
+father.appendChild(clone);// 将克隆出来的clone追加到father中
+
+// 此时页面结构应该为
+&lt;div id=&quot;father&quot;&gt;
+    &lt;div id=&quot;son&quot;&gt;&lt;div/&gt;
+    &lt;div id=&quot;demo&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&quot;demo&quot;&gt;&lt;/div&gt;
+
+/*追加克隆节点对原节点不会产生影响*/
+
+//如果代码如下 则会将demo节点直接移动到father节点下
+father.appendChild(demo);// demo是页面上存在的节点
+
+// 此时页面结构应该为
+&lt;div id=&quot;father&quot;&gt;
+    &lt;div id=&quot;son&quot;&gt;&lt;div/&gt;
+    &lt;div id=&quot;demo&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre><h4 id="插入节点-insertBefore"><a href="#插入节点-insertBefore" class="headerlink" title="插入节点 - insertBefore()"></a>插入节点 - insertBefore()</h4><p><strong><code>father.inserBefore(son1,son2)</code>: 将son1插入到father节点下的son2前面</strong></p>
+<pre><code>&lt;div id=&quot;father&quot;&gt;
+   &lt;div id=&quot;son&quot;&gt;&lt;div/&gt;
+&lt;/div&gt;
+&lt;div id=&quot;demo&quot;&gt;&lt;/div&gt;
+
+var father = document.getElementById(&quot;father&quot;);
+var son = document.getElementById(&quot;son&quot;);
+var demo = document.getElementById(&quot;demo&quot;);
+
+father.inserBefore(son,demo);//会直接将demo节点移动到father下的son前面       
+
+/*插入克隆出来的节点也不会对原节点产生影响*/
+</code></pre><h4 id="移除节点-removeChild"><a href="#移除节点-removeChild" class="headerlink" title="移除节点 - removeChild()"></a>移除节点 - removeChild()</h4><p><strong><code>father.removeChild(son)</code>: 将father下的son节点移除</strong></p>
+<pre><code>&lt;div id=&quot;father&quot;&gt;
+      &lt;div id=&quot;son&quot;&gt;&lt;div/&gt;
+&lt;/div&gt;
+
+var father = document.getElementById(&quot;father&quot;);
+var son = document.getElementById(&quot;son&quot;);
+
+father.removeChild(son);// 直接将son节点删除
+</code></pre><h3 id="创建结构"><a href="#创建结构" class="headerlink" title="创建结构"></a>创建结构</h3><h4 id="document-write"><a href="#document-write" class="headerlink" title="document.write()"></a>document.write()</h4><p><strong><code>document.write(&quot;内容&quot;)</code> 特点:只能被document调用,而且会覆盖页面上原有内容</strong></p>
+<pre><code>document.write(&quot;&lt;a href=&quot;http://www.baidu.com&quot;&gt;百度&lt;/a&gt;&quot;)
+// 可以在页面上创建一个a标签,而且会覆盖页面上原有的所有内容
+</code></pre><h4 id="element-innerHtml"><a href="#element-innerHtml" class="headerlink" title="element.innerHtml"></a>element.innerHtml</h4><p><strong><code>element.innerHtml</code>特点:往页面添加html标签,可以限定范围</strong></p>
+<pre><code>&lt;div id=&quot;box&quot;&gt;&lt;/div&gt;
+
+var box = document.getElementById(&quot;box&quot;);
+box.innerHtml = &quot;&lt;a href=&quot;http://www.baidu.com&quot;&gt;百度&lt;/a&gt;&quot;;
+
+// 追加后的结构为
+&lt;div id=&quot;box&quot;&gt;
+    &lt;a href=&quot;http://www.baidu.com&quot;&gt;百度&lt;/a&gt;
+&lt;/div&gt;
+</code></pre><h4 id="document-createElement"><a href="#document-createElement" class="headerlink" title="document.createElement()"></a>document.createElement()</h4><p><strong><code>document.createElement(&quot;内容&quot;)</code>特点:动态创建标签,添加到页面需要配合appendChild使用</strong></p>
+<pre><code>&lt;div id=&quot;box&quot;&gt;&lt;/div&gt;
+var box = document.getElementById(&quot;box&quot;);
+var input = document.createElement(&quot;input&quot;);
+input.type = &quot;text&quot;;
+box.appendChild(input);
+</code></pre><h3 id="标签的自定义属性操作"><a href="#标签的自定义属性操作" class="headerlink" title="标签的自定义属性操作"></a>标签的自定义属性操作</h3><h4 id="setAttribute"><a href="#setAttribute" class="headerlink" title="setAttribute()"></a>setAttribute()</h4><p><strong>设置标签属性: <code>setAttribute()</code></strong></p>
+<pre><code>&lt;div id=&quot;box&quot;&gt;&lt;/div&gt;
+var box = document.getElementById(&quot;box&quot;);
+box.setAttribute(&quot;id&quot;,&quot;aaa&quot;);// 有规定的属性可以设置
+box.setAttribute(&quot;bbb&quot;,&quot;ccc&quot;);// 没有规定的属性也可以设置
+</code></pre><h4 id="getAttribute"><a href="#getAttribute" class="headerlink" title="getAttribute()"></a>getAttribute()</h4><p><strong>获取标签属性:<code>getAttribute()</code></strong></p>
+<pre><code>&lt;div id=&quot;box&quot;&gt;&lt;/div&gt;
+var box = document.getElementById(&quot;box&quot;);
+box.getAttribute(&quot;id&quot;);// 有规定的可以获取
+box.getAttribute(&quot;aaa&quot;); // 没有规定的也可以获取
+</code></pre><h4 id="removeAttribute"><a href="#removeAttribute" class="headerlink" title="removeAttribute()"></a>removeAttribute()</h4><p><strong>移除标签属性:<code>removeAttribute()</code></strong></p>
+<pre><code>&lt;div id=&quot;box&quot;&gt;&lt;/div&gt;
+var box = document.getElementById(&quot;box&quot;);
+box.removeAttribute(&quot;id&quot;); // 有规定的可以删除
+box.removeAttribute(&quot;aaa&quot;); // 没有规定的也可以删除
+</code></pre><h3 id="兼容方法"><a href="#兼容方法" class="headerlink" title="兼容方法"></a>兼容方法</h3><h4 id="innerText兼容写法"><a href="#innerText兼容写法" class="headerlink" title="innerText兼容写法"></a>innerText兼容写法</h4><p><strong>获取文本</strong></p>
+<pre><code>function getInnerText(element) {
+    // 能力检测 判断是否有这一属性
+    if (typeof element.innerText === &quot;string&quot;) {
+        return element.innerText;
+    } else {
+        return element.textContent;
+    }
+}
+</code></pre><p><strong>设置文本</strong></p>
+<pre><code>function setInnerText(element, content) {
+    // 能力检测 判断是否有这一属性
+    if (typeof element.innerText === &quot;string&quot;) {
+        element.innerText = content;
+    } else {
+        element.textContent = content;
+    }
+}
+</code></pre><h4 id="获取上一个-amp-下一个兄弟元素的兼容写法"><a href="#获取上一个-amp-下一个兄弟元素的兼容写法" class="headerlink" title="获取上一个&amp;下一个兄弟元素的兼容写法"></a>获取上一个&amp;下一个兄弟元素的兼容写法</h4><p><strong>获取下一个兄弟元素兼容写法</strong></p>
+<pre><code>// 获取下一个兄弟元素
+function getNextElement(element){
+    if(element.nextElementSibling){
+        //能找到nextElementSibling这个属性 就可以直接使用
+        return element.nextElementSibling;
+    }else{
+        var next = element.nextSibling;// 获取下一个兄弟节点
+        // 如果next就是想要的下一个兄弟元素 就直接返回 如果不是 就一直找
+        while(next&amp;&amp;next.nodeType !==1){//next找到了而且不是想要的元素节点就继续找
+            next = next.nextSibling;
+        }
+        return next;
+    }
+}
+</code></pre><p><strong>获取上一个兄弟元素兼容写法</strong></p>
+<pre><code>// 获取上一个兄弟元素
+function getPreviousElement(element){
+    if(element.previousElementSibling){
+        return element.previousElementSibling;
+    }else{
+        var previous = element.previousSibling;
+        while(previous&amp;&amp;previous.nodeType !== 1){
+            previous = element.previousSibling;
+        }
+        return previous;
+    }
+}
+</code></pre><h4 id="获取第一个子元素-amp-最后一个子元素的兼容写法"><a href="#获取第一个子元素-amp-最后一个子元素的兼容写法" class="headerlink" title="获取第一个子元素&amp;最后一个子元素的兼容写法"></a>获取第一个子元素&amp;最后一个子元素的兼容写法</h4><p><strong>获取第一个子元素兼容写法</strong></p>
+<pre><code>// 获取element的第一个子元素
+function getFirstElement(element){
+    // 判断是否支持这一写法
+    if(element.firstElementChild){
+        return element.firstElementChild;
+    }else{
+        // 先找到第一个节点
+        var first = element.firstChild;
+        // 如果这个节点存在而且这个节点不是元素节点
+        while(first&amp;&amp;first.nodeType !== 1){
+            // 从这个节点向后继续找下一个兄弟节点
+            first = first.nextSibling;
+        }
+        return first;
+    }
+}
+</code></pre><p><strong>获取最后一个子元素兼容写法</strong></p>
+<pre><code>// 获取element的最后一个子元素
+function getLastElement(element){
+    // 判断是否支持这一写法
+    if(element.lastElementChild){
+        return element.lastElementChild;
+    }else{
+        // 先找到最后一个个节点
+        var last = element.lastChild;
+        // 如果这个节点存在而且这个节点不是元素节点
+        while(last&amp;&amp;last.nodeType !== 1){
+            // 从这个节点向前继续找上一个兄弟节点
+            last = last.previousSibling;
+        }
+        return last;
+    }
+}
+</code></pre><h4 id="通过类名获取元素对象的兼容方法"><a href="#通过类名获取元素对象的兼容方法" class="headerlink" title="通过类名获取元素对象的兼容方法"></a>通过类名获取元素对象的兼容方法</h4><pre><code>function getElementsByClassName(element, className) {
+    var filterArr = [];
+    var elements = element.getElementsByTagName(&quot;*&quot;);
+    for (var i = 0; i &lt; elements.length; i++) {
+        var nameArr = elements[i].className.split(&quot; &quot;);
+        for (var j = 0; j &lt; nameArr.length; j++) {
+            if (nameArr[j] === className) {
+                filterArr.push(elements[i]);
+                break;
+            }
+        }
+    }
+    return filterArr;
+}
+</code></pre><h3 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h3><pre><code>var box = document.getElementById(&quot;box&quot;);
+
+box.onclick = function(){
+    // 鼠标单击事件
+}
+
+box.dblclick = function(){
+    // 鼠标双击事件
+}
+
+box.onmouseover = function(){
+    // 鼠标移入事件
+}
+
+box.onmouseout = function(){
+    // 鼠标移出事件
+}
+
+
+box.onfocus = function(){
+    // 聚焦事件
+}
+
+box.onblur = function(){
+    // 失去焦点事件
+}
+
+box.onkeyup = function(){
+    // 按键弹起事件
+}
+
+box.onkeydown = function(){
+    // 按键按下事件
+}
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/面向对象/" rel="tag"># 面向对象</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="../JS02/" rel="next" title="JS实现简单算法排序">
+                <i class="fa fa-chevron-left"></i> JS实现简单算法排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../OOP02/" rel="prev" title="OOP-(2)--原型与继承">
+                OOP-(2)--原型与继承 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Majun</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="../../../../archives">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="../../../../categories/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="../../../../tags/index.html">
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript-多范式编程语言"><span class="nav-number">1.</span> <span class="nav-text">JavaScript-多范式编程语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多范式编程"><span class="nav-number">1.1.</span> <span class="nav-text">多范式编程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面向对象基本概念"><span class="nav-number">2.</span> <span class="nav-text">面向对象基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#面向过程"><span class="nav-number">2.1.</span> <span class="nav-text">面向过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面向对象"><span class="nav-number">2.2.</span> <span class="nav-text">面向对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面向对象三大特征"><span class="nav-number">2.3.</span> <span class="nav-text">面向对象三大特征</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是对象"><span class="nav-number">3.</span> <span class="nav-text">什么是对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集"><span class="nav-number">3.1.</span> <span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#功能集"><span class="nav-number">3.2.</span> <span class="nav-text">功能集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">4.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本数据类型-值类型"><span class="nav-number">4.1.</span> <span class="nav-text">基本数据类型(值类型)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复杂数据类型（引用数据类型）"><span class="nav-number">4.2.</span> <span class="nav-text">复杂数据类型（引用数据类型）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空类型"><span class="nav-number">4.3.</span> <span class="nav-text">空类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用类型的拷贝"><span class="nav-number">5.</span> <span class="nav-text">引用类型的拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#浅拷贝"><span class="nav-number">5.1.</span> <span class="nav-text">浅拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深拷贝"><span class="nav-number">5.2.</span> <span class="nav-text">深拷贝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造函数-构造器"><span class="nav-number">6.</span> <span class="nav-text">构造函数(构造器)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象的动态特性"><span class="nav-number">6.1.</span> <span class="nav-text">对象的动态特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#点语法-amp-关联数组语法"><span class="nav-number">6.2.</span> <span class="nav-text">点语法&关联数组语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂函数模式"><span class="nav-number">6.3.</span> <span class="nav-text">工厂函数模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数模式"><span class="nav-number">6.4.</span> <span class="nav-text">构造函数模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常与捕获"><span class="nav-number">7.</span> <span class="nav-text">异常与捕获</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常见异常"><span class="nav-number">7.1.</span> <span class="nav-text">常见异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常捕获语法"><span class="nav-number">7.2.</span> <span class="nav-text">异常捕获语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义抛出异常"><span class="nav-number">7.3.</span> <span class="nav-text">自定义抛出异常</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM操作复习"><span class="nav-number">8.</span> <span class="nav-text">DOM操作复习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取元素"><span class="nav-number">8.1.</span> <span class="nav-text">获取元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取指定元素"><span class="nav-number">8.1.1.</span> <span class="nav-text">获取指定元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取子元素-amp-兄弟元素-amp-父元素"><span class="nav-number">8.1.2.</span> <span class="nav-text">获取子元素&兄弟元素&父元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取第一-amp-最后一个子元素"><span class="nav-number">8.1.3.</span> <span class="nav-text">获取第一&最后一个子元素</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节点操作"><span class="nav-number">8.2.</span> <span class="nav-text">节点操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#克隆节点-cloneNode"><span class="nav-number">8.2.1.</span> <span class="nav-text">克隆节点 - cloneNode()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加节点-appendChild"><span class="nav-number">8.2.2.</span> <span class="nav-text">添加节点 - appendChild()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入节点-insertBefore"><span class="nav-number">8.2.3.</span> <span class="nav-text">插入节点 - insertBefore()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移除节点-removeChild"><span class="nav-number">8.2.4.</span> <span class="nav-text">移除节点 - removeChild()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建结构"><span class="nav-number">8.3.</span> <span class="nav-text">创建结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#document-write"><span class="nav-number">8.3.1.</span> <span class="nav-text">document.write()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#element-innerHtml"><span class="nav-number">8.3.2.</span> <span class="nav-text">element.innerHtml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#document-createElement"><span class="nav-number">8.3.3.</span> <span class="nav-text">document.createElement()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标签的自定义属性操作"><span class="nav-number">8.4.</span> <span class="nav-text">标签的自定义属性操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#setAttribute"><span class="nav-number">8.4.1.</span> <span class="nav-text">setAttribute()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getAttribute"><span class="nav-number">8.4.2.</span> <span class="nav-text">getAttribute()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#removeAttribute"><span class="nav-number">8.4.3.</span> <span class="nav-text">removeAttribute()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#兼容方法"><span class="nav-number">8.5.</span> <span class="nav-text">兼容方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#innerText兼容写法"><span class="nav-number">8.5.1.</span> <span class="nav-text">innerText兼容写法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取上一个-amp-下一个兄弟元素的兼容写法"><span class="nav-number">8.5.2.</span> <span class="nav-text">获取上一个&下一个兄弟元素的兼容写法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取第一个子元素-amp-最后一个子元素的兼容写法"><span class="nav-number">8.5.3.</span> <span class="nav-text">获取第一个子元素&最后一个子元素的兼容写法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过类名获取元素对象的兼容方法"><span class="nav-number">8.5.4.</span> <span class="nav-text">通过类名获取元素对象的兼容方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件"><span class="nav-number">8.6.</span> <span class="nav-text">事件</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Majun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="../../../../js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="../../../../js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="../../../../js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
